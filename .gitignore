@@ -1,0 +1,32 @@
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de registro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor de código (si usas VS Code, carpeta de configuración personal)
+.vscode/
+.idea/
+
+# Archivos de construcción o empaquetado (si usas alguno)
+dist/
+build/
+
+# Variables de entorno (no aplica, pero por si acaso)
+.env
+.env.local
+.env.*.local
+
+# Archivos de cobertura de pruebas (si usas)
+coverage/
+
+# Archivos de metadatos de npm
+package-lock.json
+yarn.lock

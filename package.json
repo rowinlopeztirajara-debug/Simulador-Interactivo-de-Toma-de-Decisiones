@@ -1,0 +1,24 @@
+{
+  "name": "simulador",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --entry-file=index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones/issues"
+  },
+  "homepage": "https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones#readme",
+  "description": "",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
