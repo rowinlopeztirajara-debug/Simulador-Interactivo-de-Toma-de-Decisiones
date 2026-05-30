@@ -1,0 +1,16 @@
+name: CI - Verificación automática
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar archivos esenciales
+        run: |
+          test -f index.html && echo "✅ index.html existe"
+          test -f style.css && echo "✅ style.css existe"
+          test -f script.js && echo "✅ script.js existe"
