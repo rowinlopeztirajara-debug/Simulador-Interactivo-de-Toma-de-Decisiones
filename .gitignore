@@ -1,7 +1,10 @@
-# Dependencias de Node.js
+# Dependencias de Node.js (si se instalan para herramientas de desarrollo)
 node_modules/
 
-# Archivos de registro
+# Archivos de entorno (valores reales, no se suben)
+.env
+
+# Archivos de log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -11,22 +14,13 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-# Editor de código (si usas VS Code, carpeta de configuración personal)
+# Carpetas de configuración de editor (opcional, si no quieres compartir tu configuración de VS Code)
 .vscode/
 .idea/
 
-# Archivos de construcción o empaquetado (si usas alguno)
-dist/
-build/
-
-# Variables de entorno (no aplica, pero por si acaso)
-.env
-.env.local
-.env.*.local
-
-# Archivos de cobertura de pruebas (si usas)
+# Archivos de cobertura de pruebas (si las hay)
 coverage/
 
-# Archivos de metadatos de npm
-package-lock.json
-yarn.lock
+# Archivos de construcción (si usas algún empaquetador)
+dist/
+build/
