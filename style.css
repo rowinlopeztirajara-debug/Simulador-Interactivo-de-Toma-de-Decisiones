@@ -21,7 +21,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-image: url('https://www.transparenttextures.com/patterns/camouflage.png');
+    background-image: url('https://www.t
     background-repeat: repeat;
     background-attachment: fixed;
     background-color: var(--bg-body);
@@ -34,8 +34,8 @@ body.dark::before { background: rgba(0,0,0,0.5); }
 body.theme-military { --color-primary: #2c5e2a; --color-primary-dark: #1e421d; --color-accent: #5f8b5a; }
 body.theme-steel { --color-primary: #4a5568; --color-primary-dark: #2d3748; --color-accent: #718096; }
 
-.game-container {
-    max-width: 950px;
+.game-container 
+    max-width: 950px
     width: 100%;
     border-radius: 32px;
     box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
