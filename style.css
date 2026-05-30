@@ -13,7 +13,7 @@
     --bg-card: rgba(255,255,255,0.94);
     --text-dark: #1e293b;
     --border-light: rgba(0,0,0,0.1);
-}
+
 body {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
