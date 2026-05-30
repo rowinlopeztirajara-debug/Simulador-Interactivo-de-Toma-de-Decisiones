@@ -6,7 +6,7 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 :root {
-    --color-primary: #2c4c6e;
+    --color-primary: #fc6602;
     --color-primary-dark: #1f3a54;
     --color-accent: #5b7c9e;
     --bg-body: #d4dcec;
