@@ -27,7 +27,9 @@ graph TD
 
     Cliente --> Módulo_Central
     Módulo_Central --> Backend
-
+```
+## Diagrama de Flujo
+```mermaid
 flowchart TB
     Inicio((Inicio))
     A1[Usuario hace click en<br/>nuevo escenario simulado]
@@ -37,7 +39,7 @@ flowchart TB
     A5[Clonar escenario seleccionado]
     A6[Inyectar resultados finales]
     A7[Reemplazar referencia<br/>en opciones]
-    A8[Resetear estadoActualID = "p1"]
+    A8["Resetear estadoActualID = \"p1\""]
     A9[Renderizar pregunta]
     A10[/Usuario dentro del<br/>nuevo escenario/]
 
@@ -53,7 +55,9 @@ flowchart TB
     A8 --> A9
     A9 --> A10
     A10 -.->|Nuevo escenario| A1
-
+```
+## Diagrama de Secuencia UML
+```mermaid
 sequenceDiagram
     box 🎯 SISTEMA COMPLETO
         participant Usuario as 👤 Usuario (Actor)
@@ -73,7 +77,9 @@ sequenceDiagram
         Control ->> Control: Procesar lógica interna
     end
     Modelo -->> Control: Retornar estado
-
+```
+## Diagrama de Caso de Uso
+```mermaid
 flowchart TB
     subgraph Sistema ["🎯 SISTEMA DE SIMULACIÓN"]
         UC1[Iniciar Simulación]
@@ -113,7 +119,9 @@ flowchart TB
     Admin --> A3
     Admin --> A4
     A1 -.-> A1_validate
-
+```
+## Diagrama de Flujo - Simulación de Escenarios
+```mermaid
 flowchart TD
     Inicio([Inicio])
     Click[Jugador hace click en Jugar]
@@ -142,4 +150,4 @@ flowchart TD
     Reinicio -->|Empezar de nuevo| EmpezarOtro
     VolverMenu --> Fin
     EmpezarOtro --> Click
-
+```
