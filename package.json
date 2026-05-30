@@ -1,10 +1,17 @@
 {
-  "name": "simulador",
+  "name": "simulador-tactico",
   "version": "1.0.0",
   "main": "index.html",
   "scripts": {
     "dev": "live-server --port=3000 --entry-file=index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:css": "stylelint '**/*.css'",
+    "lint": "npm run lint:css"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "prettier": "^3.8.3",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0"
   },
   "repository": {
     "type": "git",
@@ -17,8 +24,5 @@
     "url": "https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones/issues"
   },
   "homepage": "https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones#readme",
-  "description": "",
-  "devDependencies": {
-    "live-server": "^1.2.2"
-  }
+  "description": "Simulador interactivo de toma de decisiones para entrenamiento táctico"
 }
