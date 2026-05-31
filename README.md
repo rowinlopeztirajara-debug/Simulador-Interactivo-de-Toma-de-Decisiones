@@ -4,6 +4,8 @@ Aplicación web de Simulador Interactivo de Toma de Decisiones ante amenazas.
 
 ![prototipo 1](https://github.com/user-attachments/assets/bc8a3687-a782-4afe-9aee-a5ae8a8d9c60)
 
+[![Portada del video](public/portada.png)](https://www.youtube.com/watch?v=jtwspJoaWX8)
+
 ## Diagrama de Arquitectura
 
 ```mermaid
