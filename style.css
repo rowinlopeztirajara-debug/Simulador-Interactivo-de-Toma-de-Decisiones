@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-@keyframes fade-in-up {
+@keyfrafade-in-up {
   from {
     opacity: 0;
     transform: translateY(20px);
