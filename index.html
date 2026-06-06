@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Simulador Táctico | ADI Sede Coro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,23 +14,24 @@
         <div class="military-badge"><span>🎖️</span></div>
         <div class="game-title">SIMULADOR TÁCTICO</div>
         <div class="game-subtitle">ADI SEDE CORO - FALCÓN<br>ENTRENAMIENTO PARA OFICIALES</div>
-        <button class="start-btn" id="startBtn"><i class="fas fa-play"></i> JUGAR</button>
+        <button type="button" class="start-btn" id="startBtn"><i class="fas fa-play"></i> JUGAR</button>
         <div id="levelMenu" class="level-menu">
             <div class="level-title">NIVEL DE DIFICULTAD</div>
             <div class="level-buttons">
-                <button class="level-btn easy" data-difficulty="easy"><i class="fas fa-seedling"></i> FÁCIL</button>
-                <button class="level-btn medium" data-difficulty="medium"><i class="fas fa-chart-line"></i> NORMAL</button>
-                <button class="level-btn hard" data-difficulty="hard"><i class="fas fa-skull"></i> DIFÍCIL</button>
+                <button type="button" class="level-btn easy" data-difficulty="easy"><i class="fas fa-seedling"></i> FÁCIL</button>
+                <button type="button" class="level-btn medium" data-difficulty="medium"><i class="fas fa-chart-line"></i> NORMAL</button>
+                <button type="button" class="level-btn hard" data-difficulty="hard"><i class="fas fa-skull"></i> DIFÍCIL</button>
             </div>
-            <div class="training-toggle"><label><input type="checkbox" id="trainingModeCheckbox"> 🧘 Modo entrenamiento (sin tiempo)</label></div>
+            <div class="training-toggle">
+                <label><input type="checkbox" id="trainingModeCheckbox"> 🧘 Modo entrenamiento (sin tiempo)</label>
+            </div>
         </div>
         <div style="margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-            <button class="menu-btn" id="openManualBtn"><i class="fas fa-book-open"></i> Manual</button>
-            <button class="menu-btn" id="openAchievementsBtn"><i class="fas fa-medal"></i> Logros</button>
-            <button class="menu-btn" id="openStatsBtn"><i class="fas fa-chart-simple"></i> Estadísticas</button>
-            <button class="menu-btn" id="openPaletteBtn"><i class="fas fa-palette"></i> Temas</button>
-            <button class="menu-btn" id="soundToggleBtn"><i class="fas fa-volume-up"></i> Sonido</button>
-            <button class="menu-btn" id="ambientSoundBtn"><i class="fas fa-head-side-vr"></i> Ambiente</button>
+            <button type="button" class="menu-btn" id="openManualBtn"><i class="fas fa-book-open"></i> Manual</button>
+            <button type="button" class="menu-btn" id="openAchievementsBtn"><i class="fas fa-medal"></i> Logros</button>
+            <button type="button" class="menu-btn" id="openPaletteBtn"><i class="fas fa-palette"></i> Temas</button>
+            <button type="button" class="menu-btn" id="soundToggleBtn"><i class="fas fa-volume-up"></i> Sonido</button>
+            <button type="button" class="menu-btn" id="ambientSoundBtn"><i class="fas fa-head-side-vr"></i> Ambiente</button>
         </div>
     </div>
 
@@ -38,15 +39,21 @@
         <div class="sim-header">
             <div class="header-controls">
                 <span class="difficulty-badge" id="difficultyBadge">NORMAL</span>
-                <button class="icon-btn" id="themeToggleBtn"><i class="fas fa-moon"></i></button>
-                <button class="icon-btn" id="tutorialBtn"><i class="fas fa-question"></i></button>
+                <button type="button" class="icon-btn" id="themeToggleBtn"><i class="fas fa-moon"></i></button>
+                <button type="button" class="icon-btn" id="tutorialBtn"><i class="fas fa-question"></i></button>
             </div>
-            <div class="timer-display" id="timerDisplay">00:30</div>
-            <button class="menu-btn" id="exitToMenuBtn"><i class="fas fa-door-open"></i> SALIR</button>
+            <div class="timer-display" id="timerDisplay">01:00</div>
+            <button type="button" class="menu-btn" id="exitToMenuBtn"><i class="fas fa-door-open"></i> SALIR</button>
         </div>
-        <div class="gif-area"><div class="gif-placeholder"><img id="situationGif" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%232c4c6e'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial' dy='.3em'%3E🎖️ ESCENARIO TÁCTICO%3C/text%3E%3C/svg%3E" alt="GIF"></div></div>
+        <div class="gif-area">
+            <div class="gif-placeholder">
+                <img id="situationGif" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%232c4c6e'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial' dy='.3em'%3E🎖️ ESCENARIO%3C/text%3E%3C/svg%3E" alt="GIF">
+            </div>
+        </div>
         <div class="sim-body">
-            <div id="situationBox" class="situation-box"><div class="situation-text" id="situationText">Cargando...</div></div>
+            <div id="situationBox" class="situation-box">
+                <div class="situation-text" id="situationText">Cargando...</div>
+            </div>
             <div id="optionsBox" class="options-box"></div>
         </div>
     </div>
@@ -60,8 +67,8 @@
             <div class="feedback-analysis" id="analysisText"></div>
         </div>
         <div class="action-buttons">
-            <button class="action-btn" id="retryBtn"><i class="fas fa-redo-alt"></i> REINTENTAR</button>
-            <button class="action-btn" id="mainMenuBtn"><i class="fas fa-home"></i> MENÚ PRINCIPAL</button>
+            <button type="button" class="action-btn" id="retryBtn"><i class="fas fa-redo-alt"></i> REINTENTAR</button>
+            <button type="button" class="action-btn" id="mainMenuBtn"><i class="fas fa-home"></i> MENÚ PRINCIPAL</button>
         </div>
     </div>
 </div>
