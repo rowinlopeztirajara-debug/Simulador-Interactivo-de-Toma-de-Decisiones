@@ -58,7 +58,7 @@ function shuffleOptions(opts) {
     return newOpts;
 }
 
-// Escenario 1: FRONTERA
+// ESCENARIO 1: FRONTERA
 const escenarioFrontera = {
     nombre: "Crisis en la Frontera Occidental",
     p1: { texto: "Inteligencia detecta grupo irregular armado a 5 km de la frontera. Planean atacar un puesto de control. ¿Primera acción?", gif: gifPlaceholder,
@@ -163,7 +163,7 @@ const escenarioFrontera = {
         ] }
 };
 
-// Escenario 2: DISTURBIOS
+// ESCENARIO 2: DISTURBIOS
 const escenarioDisturbios = {
     nombre: "Control de Orden Público",
     p1: { texto: "Manifestaciones violentas en el centro. Grupos encapuchados atacan comercios. ¿Qué ordena?", gif: gifPlaceholder,
@@ -258,7 +258,7 @@ const escenarioDisturbios = {
     consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: gifPlaceholder, siguiente: "finalExitoParcial" }
 };
 
-// Escenario 3: INFILTRACIÓN
+// ESCENARIO 3: INFILTRACIÓN
 const escenarioInfiltracion = {
     nombre: "Seguridad Perimetral de la Base",
     p1: { texto: "Sensores detectan intrusión en perímetro norte. Son las 03:00. ¿Qué ordena?", gif: gifPlaceholder,
@@ -372,10 +372,19 @@ const resultadosBase = {
     finalError: { tipo: "fracaso", mensaje: "ERROR", analisisBase: "Reinicie la simulación.", gif: gifPlaceholder }
 };
 
+// VARIABLES GLOBALES
 let escenarioActivo = null, pasoActual = null, esperando = false, dificultadActual = "medium", historial = [];
 let temporizadorInterval = null, tiempoRestante = 60, tiempoActivo = false, decisionTomada = false;
 let tiemposDificultad = { easy: 90, medium: 60, hard: 45 };
 let trainingModeFlag = false, currentChosenLetters = [];
+
+// FUNCIÓN PARA ACTUALIZAR EL CONTADOR DE PROGRESO
+function updateProgressCounter() {
+    const counterSpan = document.getElementById("progressCounter");
+    if (counterSpan) {
+        counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
+    }
+}
 
 function prepararEscenario(escenarioBase) {
     let escenario = JSON.parse(JSON.stringify(escenarioBase));
@@ -441,6 +450,7 @@ function iniciarJuego() {
     historial = [];
     currentChosenLetters = [];
     decisionTomada = false;
+    updateProgressCounter();  // <--- resetea contador a 0
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("simScreen").style.display = "block";
     document.getElementById("feedbackScreen").style.display = "none";
@@ -482,6 +492,7 @@ function elegirOpcion(dest, letra, texto) {
     let tiempoUsado = trainingModeFlag ? 0 : tiemposDificultad[dificultadActual] - tiempoRestante;
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
+    updateProgressCounter();  // <--- actualiza contador cada vez que se toma una decisión
     if(dest === "finalExito" || dest === "finalExitoParcial" || dest === "finalFracasoTotal") {
         mostrarFeedback(escenarioActivo[dest] || escenarioActivo.finalError);
         return;
@@ -573,7 +584,7 @@ function volverMenu() { location.reload(); }
 function reiniciarMismo() { iniciarJuego(); }
 function setDifficulty(d) { dificultadActual = d; const badge = document.getElementById("difficultyBadge"); if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL'; else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL'; else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL'; }
 
-// Eventos
+// EVENTOS
 document.getElementById("startBtn").onclick = () => { document.getElementById("levelMenu").style.display = "block"; document.getElementById("startBtn").style.display = "none"; };
 document.querySelectorAll(".level-btn").forEach(btn => { btn.onclick = () => { setDifficulty(btn.getAttribute("data-difficulty")); iniciarJuego(); }; });
 document.getElementById("themeToggleBtn").onclick = () => { document.body.classList.toggle("dark"); localStorage.setItem("darkMode", document.body.classList.contains("dark")); };
