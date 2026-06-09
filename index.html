@@ -7,11 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="public/logo.png">
 </head>
 <body class="light theme-default">
 <div class="game-container">
     <div id="startScreen" class="start-screen">
-        <div class="military-badge"><span>🎖️</span></div>
+        <div class="military-badge">
+            <img src="public/logo.png" alt="Logo ADI Coro">
+        </div>
         <div class="game-title">SIMULADOR TÁCTICO</div>
         <div class="game-subtitle">ADI SEDE CORO - FALCÓN<br>ENTRENAMIENTO PARA OFICIALES</div>
         <button type="button" class="start-btn" id="startBtn"><i class="fas fa-play"></i> JUGAR</button>
@@ -41,6 +44,7 @@
                 <span class="difficulty-badge" id="difficultyBadge">NORMAL</span>
                 <button type="button" class="icon-btn" id="themeToggleBtn"><i class="fas fa-moon"></i></button>
                 <button type="button" class="icon-btn" id="tutorialBtn"><i class="fas fa-question"></i></button>
+                <span class="progress-indicator" id="progressCounter"><i class="fas fa-list-ol"></i> Decisiones: 0</span>
             </div>
             <div class="timer-display" id="timerDisplay">01:00</div>
             <button type="button" class="menu-btn" id="exitToMenuBtn"><i class="fas fa-door-open"></i> SALIR</button>
