@@ -185,6 +185,19 @@ function shuffleOptions(opts) {
     return newOpts;
 }
 
+// ===== RESULTADOS BASE =====
+const resultadosBase = {
+    exito: {
+        tipo: "exito",
+        mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!",
+        analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.",
+        gif: "https://www.image2url.com/r2/default/gifs/1781981587356-83265fec-b07c-41c9-bca5-33a13a815d32.gif"
+    },
+    parcial: { tipo: "parcial", mensaje: "ÉXITO PARCIAL", analisisBase: "El objetivo se alcanzó, pero hubo contratiempos evitables.", gif: gifPlaceholder },
+    fracaso: { tipo: "fracaso", mensaje: "FRACASO TOTAL", analisisBase: "Error estratégico. Revise la doctrina.", gif: gifPlaceholder },
+    error: { tipo: "fracaso", mensaje: "ERROR", analisisBase: "Reinicie la simulación.", gif: gifPlaceholder }
+};
+
 // ===== ESCENARIO 1: FRONTERA =====
 const escenarioFrontera = {
     nombre: "Crisis en la Frontera Occidental",
@@ -243,7 +256,7 @@ const escenarioFrontera = {
         ]
     },
     consE1: { texto: "Ataque sorpresa logra romper la defensa enemiga. Avance significativo.", gif: gifPlaceholder, siguiente: "p6" },
-    consE2: { texto: "El bombardeo causa pánico y deserción masiva. El enemigo se rinde.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consE2: { texto: "El bombardeo causa pánico y deserción masiva. El enemigo se rinde.", gif: gifPlaceholder, siguiente: "exito" },
     p3b: {
         texto: "El enemigo atrincherado lanza un contraataque. ¿Cómo responde?",
         gif: gifPlaceholder,
@@ -253,7 +266,7 @@ const escenarioFrontera = {
         ]
     },
     consF1: { texto: "Retirada ordenada, pero pierde terreno.", gif: gifPlaceholder, siguiente: "p6b" },
-    consF2: { texto: "Repelen ataque con 10 bajas enemigas.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consF2: { texto: "Repelen ataque con 10 bajas enemigas.", gif: gifPlaceholder, siguiente: "parcial" },
     p3c: {
         texto: "El tiempo perdido permitió al enemigo recibir suministros. ¿Qué orden da?",
         gif: gifPlaceholder,
@@ -262,8 +275,8 @@ const escenarioFrontera = {
             { texto: "Solicitar alto el fuego", destino: "consG2" }
         ]
     },
-    consG1: { texto: "Destruyen convoy enemigo. Golpe de gracia.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consG2: { texto: "Alto el fuego rechazado. El enemigo ataca con más fuerza.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consG1: { texto: "Destruyen convoy enemigo. Golpe de gracia.", gif: gifPlaceholder, siguiente: "exito" },
+    consG2: { texto: "Alto el fuego rechazado. El enemigo ataca con más fuerza.", gif: gifPlaceholder, siguiente: "fracaso" },
     p4: {
         texto: "Los documentos capturados revelan un plan de ataque contra una ciudad cercana. ¿Qué hace?",
         gif: gifPlaceholder,
@@ -272,8 +285,8 @@ const escenarioFrontera = {
             { texto: "Emboscar células enemigas", destino: "consH2" }
         ]
     },
-    consH1: { texto: "Evacuación exitosa. La ciudad está a salvo.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consH2: { texto: "Emboscada elimina a 15 terroristas.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consH1: { texto: "Evacuación exitosa. La ciudad está a salvo.", gif: gifPlaceholder, siguiente: "exito" },
+    consH2: { texto: "Emboscada elimina a 15 terroristas.", gif: gifPlaceholder, siguiente: "exito" },
     p4b: {
         texto: "Los que huyeron se refugian en una aldea. ¿Cómo procede?",
         gif: gifPlaceholder,
@@ -282,8 +295,8 @@ const escenarioFrontera = {
             { texto: "Asalto directo", destino: "consI2" }
         ]
     },
-    consI1: { texto: "Capturan a los líderes. Operación exitosa.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consI2: { texto: "Asalto violento, muchos heridos.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consI1: { texto: "Capturan a los líderes. Operación exitosa.", gif: gifPlaceholder, siguiente: "exito" },
+    consI2: { texto: "Asalto violento, muchos heridos.", gif: gifPlaceholder, siguiente: "parcial" },
     p4c: {
         texto: "El oleoducto dañado provoca un incendio. ¿Cuál es su prioridad?",
         gif: gifPlaceholder,
@@ -292,8 +305,8 @@ const escenarioFrontera = {
             { texto: "Abandonar zona", destino: "consJ2" }
         ]
     },
-    consJ1: { texto: "Fuego controlado. Daño limitado.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consJ2: { texto: "El fuego se expande y causa una crisis diplomática.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consJ1: { texto: "Fuego controlado. Daño limitado.", gif: gifPlaceholder, siguiente: "parcial" },
+    consJ2: { texto: "El fuego se expande y causa una crisis diplomática.", gif: gifPlaceholder, siguiente: "fracaso" },
     p5: {
         texto: "El enemigo fugitivo busca refugio en zona montañosa. ¿Qué táctica usa?",
         gif: gifPlaceholder,
@@ -302,8 +315,8 @@ const escenarioFrontera = {
             { texto: "Bloqueo de rutas", destino: "consK2" }
         ]
     },
-    consK1: { texto: "Capturan al líder. Fin de la amenaza.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consK2: { texto: "El enemigo se rinde por falta de suministros.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consK1: { texto: "Capturan al líder. Fin de la amenaza.", gif: gifPlaceholder, siguiente: "exito" },
+    consK2: { texto: "El enemigo se rinde por falta de suministros.", gif: gifPlaceholder, siguiente: "exito" },
     p5b: {
         texto: "El armamento entregado durante la negociación ahora es usado en su contra. ¿Cómo se defiende?",
         gif: gifPlaceholder,
@@ -312,22 +325,22 @@ const escenarioFrontera = {
             { texto: "Mediación internacional", destino: "consL2" }
         ]
     },
-    consL1: { texto: "Ataque exitoso. Recuperan armamento.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consL2: { texto: "Mediación fracasa. Escalada del conflicto.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consL1: { texto: "Ataque exitoso. Recuperan armamento.", gif: gifPlaceholder, siguiente: "parcial" },
+    consL2: { texto: "Mediación fracasa. Escalada del conflicto.", gif: gifPlaceholder, siguiente: "fracaso" },
     p6: {
         texto: "Operación casi finalizada. Enemigo pide tregua. ¿Acepta?",
         gif: gifPlaceholder,
         opciones_raw: [
-            { texto: "Aceptar tregua", destino: "finalExitoParcial" },
-            { texto: "Rechazar y continuar", destino: "finalExito" }
+            { texto: "Aceptar tregua", destino: "parcial" },
+            { texto: "Rechazar y continuar", destino: "exito" }
         ]
     },
     p6b: {
         texto: "Ha perdido posiciones. Moral baja. ¿Qué orden da?",
         gif: gifPlaceholder,
         opciones_raw: [
-            { texto: "Reorganizar y contraatacar", destino: "finalExitoParcial" },
-            { texto: "Retirada estratégica", destino: "finalFracasoTotal" }
+            { texto: "Reorganizar y contraatacar", destino: "parcial" },
+            { texto: "Retirada estratégica", destino: "fracaso" }
         ]
     }
 };
@@ -374,57 +387,57 @@ const escenarioDisturbios = {
             { texto: "Mantener presencia policial", destino: "consE1" },
             { texto: "Operaciones de reconstrucción", destino: "consE2" }
         ] },
-    consE1: { texto: "Presencia evita nuevos disturbios.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consE2: { texto: "Reconstrucción gana apoyo ciudadano.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consE1: { texto: "Presencia evita nuevos disturbios.", gif: gifPlaceholder, siguiente: "exito" },
+    consE2: { texto: "Reconstrucción gana apoyo ciudadano.", gif: gifPlaceholder, siguiente: "exito" },
     p3b: { texto: "Disturbios se expanden a zonas residenciales. ¿Qué ordena?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Toque de queda y ejército", destino: "consF1" },
             { texto: "Negociar con líderes vecinales", destino: "consF2" }
         ] },
-    consF1: { texto: "Toque de queda restablece orden, pero tensiones sociales.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consF2: { texto: "Negociación reduce violencia, pero radicales persisten.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consF1: { texto: "Toque de queda restablece orden, pero tensiones sociales.", gif: gifPlaceholder, siguiente: "parcial" },
+    consF2: { texto: "Negociación reduce violencia, pero radicales persisten.", gif: gifPlaceholder, siguiente: "parcial" },
     p3c: { texto: "Radicales se refugian en barrio popular. ¿Qué acción?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Cercar y negociar", destino: "consG1" },
             { texto: "Allanamientos selectivos", destino: "consG2" }
         ] },
-    consG1: { texto: "Logran rendición de radicales.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consG2: { texto: "Allanamientos capturan cabecillas, con heridos civiles.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consG1: { texto: "Logran rendición de radicales.", gif: gifPlaceholder, siguiente: "exito" },
+    consG2: { texto: "Allanamientos capturan cabecillas, con heridos civiles.", gif: gifPlaceholder, siguiente: "fracaso" },
     p4: { texto: "Líderes detenidos. Estrategia de largo plazo.", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Programas sociales", destino: "consH1" },
             { texto: "Aumentar vigilancia", destino: "consH2" }
         ] },
-    consH1: { texto: "Programas mejoran convivencia.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consH2: { texto: "Vigilancia reduce delincuencia, pero persiste malestar.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consH1: { texto: "Programas mejoran convivencia.", gif: gifPlaceholder, siguiente: "exito" },
+    consH2: { texto: "Vigilancia reduce delincuencia, pero persiste malestar.", gif: gifPlaceholder, siguiente: "parcial" },
     p4b: { texto: "Orden parcial, focos de resistencia. ¿Qué hace?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Intensificar presencia policial", destino: "consI1" },
             { texto: "Diálogos comunitarios", destino: "consI2" }
         ] },
-    consI1: { texto: "Presión policial disuelve focos.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consI2: { texto: "Diálogo reduce tensión, requiere más tiempo.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consI1: { texto: "Presión policial disuelve focos.", gif: gifPlaceholder, siguiente: "exito" },
+    consI2: { texto: "Diálogo reduce tensión, requiere más tiempo.", gif: gifPlaceholder, siguiente: "parcial" },
     p4c: { texto: "Daños materiales enormes. ¿Prioridad?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Reconstruir infraestructura", destino: "consJ1" },
             { texto: "Capturar responsables", destino: "consJ2" }
         ] },
-    consJ1: { texto: "Reconstrucción gana apoyo ciudadano.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consJ2: { texto: "Capturas exitosas, pero ciudad en ruinas.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consJ1: { texto: "Reconstrucción gana apoyo ciudadano.", gif: gifPlaceholder, siguiente: "parcial" },
+    consJ2: { texto: "Capturas exitosas, pero ciudad en ruinas.", gif: gifPlaceholder, siguiente: "fracaso" },
     p5: { texto: "Heridos civiles necesitan atención. ¿Qué ordena?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Ambulancias y hospital de campaña", destino: "consK1" },
             { texto: "Ayuda humanitaria internacional", destino: "consK2" }
         ] },
-    consK1: { texto: "Atención médica salva vidas.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consK2: { texto: "Ayuda llega tarde. Se pierden vidas.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consK1: { texto: "Atención médica salva vidas.", gif: gifPlaceholder, siguiente: "exito" },
+    consK2: { texto: "Ayuda llega tarde. Se pierden vidas.", gif: gifPlaceholder, siguiente: "fracaso" },
     p5b: { texto: "Economía local afectada por saqueos. ¿Qué prioriza?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Ayudas a comerciantes", destino: "consL1" },
             { texto: "Reforzar seguridad", destino: "consL2" }
         ] },
-    consL1: { texto: "Ayudas reactivan comercio.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: gifPlaceholder, siguiente: "finalExitoParcial" }
+    consL1: { texto: "Ayudas reactivan comercio.", gif: gifPlaceholder, siguiente: "exito" },
+    consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: gifPlaceholder, siguiente: "parcial" }
 };
 
 // ===== ESCENARIO 3: INFILTRACIÓN =====
@@ -476,76 +489,63 @@ const escenarioInfiltracion = {
             { texto: "Bloquear acceso", destino: "consF1" },
             { texto: "Permitirles entrar para atraparlos", destino: "consF2" }
         ] },
-    consF1: { texto: "Se bloquea acceso. Intrusos se rinden.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consF2: { texto: "Al entrar, activan bomba. Explosión y daños.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
+    consF1: { texto: "Se bloquea acceso. Intrusos se rinden.", gif: gifPlaceholder, siguiente: "exito" },
+    consF2: { texto: "Al entrar, activan bomba. Explosión y daños.", gif: gifPlaceholder, siguiente: "fracaso" },
     p3c: { texto: "Intrusos tienen rehenes. ¿Cómo procede?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Negociación", destino: "consG1" },
             { texto: "Asalto relámpago", destino: "consG2" }
         ] },
-    consG1: { texto: "Negociación exitosa: liberan rehenes a cambio de helicóptero.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consG2: { texto: "Asalto exitoso, dos rehenes heridos.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consG1: { texto: "Negociación exitosa: liberan rehenes a cambio de helicóptero.", gif: gifPlaceholder, siguiente: "parcial" },
+    consG2: { texto: "Asalto exitoso, dos rehenes heridos.", gif: gifPlaceholder, siguiente: "parcial" },
     p4: { texto: "Información robada incluye planes de defensa. ¿Qué hace?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Cambiar códigos y protocolos", destino: "consH1" },
             { texto: "Rastrear responsables", destino: "consH2" }
         ] },
-    consH1: { texto: "Códigos cambiados. Información obsoleta.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consH2: { texto: "Recuperan información antes de ser vendida.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consH1: { texto: "Códigos cambiados. Información obsoleta.", gif: gifPlaceholder, siguiente: "exito" },
+    consH2: { texto: "Recuperan información antes de ser vendida.", gif: gifPlaceholder, siguiente: "exito" },
     p4b: { texto: "Huellas llevan a casa en pueblo. ¿Qué orden?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Solicitar orden de allanamiento", destino: "consI1" },
             { texto: "Allanar sin orden por urgencia", destino: "consI2" }
         ] },
-    consI1: { texto: "Orden llega tarde. Sospechosos huyen.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consI2: { texto: "Capturan espías y recuperan material.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consI1: { texto: "Orden llega tarde. Sospechosos huyen.", gif: gifPlaceholder, siguiente: "parcial" },
+    consI2: { texto: "Capturan espías y recuperan material.", gif: gifPlaceholder, siguiente: "exito" },
     p4c: { texto: "Equipos de espionaje activos. ¿Qué acción?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Desconectar red y auditoría", destino: "consJ1" },
             { texto: "Usar equipos para enviar información falsa", destino: "consJ2" }
         ] },
-    consJ1: { texto: "Auditoría descubre sistema comprometido. Reemplazan equipos.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    consJ2: { texto: "Contra-inteligencia funciona. Desenmascaran red de espionaje.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consJ1: { texto: "Auditoría descubre sistema comprometido. Reemplazan equipos.", gif: gifPlaceholder, siguiente: "parcial" },
+    consJ2: { texto: "Contra-inteligencia funciona. Desenmascaran red de espionaje.", gif: gifPlaceholder, siguiente: "exito" },
     p5: { texto: "Intrusos huyeron, dejaron pistas. ¿Qué prioriza?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Analizar pistas", destino: "consK1" },
             { texto: "Reforzar seguridad", destino: "consK2" }
         ] },
-    consK1: { texto: "Identifican célula enemiga. Toman medidas.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consK2: { texto: "Seguridad reforzada, pero culpables no capturados.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
+    consK1: { texto: "Identifican célula enemiga. Toman medidas.", gif: gifPlaceholder, siguiente: "exito" },
+    consK2: { texto: "Seguridad reforzada, pero culpables no capturados.", gif: gifPlaceholder, siguiente: "parcial" },
     p5b: { texto: "Intrusos capturados se niegan a hablar. ¿Qué técnica?", gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Interrogatorio psicológico", destino: "consL1" },
             { texto: "Ofrecer reducción de condena", destino: "consL2" }
         ] },
-    consL1: { texto: "Uno confiesa red de apoyo.", gif: gifPlaceholder, siguiente: "finalExito" },
-    consL2: { texto: "Obtienen información valiosa sobre futuros ataques.", gif: gifPlaceholder, siguiente: "finalExito" },
+    consL1: { texto: "Uno confiesa red de apoyo.", gif: gifPlaceholder, siguiente: "exito" },
+    consL2: { texto: "Obtienen información valiosa sobre futuros ataques.", gif: gifPlaceholder, siguiente: "exito" },
     p6: { texto: "Intruso capturado ofrece información a cambio de asilo. ¿Acepta?", gif: gifPlaceholder,
         opciones_raw: [
-            { texto: "Aceptar trato", destino: "finalExito" },
-            { texto: "Rechazar y juzgar", destino: "finalExitoParcial" }
+            { texto: "Aceptar trato", destino: "exito" },
+            { texto: "Rechazar y juzgar", destino: "parcial" }
         ] },
     p6b: { texto: "Intruso murió en explosión. No hay pistas. ¿Qué concluye?", gif: gifPlaceholder,
         opciones_raw: [
-            { texto: "Amenaza continúa. Incrementar vigilancia", destino: "finalExitoParcial" },
-            { texto: "Cerrar caso por falta de pruebas", destino: "finalFracasoTotal" }
+            { texto: "Amenaza continúa. Incrementar vigilancia", destino: "parcial" },
+            { texto: "Cerrar caso por falta de pruebas", destino: "fracaso" }
         ] }
 };
 
 const escenariosPosibles = [escenarioFrontera, escenarioDisturbios, escenarioInfiltracion];
-
-// ========== RESULTADOS ==========
-const resultadosBase = {
-    finalExito: {
-        tipo: "exito",
-        mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!",
-        analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781981587356-83265fec-b07c-41c9-bca5-33a13a815d32.gif"
-    },
-    finalExitoParcial: { tipo: "parcial", mensaje: "ÉXITO PARCIAL", analisisBase: "El objetivo se alcanzó, pero hubo contratiempos evitables.", gif: gifPlaceholder },
-    finalFracasoTotal: { tipo: "fracaso", mensaje: "FRACASO TOTAL", analisisBase: "Error estratégico. Revise la doctrina.", gif: gifPlaceholder },
-    finalError: { tipo: "fracaso", mensaje: "ERROR", analisisBase: "Reinicie la simulación.", gif: gifPlaceholder }
-};
 
 // ========== VARIABLES GLOBALES ==========
 let escenarioActivo = null, pasoActual = null, esperando = false, dificultadActual = "medium", historial = [];
@@ -559,21 +559,22 @@ function updateProgressCounter() {
     if (counterSpan) counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
 }
 
+// ===== PREPARAR ESCENARIO (con barajado) =====
 function prepararEscenario(escenarioBase) {
     let escenario = JSON.parse(JSON.stringify(escenarioBase));
-    escenario.finalExito = { ...resultadosBase.finalExito };
-    escenario.finalExitoParcial = { ...resultadosBase.finalExitoParcial };
-    escenario.finalFracasoTotal = { ...resultadosBase.finalFracasoTotal };
-    escenario.finalError = { ...resultadosBase.finalError };
+    // Barajar opciones
     for (let key in escenario) {
         if (escenario[key].opciones_raw) {
-            let opts = shuffleOptions(escenario[key].opciones_raw);
-            escenario[key].opciones = opts;
+            let rawOpts = escenario[key].opciones_raw;
+            let shuffled = shuffleOptions(rawOpts);
+            escenario[key].opciones = shuffled;
         }
     }
+    console.log(`🎯 Escenario preparado: ${escenario.nombre}`);
     return escenario;
 }
 
+// ===== FUNCIONES DE CONTROL =====
 function detenerTemporizador() { if(temporizadorInterval) clearInterval(temporizadorInterval); temporizadorInterval = null; tiempoActivo = false; }
 function iniciarTemporizador() {
     if (trainingModeFlag) { document.getElementById("timerDisplay").textContent = "--:--"; return; }
@@ -589,7 +590,7 @@ function iniciarTemporizador() {
             playSound("timeout");
             const botones = document.querySelectorAll('.option-btn');
             if(botones.length > 0 && !decisionTomada) botones[Math.floor(Math.random()*botones.length)].click();
-            else mostrarFeedback(escenarioActivo.finalError);
+            else mostrarFeedback(resultadosBase.error);
         } else { tiempoRestante--; actualizarDisplayTimer(); }
     }, 1000);
 }
@@ -622,12 +623,12 @@ function iniciarJuego() {
     document.getElementById("simScreen").style.display = "block";
     document.getElementById("feedbackScreen").style.display = "none";
     const primera = escenarioActivo.p1;
-    if(!primera) mostrarFeedback(escenarioActivo.finalError);
+    if(!primera) mostrarFeedback(resultadosBase.error);
     else mostrarPregunta(primera);
 }
 
 function mostrarPregunta(preg) {
-    if(!preg) { mostrarFeedback(escenarioActivo.finalError); return; }
+    if(!preg) { mostrarFeedback(resultadosBase.error); return; }
     detenerTemporizador();
     const situationBox = document.getElementById("situationBox");
     situationBox.style.animation = "none";
@@ -655,7 +656,7 @@ function mostrarPregunta(preg) {
         optsDiv.appendChild(aviso);
         sessionStorage.setItem("avisoMostrado", "true");
     }
-    if(!preg.opciones || preg.opciones.length === 0) { mostrarFeedback(escenarioActivo.finalError); return; }
+    if(!preg.opciones || preg.opciones.length === 0) { mostrarFeedback(resultadosBase.error); return; }
     preg.opciones.forEach((op, idx) => {
         const btn = document.createElement("button");
         btn.className = "option-btn";
@@ -668,6 +669,7 @@ function mostrarPregunta(preg) {
     setTimeout(() => iniciarTemporizador(), 100);
 }
 
+// ===== FUNCIONES CORREGIDAS (con detección de "exito", "parcial", "fracaso") =====
 function elegirOpcion(dest, letra, texto) {
     if(esperando || decisionTomada) return;
     decisionTomada = true;
@@ -678,12 +680,31 @@ function elegirOpcion(dest, letra, texto) {
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
     updateProgressCounter();
-    if(dest === "finalExito" || dest === "finalExitoParcial" || dest === "finalFracasoTotal") {
-        mostrarFeedback(escenarioActivo[dest]);
+    console.log(`👉 Elegiste: "${texto}" → Destino: ${dest}`);
+
+    // === COMPROBAR SI ES UN RESULTADO DIRECTO ===
+    if (dest === "exito") {
+        console.log("🏆 VICTORIA DIRECTA");
+        mostrarFeedback(resultadosBase.exito);
+        return;
+    } else if (dest === "parcial") {
+        console.log("⚠️ ÉXITO PARCIAL");
+        mostrarFeedback(resultadosBase.parcial);
+        return;
+    } else if (dest === "fracaso") {
+        console.log("💀 FRACASO");
+        mostrarFeedback(resultadosBase.fracaso);
         return;
     }
+
+    // SI ES UN NODO, BUSCARLO
     const cons = escenarioActivo[dest];
-    if(!cons) { mostrarFeedback(escenarioActivo.finalError); return; }
+    if(!cons) { 
+        console.error(`❌ Nodo "${dest}" no encontrado.`);
+        mostrarFeedback(resultadosBase.error); 
+        return; 
+    }
+    console.log(`✅ Nodo encontrado: ${dest}, siguiente: ${cons.siguiente}`);
     mostrarConsecuencia(cons);
 }
 
@@ -696,8 +717,25 @@ function mostrarConsecuencia(cons) {
     document.getElementById("situationGif").src = cons.gif || gifPlaceholder;
     document.getElementById("optionsBox").innerHTML = `<div class="loading"><div class="loading-spinner"></div> ANALIZANDO CONSECUENCIAS...</div>`;
     setTimeout(() => {
+        // === COMPROBAR SI EL SIGUIENTE ES UN RESULTADO DIRECTO ===
+        if (cons.siguiente === "exito") {
+            mostrarFeedback(resultadosBase.exito);
+            return;
+        } else if (cons.siguiente === "parcial") {
+            mostrarFeedback(resultadosBase.parcial);
+            return;
+        } else if (cons.siguiente === "fracaso") {
+            mostrarFeedback(resultadosBase.fracaso);
+            return;
+        }
+        
+        // SI ES UN NODO, CONTINUAR
         const sig = escenarioActivo[cons.siguiente];
-        if(!sig) { mostrarFeedback(escenarioActivo.finalError); return; }
+        if(!sig) { 
+            console.error(`❌ Siguiente nodo "${cons.siguiente}" no encontrado.`);
+            mostrarFeedback(resultadosBase.error); 
+            return; 
+        }
         pasoActual = cons.siguiente;
         esperando = false;
         decisionTomada = false;
@@ -705,11 +743,9 @@ function mostrarConsecuencia(cons) {
     }, 3500);
 }
 
-// ===== NUEVA FUNCIÓN DE ANÁLISIS SIMPLIFICADA =====
+// ===== ANÁLISIS Y FEEDBACK =====
 function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, escenarioNombre) {
     let analisis = "";
-    
-    // Resultado centrado
     if (final.tipo === "exito") {
         analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
                         <i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL
@@ -723,11 +759,7 @@ function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, esce
                         <i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO
                     </div>`;
     }
-    
-    // Valoración del mando
     analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
-    
-    // Conclusión extendida
     let conclusionTexto = "Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo. ";
     if (final.tipo === "exito") {
         conclusionTexto += "La victoria es el resultado de una planificación sólida y una ejecución precisa. Mantenga este nivel de excelencia en futuras misiones. El mando confía en su criterio y capacidad para tomar decisiones bajo presión. Siga así, comandante.";
@@ -737,11 +769,9 @@ function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, esce
         conclusionTexto += "El fracaso es una lección en sí mismo. Identifique los errores tácticos y estratégicos que llevaron a este resultado. La próxima vez, asegúrese de mantener la iniciativa y aplicar la doctrina aprendida. El camino hacia la maestría está pavimentado con experiencias como esta. Levántese y vuelva a intentarlo.";
     }
     analisis += `<p><strong>📌 Conclusión:</strong> ${conclusionTexto}</p>`;
-    
     return analisis;
 }
 
-// ===== NUEVA FUNCIÓN mostrarFeedback (simplificada) =====
 function mostrarFeedback(final) {
     detenerTemporizador();
     let tiempos = historial.map(h => h.tiempo).filter(t => t !== undefined);
