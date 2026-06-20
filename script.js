@@ -171,7 +171,7 @@ function showPaletteSelector() {
     document.body.appendChild(modal);
 }
 
-// ========== ESCENARIOS LARGOS ==========
+// ========== ESCENARIOS ==========
 const gifPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%232c4c6e'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial' dy='.3em'%3E🎖️ SIMULADOR%3C/text%3E%3C/svg%3E";
 
 function shuffleOptions(opts) {
@@ -185,7 +185,7 @@ function shuffleOptions(opts) {
     return newOpts;
 }
 
-// ESCENARIO 1: FRONTERA (CORREGIDO)
+// ===== ESCENARIO 1: FRONTERA =====
 const escenarioFrontera = {
     nombre: "Crisis en la Frontera Occidental",
     p1: {
@@ -332,7 +332,7 @@ const escenarioFrontera = {
     }
 };
 
-// ESCENARIO 2: DISTURBIOS (sin cambios)
+// ===== ESCENARIO 2: DISTURBIOS =====
 const escenarioDisturbios = {
     nombre: "Control de Orden Público",
     p1: { texto: "Manifestaciones violentas en el centro. Grupos encapuchados atacan comercios. ¿Qué ordena?", gif: gifPlaceholder,
@@ -427,7 +427,7 @@ const escenarioDisturbios = {
     consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: gifPlaceholder, siguiente: "finalExitoParcial" }
 };
 
-// ESCENARIO 3: INFILTRACIÓN (sin cambios)
+// ===== ESCENARIO 3: INFILTRACIÓN =====
 const escenarioInfiltracion = {
     nombre: "Seguridad Perimetral de la Base",
     p1: { texto: "Sensores detectan intrusión en perímetro norte. Son las 03:00. ¿Qué ordena?", gif: gifPlaceholder,
@@ -536,13 +536,18 @@ const escenariosPosibles = [escenarioFrontera, escenarioDisturbios, escenarioInf
 
 // ========== RESULTADOS ==========
 const resultadosBase = {
-    finalExito: { tipo: "exito", mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!", analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.", gif: gifPlaceholder },
+    finalExito: {
+        tipo: "exito",
+        mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!",
+        analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.",
+        gif: "https://www.image2url.com/r2/default/gifs/1781981587356-83265fec-b07c-41c9-bca5-33a13a815d32.gif"
+    },
     finalExitoParcial: { tipo: "parcial", mensaje: "ÉXITO PARCIAL", analisisBase: "El objetivo se alcanzó, pero hubo contratiempos evitables.", gif: gifPlaceholder },
     finalFracasoTotal: { tipo: "fracaso", mensaje: "FRACASO TOTAL", analisisBase: "Error estratégico. Revise la doctrina.", gif: gifPlaceholder },
     finalError: { tipo: "fracaso", mensaje: "ERROR", analisisBase: "Reinicie la simulación.", gif: gifPlaceholder }
 };
 
-// VARIABLES GLOBALES
+// ========== VARIABLES GLOBALES ==========
 let escenarioActivo = null, pasoActual = null, esperando = false, dificultadActual = "medium", historial = [];
 let temporizadorInterval = null, tiempoRestante = 60, tiempoActivo = false, decisionTomada = false;
 let tiemposDificultad = { easy: 90, medium: 60, hard: 45 };
@@ -556,20 +561,15 @@ function updateProgressCounter() {
 
 function prepararEscenario(escenarioBase) {
     let escenario = JSON.parse(JSON.stringify(escenarioBase));
-    // Asignar resultados base al escenario
     escenario.finalExito = { ...resultadosBase.finalExito };
     escenario.finalExitoParcial = { ...resultadosBase.finalExitoParcial };
     escenario.finalFracasoTotal = { ...resultadosBase.finalFracasoTotal };
     escenario.finalError = { ...resultadosBase.finalError };
-    // Procesar opciones
     for (let key in escenario) {
         if (escenario[key].opciones_raw) {
             let opts = shuffleOptions(escenario[key].opciones_raw);
             escenario[key].opciones = opts;
-            // No es necesario reemplazar destinos porque ya son strings
         }
-        // Si tiene 'siguiente' y es uno de los finales, dejarlo como está
-        // Porque los finales ya son propiedades del objeto
     }
     return escenario;
 }
@@ -599,7 +599,6 @@ function actualizarDisplayTimer() {
     const disp = document.getElementById("timerDisplay");
     if(disp) disp.textContent = `${mins.toString().padStart(2,'0')}:${segs.toString().padStart(2,'0')}`;
     if(tiempoRestante <= 5) {
-        // Parpadeo
         disp.style.color = (Math.floor(Date.now() / 300) % 2 === 0) ? '#f87171' : 'white';
     } else {
         disp.style.color = 'white';
@@ -638,7 +637,6 @@ function mostrarPregunta(preg) {
     document.getElementById("situationGif").src = preg.gif || gifPlaceholder;
     const optsDiv = document.getElementById("optionsBox");
     optsDiv.innerHTML = "";
-    // Mostrar aviso de barajado solo en la primera pregunta y una vez por sesión
     if (pasoActual === "p1" && !sessionStorage.getItem("avisoMostrado")) {
         const aviso = document.createElement("div");
         aviso.style.cssText = `
@@ -680,7 +678,6 @@ function elegirOpcion(dest, letra, texto) {
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
     updateProgressCounter();
-    // Verificar si dest es uno de los finales (son strings)
     if(dest === "finalExito" || dest === "finalExitoParcial" || dest === "finalFracasoTotal") {
         mostrarFeedback(escenarioActivo[dest]);
         return;
@@ -708,64 +705,78 @@ function mostrarConsecuencia(cons) {
     }, 3500);
 }
 
+// ===== NUEVA FUNCIÓN DE ANÁLISIS SIMPLIFICADA =====
 function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, escenarioNombre) {
     let analisis = "";
+    
+    // Resultado centrado
     if (final.tipo === "exito") {
-        analisis = `<span style="color: var(--color-success);"><i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL</span><hr>`;
-        analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
+                        <i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL
+                    </div>`;
     } else if (final.tipo === "parcial") {
-        analisis = `<span style="color: var(--color-warning);"><i class="fas fa-exclamation-triangle"></i> RESULTADO: ÉXITO LIMITADO</span><hr>`;
-        analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #facc15; margin-bottom: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> RESULTADO: ÉXITO LIMITADO
+                    </div>`;
     } else {
-        analisis = `<span style="color: var(--color-danger);"><i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO</span><hr>`;
-        analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #f87171; margin-bottom: 15px;">
+                        <i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO
+                    </div>`;
     }
-    analisis += `<p><strong>📋 Lecciones aprendidas:</strong><br>`;
+    
+    // Valoración del mando
+    analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+    
+    // Conclusión extendida
+    let conclusionTexto = "Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo. ";
     if (final.tipo === "exito") {
-        analisis += `✓ Coherencia estratégica: sus decisiones mantuvieron una línea de mando efectiva.<br>`;
-        analisis += `✓ Gestión de riesgos: supo priorizar adecuadamente en cada fase.<br>`;
+        conclusionTexto += "La victoria es el resultado de una planificación sólida y una ejecución precisa. Mantenga este nivel de excelencia en futuras misiones. El mando confía en su criterio y capacidad para tomar decisiones bajo presión. Siga así, comandante.";
     } else if (final.tipo === "parcial") {
-        analisis += `⚠️ Puntos de mejora: identifique los momentos donde dudó o eligió una opción subóptima.<br>`;
-        analisis += `💡 Recomendación: en escenarios similares, priorice siempre la seguridad de la tropa y la obtención de información.<br>`;
+        conclusionTexto += "El éxito parcial indica que va por buen camino, pero aún hay margen de mejora. Revise los momentos clave donde pudo haber actuado con más determinación o anticipación. La próxima vez, el triunfo total estará a su alcance. No baje la guardia.";
     } else {
-        analisis += `❌ Error crítico: la indecisión o la táctica inapropiada fueron determinantes.<br>`;
-        analisis += `🎯 Para la próxima: evite posturas pasivas cuando la iniciativa es necesaria. Revise la doctrina básica.<br>`;
+        conclusionTexto += "El fracaso es una lección en sí mismo. Identifique los errores tácticos y estratégicos que llevaron a este resultado. La próxima vez, asegúrese de mantener la iniciativa y aplicar la doctrina aprendida. El camino hacia la maestría está pavimentado con experiencias como esta. Levántese y vuelva a intentarlo.";
     }
-    analisis += `</p>`;
-    analisis += `<p><strong>🎯 Enfoque para ${escenarioNombre}:</strong><br>`;
-    if (escenarioNombre.includes("Frontera")) {
-        analisis += `• En operaciones fronterizas, combine poder aéreo con reconocimiento terrestre. La negociación con grupos irregulares rara vez funciona sin presión militar.`;
-    } else if (escenarioNombre.includes("Orden Público")) {
-        analisis += `• En disturbios, la disuasión temprana evita escaladas. El diálogo es complementario, no sustituto.`;
-    } else if (escenarioNombre.includes("Seguridad")) {
-        analisis += `• En protección de instalaciones, active los protocolos de inmediato. Dudar da ventaja al intruso.`;
-    }
-    analisis += `</p>`;
-    analisis += `<p><strong>📌 Conclusión:</strong> Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo.</p>`;
+    analisis += `<p><strong>📌 Conclusión:</strong> ${conclusionTexto}</p>`;
+    
     return analisis;
 }
 
+// ===== NUEVA FUNCIÓN mostrarFeedback (simplificada) =====
 function mostrarFeedback(final) {
     detenerTemporizador();
     let tiempos = historial.map(h => h.tiempo).filter(t => t !== undefined);
     let tiempoPromedio = tiempos.length ? (tiempos.reduce((a,b)=>a+b,0)/tiempos.length).toFixed(1) : 0;
     let decisionCount = historial.length;
     checkAchievements(final.tipo, decisionCount, tiempoPromedio, trainingModeFlag);
-    let analisisCompleto = generarAnalisisCritico(final, historial, tiempoPromedio, escenarioActivo.nombre);
+    
     document.getElementById("simScreen").style.display = "none";
     document.getElementById("feedbackScreen").style.display = "block";
+    
     const badge = document.getElementById("resultBadge");
-    if(final.tipo === "exito") { badge.innerHTML = '<i class="fas fa-trophy"></i> VICTORIA TÁCTICA'; badge.className = "result-badge result-success"; playSound("victory"); }
-    else if(final.tipo === "parcial") { badge.innerHTML = '<i class="fas fa-chart-line"></i> ÉXITO PARCIAL'; badge.className = "result-badge result-parcial"; playSound("failure"); }
-    else { badge.innerHTML = '<i class="fas fa-skull-crossbones"></i> MISIÓN NO CUMPLIDA'; badge.className = "result-badge result-failure"; playSound("failure"); }
+    if(final.tipo === "exito") { 
+        badge.innerHTML = '<i class="fas fa-trophy"></i> VICTORIA TÁCTICA'; 
+        badge.className = "result-badge result-success"; 
+        playSound("victory"); 
+    } else if(final.tipo === "parcial") { 
+        badge.innerHTML = '<i class="fas fa-chart-line"></i> ÉXITO PARCIAL'; 
+        badge.className = "result-badge result-parcial"; 
+        playSound("failure"); 
+    } else { 
+        badge.innerHTML = '<i class="fas fa-skull-crossbones"></i> MISIÓN NO CUMPLIDA'; 
+        badge.className = "result-badge result-failure"; 
+        playSound("failure"); 
+    }
+    
     document.getElementById("resultGifArea").innerHTML = `<img src="${final.gif}" alt="Resultado">`;
-    document.getElementById("feedbackText").innerHTML = final.mensaje;
-    let historialHtml = "";
-    historial.forEach((h,i) => {
-        historialHtml += `<br>• Decisión ${i+1}: Opción ${h.letra} - "${h.texto}" (${h.momento}) - ⏱️ ${h.tiempo}s`;
-    });
+    document.getElementById("feedbackText").innerHTML = `<div style="text-align: center; font-size: 1.8em; font-weight: bold; margin-bottom: 10px;">${final.mensaje}</div>`;
+    
+    let analisisCompleto = generarAnalisisCritico(final, historial, tiempoPromedio, escenarioActivo.nombre);
     let diffName = dificultadActual === "easy" ? "FÁCIL" : (dificultadActual === "medium" ? "NORMAL" : "DIFÍCIL");
-    document.getElementById("analysisText").innerHTML = `${analisisCompleto}<hr><strong>REGISTRO DE DECISIONES:</strong>${historialHtml}<br><br><strong>TIEMPO PROMEDIO POR DECISIÓN:</strong> ${tiempoPromedio} segundos<br><strong>DIFICULTAD:</strong> ${diffName}<br><strong>ESCENARIO:</strong> ${escenarioActivo.nombre}`;
+    analisisCompleto += `<hr><p><strong>⏱️ TIEMPO PROMEDIO POR DECISIÓN:</strong> ${tiempoPromedio} segundos</p>`;
+    analisisCompleto += `<p><strong>📊 DIFICULTAD:</strong> ${diffName}</p>`;
+    analisisCompleto += `<p><strong>📌 ESCENARIO:</strong> ${escenarioActivo.nombre}</p>`;
+    
+    document.getElementById("analysisText").innerHTML = analisisCompleto;
 }
 
 function volverMenu() { location.reload(); }
