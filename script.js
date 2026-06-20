@@ -36,15 +36,57 @@ function checkAchievements(finalType, decisionCount, tiempoPromedio, training) {
     if (!training && tiempoPromedio && tiempoPromedio < 10 && decisionCount >= 1 && dificultadActual !== "easy") { if (!achievements.quickDecision) unlockAchievement("quickDecision"); }
 }
 
-// ========== TEMAS Y MODALES ==========
-function setColorTheme(theme) { document.body.classList.remove("theme-military", "theme-steel", "theme-default"); if (theme === "military") document.body.classList.add("theme-military"); else if (theme === "steel") document.body.classList.add("theme-steel"); localStorage.setItem("colorTheme", theme); }
-function loadColorTheme() { const theme = localStorage.getItem("colorTheme") || "default"; setColorTheme(theme); }
+// ========== TEMAS Y MODALES (actualizado con temas militares) ==========
+function setColorTheme(theme) {
+    document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial", "dark");
+    if (theme === "llanero") document.body.classList.add("theme-llanero");
+    else if (theme === "selva") document.body.classList.add("theme-selva");
+    else if (theme === "costa") document.body.classList.add("theme-costa");
+    else if (theme === "ceremonial") document.body.classList.add("theme-ceremonial");
+    else document.body.classList.add("theme-default");
+    localStorage.setItem("colorTheme", theme);
+    localStorage.setItem("darkMode", "false");
+    const themeBtn = document.getElementById("themeToggleBtn");
+    if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+}
+function loadColorTheme() {
+    const theme = localStorage.getItem("colorTheme") || "default";
+    setColorTheme(theme);
+    const dark = localStorage.getItem("darkMode") === "true";
+    if (dark) {
+        document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial");
+        document.body.classList.add("dark");
+        const themeBtn = document.getElementById("themeToggleBtn");
+        if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+}
 function showModal(title, content) { const modalDiv = document.createElement("div"); modalDiv.className = "modal"; modalDiv.innerHTML = `<div class="modal-content"><h3><i class="fas fa-info-circle"></i> ${title}</h3>${content}<button onclick="this.closest('.modal').remove()">Cerrar</button></div>`; document.body.appendChild(modalDiv); }
 function showManual() { showModal("Manual Táctico", "<p>✔️ Desplegar patrullas y pedir refuerzos es la táctica más segura.<br>✔️ En rehenes, priorizar rescate con fuerzas especiales.<br>✔️ Atacar suministros enemigos cambia el rumbo.<br>✔️ El diálogo temprano evita víctimas civiles.<br>✔️ Activar código rojo ante intrusión.</p>"); }
 function showAchievements() { let list = ""; for (let [id, unlocked] of Object.entries(achievements)) { list += `<li style="display:flex; align-items:center; gap:10px; margin:10px 0; ${!unlocked ? 'opacity:0.6' : ''}"><i class="fas fa-${unlocked ? 'medal' : 'lock'} fa-2x"></i><div><strong>${getAchievementName(id)}</strong><br><small>${getAchievementDesc(id)}</small></div>${unlocked ? '<i class="fas fa-check-circle" style="color:#4ade80"></i>' : '<i class="fas fa-hourglass-half"></i>'}</li>`; } showModal("Logros", `<ul style="list-style:none">${list}</ul>`); }
-function showPaletteSelector() { const modal = document.createElement("div"); modal.className = "modal"; modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-palette"></i> Tema</h3><div style="display:flex; gap:15px; justify-content:center"><div style="width:50px;height:50px;background:#2c4c6e;border-radius:25px;cursor:pointer" onclick="setColorTheme('default'); this.closest('.modal').remove();"></div><div style="width:50px;height:50px;background:#2c5e2a;border-radius:25px;cursor:pointer" onclick="setColorTheme('military'); this.closest('.modal').remove();"></div><div style="width:50px;height:50px;background:#4a5568;border-radius:25px;cursor:pointer" onclick="setColorTheme('steel'); this.closest('.modal').remove();"></div></div><button onclick="this.closest('.modal').remove()">Cerrar</button></div>`; document.body.appendChild(modal); }
+function showPaletteSelector() {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3><i class="fas fa-palette"></i> Temas Militares Venezolanos</h3>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
+                <div style="width: 50px; height: 50px; background-color: #5b6e3f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('llanero'); this.closest('.modal').remove();" title="Llanero"></div>
+                <div style="width: 50px; height: 50px; background-color: #1e3a2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('selva'); this.closest('.modal').remove();" title="Selva"></div>
+                <div style="width: 50px; height: 50px; background-color: #1f4e79; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('costa'); this.closest('.modal').remove();" title="Costa"></div>
+                <div style="width: 50px; height: 50px; background-color: #6b1e2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('ceremonial'); this.closest('.modal').remove();" title="Ceremonial"></div>
+            </div>
+            <div style="font-size: 12px; color: #666; text-align: center;">* El modo oscuro se puede activar con el botón 🌙/☀️</div>
+            <button onclick="this.closest('.modal').remove()" style="margin-top: 15px;">Cerrar</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
 
-// ========== ESCENARIOS LARGOS CON RUTAS DE VICTORIA ==========
+// ========== ESCENARIOS LARGOS (originales) ==========
 const gifPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%232c4c6e'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial' dy='.3em'%3E🎖️ SIMULADOR%3C/text%3E%3C/svg%3E";
 
 function shuffleOptions(opts) {
@@ -364,7 +406,6 @@ const escenarioInfiltracion = {
 };
 
 const escenariosPosibles = [escenarioFrontera, escenarioDisturbios, escenarioInfiltracion];
-
 const resultadosBase = {
     finalExito: { tipo: "exito", mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!", analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.", gif: gifPlaceholder },
     finalExitoParcial: { tipo: "parcial", mensaje: "ÉXITO PARCIAL", analisisBase: "El objetivo se alcanzó, pero hubo contratiempos evitables.", gif: gifPlaceholder },
@@ -378,12 +419,9 @@ let temporizadorInterval = null, tiempoRestante = 60, tiempoActivo = false, deci
 let tiemposDificultad = { easy: 90, medium: 60, hard: 45 };
 let trainingModeFlag = false, currentChosenLetters = [];
 
-// FUNCIÓN PARA ACTUALIZAR EL CONTADOR DE PROGRESO
 function updateProgressCounter() {
     const counterSpan = document.getElementById("progressCounter");
-    if (counterSpan) {
-        counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
-    }
+    if (counterSpan) counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
 }
 
 function prepararEscenario(escenarioBase) {
@@ -450,7 +488,7 @@ function iniciarJuego() {
     historial = [];
     currentChosenLetters = [];
     decisionTomada = false;
-    updateProgressCounter();  // <--- resetea contador a 0
+    updateProgressCounter();
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("simScreen").style.display = "block";
     document.getElementById("feedbackScreen").style.display = "none";
@@ -492,7 +530,7 @@ function elegirOpcion(dest, letra, texto) {
     let tiempoUsado = trainingModeFlag ? 0 : tiemposDificultad[dificultadActual] - tiempoRestante;
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
-    updateProgressCounter();  // <--- actualiza contador cada vez que se toma una decisión
+    updateProgressCounter();
     if(dest === "finalExito" || dest === "finalExitoParcial" || dest === "finalFracasoTotal") {
         mostrarFeedback(escenarioActivo[dest] || escenarioActivo.finalError);
         return;
@@ -584,11 +622,24 @@ function volverMenu() { location.reload(); }
 function reiniciarMismo() { iniciarJuego(); }
 function setDifficulty(d) { dificultadActual = d; const badge = document.getElementById("difficultyBadge"); if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL'; else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL'; else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL'; }
 
-// EVENTOS
+// ========== EVENTOS ==========
 document.getElementById("startBtn").onclick = () => { document.getElementById("levelMenu").style.display = "block"; document.getElementById("startBtn").style.display = "none"; };
 document.querySelectorAll(".level-btn").forEach(btn => { btn.onclick = () => { setDifficulty(btn.getAttribute("data-difficulty")); iniciarJuego(); }; });
-document.getElementById("themeToggleBtn").onclick = () => { document.body.classList.toggle("dark"); localStorage.setItem("darkMode", document.body.classList.contains("dark")); };
-document.getElementById("tutorialBtn").onclick = () => { showModal("Tutorial", "<p>Seleccione dificultad, lea la situación y elija una opción. El temporizador corre por decisión. Al final, obtendrá un análisis detallado.</p>"); };
+document.getElementById("themeToggleBtn").onclick = () => {
+    const isDark = document.body.classList.contains("dark");
+    if (isDark) {
+        const savedTheme = localStorage.getItem("colorTheme") || "default";
+        setColorTheme(savedTheme);
+        localStorage.setItem("darkMode", "false");
+        document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-moon"></i>';
+    } else {
+        document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial");
+        document.body.classList.add("dark");
+        localStorage.setItem("darkMode", "true");
+        document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-sun"></i>';
+    }
+};
+document.getElementById("tutorialBtn").onclick = () => { showModal("Tutorial", "<p>Seleccione dificultad, lea la situación y elija una opción.</p>"); };
 document.getElementById("exitToMenuBtn").onclick = volverMenu;
 document.getElementById("retryBtn").onclick = reiniciarMismo;
 document.getElementById("mainMenuBtn").onclick = volverMenu;
