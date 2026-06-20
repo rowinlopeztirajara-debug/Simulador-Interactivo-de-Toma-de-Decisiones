@@ -21,22 +21,94 @@ function playSound(type) {
 }
 let ambientSoundEnabled = localStorage.getItem("ambientSoundEnabled") === "true";
 let ambientAudio = null;
-function startAmbientSound() { if (!ambientSoundEnabled) return; try { ambientAudio = new Audio("data:audio/wav;base64,U3RlcmVvIG5vIGV4aXN0ZQ=="); ambientAudio.loop = true; ambientAudio.volume = 0.1; ambientAudio.play().catch(()=>{}); } catch(e) {} }
-function stopAmbientSound() { if (ambientAudio) { ambientAudio.pause(); ambientAudio = null; } }
-function toggleAmbientSound() { ambientSoundEnabled = !ambientSoundEnabled; localStorage.setItem("ambientSoundEnabled", ambientSoundEnabled); if (ambientSoundEnabled) startAmbientSound(); else stopAmbientSound(); const btn = document.getElementById("ambientSoundBtn"); if (btn) btn.innerHTML = ambientSoundEnabled ? '<i class="fas fa-head-side-vr"></i> Ambiente ON' : '<i class="fas fa-head-side-vr"></i> Ambiente OFF'; }
-
-// ========== LOGROS ==========
-let achievements = JSON.parse(localStorage.getItem("achievements")) || { firstVictory: false, quickDecision: false, strategist: false, perfectMision: false };
-let totalWins = parseInt(localStorage.getItem("totalWins") || 0);
-function unlockAchievement(id) { if (achievements[id]) return; achievements[id] = true; localStorage.setItem("achievements", JSON.stringify(achievements)); playSound("victory"); alert(`🏅 ¡LOGRO DESBLOQUEADO! ${getAchievementName(id)}`); }
-function getAchievementName(id) { const names = { firstVictory: "Primera Victoria", quickDecision: "Decisión Rápida", strategist: "Estratega", perfectMision: "Perfecto" }; return names[id]; }
-function getAchievementDesc(id) { const desc = { firstVictory: "Completa tu primera misión con éxito.", quickDecision: "Decisión en menos de 10 segundos (Normal+).", strategist: "Acumula 3 victorias.", perfectMision: "5+ decisiones sin fallar." }; return desc[id]; }
-function checkAchievements(finalType, decisionCount, tiempoPromedio, training) {
-    if (finalType === "exito") { if (!achievements.firstVictory) unlockAchievement("firstVictory"); totalWins++; localStorage.setItem("totalWins", totalWins); if (totalWins >= 3 && !achievements.strategist) unlockAchievement("strategist"); if (decisionCount >= 5 && !achievements.perfectMision) unlockAchievement("perfectMision"); }
-    if (!training && tiempoPromedio && tiempoPromedio < 10 && decisionCount >= 1 && dificultadActual !== "easy") { if (!achievements.quickDecision) unlockAchievement("quickDecision"); }
+function startAmbientSound() {
+    if (!ambientSoundEnabled) return;
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const bufferSize = 2 * ctx.sampleRate;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.05 + Math.sin(i * 0.05) * 0.02;
+        }
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const gain = ctx.createGain();
+        gain.gain.value = 0.05;
+        source.connect(gain);
+        gain.connect(ctx.destination);
+        source.start();
+        ambientAudio = { source, gain, ctx };
+    } catch(e) { console.warn("Ambient sound not supported"); }
+}
+function stopAmbientSound() {
+    if (ambientAudio) {
+        try { ambientAudio.source.stop(); } catch(e) {}
+        try { ambientAudio.ctx.close(); } catch(e) {}
+        ambientAudio = null;
+    }
+}
+function toggleAmbientSound() {
+    ambientSoundEnabled = !ambientSoundEnabled;
+    localStorage.setItem("ambientSoundEnabled", ambientSoundEnabled);
+    if (ambientSoundEnabled) startAmbientSound();
+    else stopAmbientSound();
+    const btn = document.getElementById("ambientSoundBtn");
+    if (btn) btn.innerHTML = ambientSoundEnabled ? '<i class="fas fa-head-side-vr"></i> Ambiente ON' : '<i class="fas fa-head-side-vr"></i> Ambiente OFF';
 }
 
-// ========== TEMAS Y MODALES (actualizado con temas militares) ==========
+// ========== LOGROS ==========
+let achievements = { firstVictory: false, quickDecision: false, strategist: false, perfectMision: false };
+try {
+    const stored = localStorage.getItem("achievements");
+    if (stored) achievements = JSON.parse(stored);
+} catch (e) {
+    localStorage.removeItem("achievements");
+    console.warn("Achievements corrupted, reset.");
+}
+let totalWins = parseInt(localStorage.getItem("totalWins") || "0");
+function unlockAchievement(id) {
+    if (achievements[id]) return;
+    achievements[id] = true;
+    localStorage.setItem("achievements", JSON.stringify(achievements));
+    playSound("victory");
+    const names = {
+        firstVictory: "Primera Victoria",
+        quickDecision: "Decisión Rápida",
+        strategist: "Estratega",
+        perfectMision: "Perfecto"
+    };
+    const descs = {
+        firstVictory: "Completa tu primera misión con éxito.",
+        quickDecision: "Decisión en menos de 10 segundos (Normal+).",
+        strategist: "Acumula 3 victorias.",
+        perfectMision: "5+ decisiones sin fallar."
+    };
+    showModal("🏅 Logro desbloqueado", `<p><strong>${names[id]}</strong><br><small>${descs[id]}</small></p>`);
+}
+function getAchievementName(id) {
+    const names = { firstVictory: "Primera Victoria", quickDecision: "Decisión Rápida", strategist: "Estratega", perfectMision: "Perfecto" };
+    return names[id];
+}
+function getAchievementDesc(id) {
+    const desc = { firstVictory: "Completa tu primera misión con éxito.", quickDecision: "Decisión en menos de 10 segundos (Normal+).", strategist: "Acumula 3 victorias.", perfectMision: "5+ decisiones sin fallar." };
+    return desc[id];
+}
+function checkAchievements(finalType, decisionCount, tiempoPromedio, training) {
+    if (finalType === "exito") {
+        if (!achievements.firstVictory) unlockAchievement("firstVictory");
+        totalWins++;
+        localStorage.setItem("totalWins", totalWins);
+        if (totalWins >= 3 && !achievements.strategist) unlockAchievement("strategist");
+        if (decisionCount >= 5 && !achievements.perfectMision) unlockAchievement("perfectMision");
+    }
+    if (!training && tiempoPromedio && tiempoPromedio < 10 && decisionCount >= 1 && dificultadActual !== "easy") {
+        if (!achievements.quickDecision) unlockAchievement("quickDecision");
+    }
+}
+
+// ========== TEMAS Y MODALES ==========
 function setColorTheme(theme) {
     document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial", "dark");
     if (theme === "llanero") document.body.classList.add("theme-llanero");
@@ -60,9 +132,22 @@ function loadColorTheme() {
         if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
     }
 }
-function showModal(title, content) { const modalDiv = document.createElement("div"); modalDiv.className = "modal"; modalDiv.innerHTML = `<div class="modal-content"><h3><i class="fas fa-info-circle"></i> ${title}</h3>${content}<button onclick="this.closest('.modal').remove()">Cerrar</button></div>`; document.body.appendChild(modalDiv); }
-function showManual() { showModal("Manual Táctico", "<p>✔️ Desplegar patrullas y pedir refuerzos es la táctica más segura.<br>✔️ En rehenes, priorizar rescate con fuerzas especiales.<br>✔️ Atacar suministros enemigos cambia el rumbo.<br>✔️ El diálogo temprano evita víctimas civiles.<br>✔️ Activar código rojo ante intrusión.</p>"); }
-function showAchievements() { let list = ""; for (let [id, unlocked] of Object.entries(achievements)) { list += `<li style="display:flex; align-items:center; gap:10px; margin:10px 0; ${!unlocked ? 'opacity:0.6' : ''}"><i class="fas fa-${unlocked ? 'medal' : 'lock'} fa-2x"></i><div><strong>${getAchievementName(id)}</strong><br><small>${getAchievementDesc(id)}</small></div>${unlocked ? '<i class="fas fa-check-circle" style="color:#4ade80"></i>' : '<i class="fas fa-hourglass-half"></i>'}</li>`; } showModal("Logros", `<ul style="list-style:none">${list}</ul>`); }
+function showModal(title, content) {
+    const modalDiv = document.createElement("div");
+    modalDiv.className = "modal";
+    modalDiv.innerHTML = `<div class="modal-content"><h3><i class="fas fa-info-circle"></i> ${title}</h3>${content}<button onclick="this.closest('.modal').remove()">Cerrar</button></div>`;
+    document.body.appendChild(modalDiv);
+}
+function showManual() {
+    showModal("Manual Táctico", "<p>✔️ Desplegar patrullas y pedir refuerzos es la táctica más segura.<br>✔️ En rehenes, priorizar rescate con fuerzas especiales.<br>✔️ Atacar suministros enemigos cambia el rumbo.<br>✔️ El diálogo temprano evita víctimas civiles.<br>✔️ Activar código rojo ante intrusión.</p>");
+}
+function showAchievements() {
+    let list = "";
+    for (let [id, unlocked] of Object.entries(achievements)) {
+        list += `<li style="display:flex; align-items:center; gap:10px; margin:10px 0; ${!unlocked ? 'opacity:0.6' : ''}"><i class="fas fa-${unlocked ? 'medal' : 'lock'} fa-2x"></i><div><strong>${getAchievementName(id)}</strong><br><small>${getAchievementDesc(id)}</small></div>${unlocked ? '<i class="fas fa-check-circle" style="color:#4ade80"></i>' : '<i class="fas fa-hourglass-half"></i>'}</li>`;
+    }
+    showModal("Logros", `<ul style="list-style:none">${list}</ul>`);
+}
 function showPaletteSelector() {
     const modal = document.createElement("div");
     modal.className = "modal";
@@ -86,7 +171,7 @@ function showPaletteSelector() {
     document.body.appendChild(modal);
 }
 
-// ========== ESCENARIOS LARGOS (originales) ==========
+// ========== ESCENARIOS LARGOS ==========
 const gifPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='180' viewBox='0 0 300 180'%3E%3Crect width='300' height='180' fill='%232c4c6e'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial' dy='.3em'%3E🎖️ SIMULADOR%3C/text%3E%3C/svg%3E";
 
 function shuffleOptions(opts) {
@@ -95,117 +180,159 @@ function shuffleOptions(opts) {
         const j = Math.floor(Math.random() * (i + 1));
         [newOpts[i], newOpts[j]] = [newOpts[j], newOpts[i]];
     }
-    const letters = ["A", "B", "C"];
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
     newOpts.forEach((opt, idx) => { opt.letra = letters[idx]; });
     return newOpts;
 }
 
-// ESCENARIO 1: FRONTERA
+// ESCENARIO 1: FRONTERA (CORREGIDO)
 const escenarioFrontera = {
     nombre: "Crisis en la Frontera Occidental",
-    p1: { texto: "Inteligencia detecta grupo irregular armado a 5 km de la frontera. Planean atacar un puesto de control. ¿Primera acción?", gif: gifPlaceholder,
+    p1: {
+        texto: "Inteligencia detecta grupo irregular armado a 5 km de la frontera. Planean atacar un puesto de control. ¿Primera acción?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Desplegar patrullas y solicitar refuerzos aéreos", destino: "consA1" },
             { texto: "Ataque preventivo con drones", destino: "consA2" },
             { texto: "Enviar negociadores", destino: "consA3" }
-        ] },
+        ]
+    },
     consA1: { texto: "Refuerzos aéreos llegarán en 20 minutos. Sus patrullas detectan movimiento enemigo.", gif: gifPlaceholder, siguiente: "p2" },
     consA2: { texto: "Los drones destruyen un depósito de munición, pero el enemigo responde con fuego de mortero. 3 heridos.", gif: gifPlaceholder, siguiente: "p2b" },
     consA3: { texto: "Los negociadores son tomados como rehenes. La situación se vuelve crítica.", gif: gifPlaceholder, siguiente: "p2c" },
-    p2: { texto: "Refuerzos en camino. La columna enemiga avanza rápidamente. ¿Qué ordena?", gif: gifPlaceholder,
+    p2: {
+        texto: "Refuerzos en camino. La columna enemiga avanza rápidamente. ¿Qué ordena?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Atacar con francotiradores", destino: "consB1" },
             { texto: "Esperar refuerzos", destino: "consB2" },
             { texto: "Evacuar el puesto", destino: "consB3" }
-        ] },
+        ]
+    },
     consB1: { texto: "Los francotiradores eliminan a dos cabecillas. El enemigo se desorganiza.", gif: gifPlaceholder, siguiente: "p3" },
     consB2: { texto: "La espera permite al enemigo atrincherarse. La misión se complica.", gif: gifPlaceholder, siguiente: "p3b" },
     consB3: { texto: "La retirada es ordenada, pero se pierde terreno estratégico.", gif: gifPlaceholder, siguiente: "p3c" },
-    p2b: { texto: "Tras el bombardeo, el enemigo se repliega a una cueva cercana. ¿Qué acción toma?", gif: gifPlaceholder,
+    p2b: {
+        texto: "Tras el bombardeo, el enemigo se repliega a una cueva cercana. ¿Qué acción toma?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Asaltar la cueva con fuerzas especiales", destino: "consC1" },
             { texto: "Sellar las salidas y negociar", destino: "consC2" },
             { texto: "Solicitar bombardeo aéreo", destino: "consC3" }
-        ] },
+        ]
+    },
     consC1: { texto: "Asalto exitoso, 2 bajas propias. Capturan documentos.", gif: gifPlaceholder, siguiente: "p4" },
     consC2: { texto: "Negociación tensa: 10 enemigos se rinden, otros huyen.", gif: gifPlaceholder, siguiente: "p4b" },
     consC3: { texto: "El bombardeo destruye la cueva, pero daña un oleoducto cercano.", gif: gifPlaceholder, siguiente: "p4c" },
-    p2c: { texto: "Los rehenes (3 soldados) están en poder del enemigo. ¿Qué prioriza?", gif: gifPlaceholder,
+    p2c: {
+        texto: "Los rehenes (3 soldados) están en poder del enemigo. ¿Qué prioriza?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Lanzar un rescate inmediato", destino: "consD1" },
             { texto: "Negociar la liberación", destino: "consD2" }
-        ] },
+        ]
+    },
     consD1: { texto: "Rescate exitoso, pero un soldado resulta herido. El enemigo huye.", gif: gifPlaceholder, siguiente: "p5" },
     consD2: { texto: "Negociación larga: liberan a los rehenes, pero el enemigo obtiene armamento.", gif: gifPlaceholder, siguiente: "p5b" },
-    p3: { texto: "El enemigo se reagrupa en una colina. Tiene unos 100 efectivos. ¿Qué estrategia emplea?", gif: gifPlaceholder,
+    p3: {
+        texto: "El enemigo se reagrupa en una colina. Tiene unos 100 efectivos. ¿Qué estrategia emplea?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Ataque envolvente nocturno", destino: "consE1" },
             { texto: "Bombardeo de artillería", destino: "consE2" }
-        ] },
+        ]
+    },
     consE1: { texto: "Ataque sorpresa logra romper la defensa enemiga. Avance significativo.", gif: gifPlaceholder, siguiente: "p6" },
     consE2: { texto: "El bombardeo causa pánico y deserción masiva. El enemigo se rinde.", gif: gifPlaceholder, siguiente: "finalExito" },
-    p3b: { texto: "El enemigo atrincherado lanza un contraataque. ¿Cómo responde?", gif: gifPlaceholder,
+    p3b: {
+        texto: "El enemigo atrincherado lanza un contraataque. ¿Cómo responde?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Retirada táctica", destino: "consF1" },
             { texto: "Defensa firme con morteros", destino: "consF2" }
-        ] },
+        ]
+    },
     consF1: { texto: "Retirada ordenada, pero pierde terreno.", gif: gifPlaceholder, siguiente: "p6b" },
     consF2: { texto: "Repelen ataque con 10 bajas enemigas.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    p3c: { texto: "El tiempo perdido permitió al enemigo recibir suministros. ¿Qué orden da?", gif: gifPlaceholder,
+    p3c: {
+        texto: "El tiempo perdido permitió al enemigo recibir suministros. ¿Qué orden da?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Atacar cadena de suministros", destino: "consG1" },
             { texto: "Solicitar alto el fuego", destino: "consG2" }
-        ] },
+        ]
+    },
     consG1: { texto: "Destruyen convoy enemigo. Golpe de gracia.", gif: gifPlaceholder, siguiente: "finalExito" },
     consG2: { texto: "Alto el fuego rechazado. El enemigo ataca con más fuerza.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
-    p4: { texto: "Los documentos capturados revelan un plan de ataque contra una ciudad cercana. ¿Qué hace?", gif: gifPlaceholder,
+    p4: {
+        texto: "Los documentos capturados revelan un plan de ataque contra una ciudad cercana. ¿Qué hace?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Alertar autoridades y evacuar", destino: "consH1" },
             { texto: "Emboscar células enemigas", destino: "consH2" }
-        ] },
+        ]
+    },
     consH1: { texto: "Evacuación exitosa. La ciudad está a salvo.", gif: gifPlaceholder, siguiente: "finalExito" },
     consH2: { texto: "Emboscada elimina a 15 terroristas.", gif: gifPlaceholder, siguiente: "finalExito" },
-    p4b: { texto: "Los que huyeron se refugian en una aldea. ¿Cómo procede?", gif: gifPlaceholder,
+    p4b: {
+        texto: "Los que huyeron se refugian en una aldea. ¿Cómo procede?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Cercar y negociar", destino: "consI1" },
             { texto: "Asalto directo", destino: "consI2" }
-        ] },
+        ]
+    },
     consI1: { texto: "Capturan a los líderes. Operación exitosa.", gif: gifPlaceholder, siguiente: "finalExito" },
     consI2: { texto: "Asalto violento, muchos heridos.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
-    p4c: { texto: "El oleoducto dañado provoca un incendio. ¿Cuál es su prioridad?", gif: gifPlaceholder,
+    p4c: {
+        texto: "El oleoducto dañado provoca un incendio. ¿Cuál es su prioridad?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Apagar fuego", destino: "consJ1" },
             { texto: "Abandonar zona", destino: "consJ2" }
-        ] },
+        ]
+    },
     consJ1: { texto: "Fuego controlado. Daño limitado.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
     consJ2: { texto: "El fuego se expande y causa una crisis diplomática.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
-    p5: { texto: "El enemigo fugitivo busca refugio en zona montañosa. ¿Qué táctica usa?", gif: gifPlaceholder,
+    p5: {
+        texto: "El enemigo fugitivo busca refugio en zona montañosa. ¿Qué táctica usa?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Persecución con helicópteros", destino: "consK1" },
             { texto: "Bloqueo de rutas", destino: "consK2" }
-        ] },
+        ]
+    },
     consK1: { texto: "Capturan al líder. Fin de la amenaza.", gif: gifPlaceholder, siguiente: "finalExito" },
     consK2: { texto: "El enemigo se rinde por falta de suministros.", gif: gifPlaceholder, siguiente: "finalExito" },
-    p5b: { texto: "El armamento entregado durante la negociación ahora es usado en su contra. ¿Cómo se defiende?", gif: gifPlaceholder,
+    p5b: {
+        texto: "El armamento entregado durante la negociación ahora es usado en su contra. ¿Cómo se defiende?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Ataque nocturno sorpresa", destino: "consL1" },
             { texto: "Mediación internacional", destino: "consL2" }
-        ] },
+        ]
+    },
     consL1: { texto: "Ataque exitoso. Recuperan armamento.", gif: gifPlaceholder, siguiente: "finalExitoParcial" },
     consL2: { texto: "Mediación fracasa. Escalada del conflicto.", gif: gifPlaceholder, siguiente: "finalFracasoTotal" },
-    p6: { texto: "Operación casi finalizada. Enemigo pide tregua. ¿Acepta?", gif: gifPlaceholder,
+    p6: {
+        texto: "Operación casi finalizada. Enemigo pide tregua. ¿Acepta?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Aceptar tregua", destino: "finalExitoParcial" },
             { texto: "Rechazar y continuar", destino: "finalExito" }
-        ] },
-    p6b: { texto: "Ha perdido posiciones. Moral baja. ¿Qué orden da?", gif: gifPlaceholder,
+        ]
+    },
+    p6b: {
+        texto: "Ha perdido posiciones. Moral baja. ¿Qué orden da?",
+        gif: gifPlaceholder,
         opciones_raw: [
             { texto: "Reorganizar y contraatacar", destino: "finalExitoParcial" },
             { texto: "Retirada estratégica", destino: "finalFracasoTotal" }
-        ] }
+        ]
+    }
 };
 
-// ESCENARIO 2: DISTURBIOS
+// ESCENARIO 2: DISTURBIOS (sin cambios)
 const escenarioDisturbios = {
     nombre: "Control de Orden Público",
     p1: { texto: "Manifestaciones violentas en el centro. Grupos encapuchados atacan comercios. ¿Qué ordena?", gif: gifPlaceholder,
@@ -300,7 +427,7 @@ const escenarioDisturbios = {
     consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: gifPlaceholder, siguiente: "finalExitoParcial" }
 };
 
-// ESCENARIO 3: INFILTRACIÓN
+// ESCENARIO 3: INFILTRACIÓN (sin cambios)
 const escenarioInfiltracion = {
     nombre: "Seguridad Perimetral de la Base",
     p1: { texto: "Sensores detectan intrusión en perímetro norte. Son las 03:00. ¿Qué ordena?", gif: gifPlaceholder,
@@ -406,6 +533,8 @@ const escenarioInfiltracion = {
 };
 
 const escenariosPosibles = [escenarioFrontera, escenarioDisturbios, escenarioInfiltracion];
+
+// ========== RESULTADOS ==========
 const resultadosBase = {
     finalExito: { tipo: "exito", mensaje: "¡MISIÓN CUMPLIDA CON ÉXITO TOTAL!", analisisBase: "Ha demostrado una excelente capacidad de mando. Sus decisiones fueron acertadas.", gif: gifPlaceholder },
     finalExitoParcial: { tipo: "parcial", mensaje: "ÉXITO PARCIAL", analisisBase: "El objetivo se alcanzó, pero hubo contratiempos evitables.", gif: gifPlaceholder },
@@ -418,6 +547,7 @@ let escenarioActivo = null, pasoActual = null, esperando = false, dificultadActu
 let temporizadorInterval = null, tiempoRestante = 60, tiempoActivo = false, decisionTomada = false;
 let tiemposDificultad = { easy: 90, medium: 60, hard: 45 };
 let trainingModeFlag = false, currentChosenLetters = [];
+let avisoMostrado = false;
 
 function updateProgressCounter() {
     const counterSpan = document.getElementById("progressCounter");
@@ -426,25 +556,20 @@ function updateProgressCounter() {
 
 function prepararEscenario(escenarioBase) {
     let escenario = JSON.parse(JSON.stringify(escenarioBase));
-    escenario.finalExito = resultadosBase.finalExito;
-    escenario.finalExitoParcial = resultadosBase.finalExitoParcial;
-    escenario.finalFracasoTotal = resultadosBase.finalFracasoTotal;
-    escenario.finalError = resultadosBase.finalError;
-    for(let key in escenario) {
-        if(escenario[key].opciones_raw) {
+    // Asignar resultados base al escenario
+    escenario.finalExito = { ...resultadosBase.finalExito };
+    escenario.finalExitoParcial = { ...resultadosBase.finalExitoParcial };
+    escenario.finalFracasoTotal = { ...resultadosBase.finalFracasoTotal };
+    escenario.finalError = { ...resultadosBase.finalError };
+    // Procesar opciones
+    for (let key in escenario) {
+        if (escenario[key].opciones_raw) {
             let opts = shuffleOptions(escenario[key].opciones_raw);
             escenario[key].opciones = opts;
-            escenario[key].opciones.forEach(op => {
-                if(op.destino === "finalExito") op.destino = "finalExito";
-                else if(op.destino === "finalExitoParcial") op.destino = "finalExitoParcial";
-                else if(op.destino === "finalFracasoTotal") op.destino = "finalFracasoTotal";
-            });
+            // No es necesario reemplazar destinos porque ya son strings
         }
-        if(escenario[key].siguiente) {
-            if(escenario[key].siguiente === "finalExito") escenario[key].siguiente = "finalExito";
-            else if(escenario[key].siguiente === "finalExitoParcial") escenario[key].siguiente = "finalExitoParcial";
-            else if(escenario[key].siguiente === "finalFracasoTotal") escenario[key].siguiente = "finalFracasoTotal";
-        }
+        // Si tiene 'siguiente' y es uno de los finales, dejarlo como está
+        // Porque los finales ya son propiedades del objeto
     }
     return escenario;
 }
@@ -473,8 +598,12 @@ function actualizarDisplayTimer() {
     let mins = Math.floor(tiempoRestante/60), segs = tiempoRestante%60;
     const disp = document.getElementById("timerDisplay");
     if(disp) disp.textContent = `${mins.toString().padStart(2,'0')}:${segs.toString().padStart(2,'0')}`;
-    if(tiempoRestante <= 5) disp.style.color = "#f87171";
-    else disp.style.color = "white";
+    if(tiempoRestante <= 5) {
+        // Parpadeo
+        disp.style.color = (Math.floor(Date.now() / 300) % 2 === 0) ? '#f87171' : 'white';
+    } else {
+        disp.style.color = 'white';
+    }
 }
 
 function iniciarJuego() {
@@ -488,6 +617,7 @@ function iniciarJuego() {
     historial = [];
     currentChosenLetters = [];
     decisionTomada = false;
+    avisoMostrado = false;
     updateProgressCounter();
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("simScreen").style.display = "block";
@@ -508,6 +638,25 @@ function mostrarPregunta(preg) {
     document.getElementById("situationGif").src = preg.gif || gifPlaceholder;
     const optsDiv = document.getElementById("optionsBox");
     optsDiv.innerHTML = "";
+    // Mostrar aviso de barajado solo en la primera pregunta y una vez por sesión
+    if (pasoActual === "p1" && !sessionStorage.getItem("avisoMostrado")) {
+        const aviso = document.createElement("div");
+        aviso.style.cssText = `
+            background: rgba(255, 200, 0, 0.15);
+            border-left: 4px solid #facc15;
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        `;
+        aviso.innerHTML = `<i class="fas fa-info-circle" style="color:#facc15;"></i> Las opciones se reordenan cada partida. Elige por el <strong>texto</strong>, no por la letra.`;
+        optsDiv.appendChild(aviso);
+        sessionStorage.setItem("avisoMostrado", "true");
+    }
     if(!preg.opciones || preg.opciones.length === 0) { mostrarFeedback(escenarioActivo.finalError); return; }
     preg.opciones.forEach((op, idx) => {
         const btn = document.createElement("button");
@@ -531,8 +680,9 @@ function elegirOpcion(dest, letra, texto) {
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
     updateProgressCounter();
+    // Verificar si dest es uno de los finales (son strings)
     if(dest === "finalExito" || dest === "finalExitoParcial" || dest === "finalFracasoTotal") {
-        mostrarFeedback(escenarioActivo[dest] || escenarioActivo.finalError);
+        mostrarFeedback(escenarioActivo[dest]);
         return;
     }
     const cons = escenarioActivo[dest];
