@@ -58,6 +58,17 @@ function toggleAmbientSound() {
     if (btn) btn.innerHTML = ambientSoundEnabled ? '<i class="fas fa-head-side-vr"></i> Ambiente ON' : '<i class="fas fa-head-side-vr"></i> Ambiente OFF';
 }
 
+// ========== LOGGING CENTRALIZADO (Tarea 2) ==========
+function log(level, message, data = null) {
+    const timestamp = new Date().toISOString();
+    const prefix = `[${level}] [${timestamp}]`;
+    if (data) {
+        console.log(`${prefix} ${message}`, data);
+    } else {
+        console.log(`${prefix} ${message}`);
+    }
+}
+
 // ========== LOGROS ==========
 let achievements = { firstVictory: false, quickDecision: false, strategist: false, perfectMision: false };
 try {
@@ -65,7 +76,7 @@ try {
     if (stored) achievements = JSON.parse(stored);
 } catch (e) {
     localStorage.removeItem("achievements");
-    console.warn("Achievements corrupted, reset.");
+    log('WARN', 'Achievements corrupted, reset.');
 }
 let totalWins = parseInt(localStorage.getItem("totalWins") || "0");
 function unlockAchievement(id) {
@@ -73,6 +84,7 @@ function unlockAchievement(id) {
     achievements[id] = true;
     localStorage.setItem("achievements", JSON.stringify(achievements));
     playSound("victory");
+    log('INFO', `Logro desbloqueado: ${getAchievementName(id)}`);
     const names = {
         firstVictory: "Primera Victoria",
         quickDecision: "Decisión Rápida",
@@ -120,6 +132,7 @@ function setColorTheme(theme) {
     localStorage.setItem("darkMode", "false");
     const themeBtn = document.getElementById("themeToggleBtn");
     if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    log('INFO', `Tema de color cambiado a: ${theme}`);
 }
 function loadColorTheme() {
     const theme = localStorage.getItem("colorTheme") || "default";
@@ -570,7 +583,7 @@ function prepararEscenario(escenarioBase) {
             escenario[key].opciones = shuffled;
         }
     }
-    console.log(`🎯 Escenario preparado: ${escenario.nombre}`);
+    log('INFO', `Escenario preparado: ${escenario.nombre}`);
     return escenario;
 }
 
@@ -587,6 +600,7 @@ function iniciarTemporizador() {
         if(!tiempoActivo || decisionTomada) return;
         if(tiempoRestante <= 1) {
             detenerTemporizador();
+            log('WARN', 'Tiempo agotado, seleccionando opción aleatoria');
             playSound("timeout");
             const botones = document.querySelectorAll('.option-btn');
             if(botones.length > 0 && !decisionTomada) botones[Math.floor(Math.random()*botones.length)].click();
@@ -607,10 +621,12 @@ function actualizarDisplayTimer() {
 }
 
 function iniciarJuego() {
+    log('INFO', 'Iniciando nueva simulación');
     trainingModeFlag = document.getElementById("trainingModeCheckbox")?.checked || false;
     localStorage.setItem("trainingMode", trainingModeFlag);
     const randomIndex = Math.floor(Math.random() * escenariosPosibles.length);
     const escenarioSeleccionado = escenariosPosibles[randomIndex];
+    log('INFO', `Escenario seleccionado: ${escenarioSeleccionado.nombre}`);
     escenarioActivo = prepararEscenario(escenarioSeleccionado);
     pasoActual = "p1";
     esperando = false;
@@ -623,12 +639,18 @@ function iniciarJuego() {
     document.getElementById("simScreen").style.display = "block";
     document.getElementById("feedbackScreen").style.display = "none";
     const primera = escenarioActivo.p1;
-    if(!primera) mostrarFeedback(resultadosBase.error);
-    else mostrarPregunta(primera);
+    if(!primera) {
+        log('ERROR', 'No se encontró la primera pregunta');
+        mostrarFeedback(resultadosBase.error);
+    } else mostrarPregunta(primera);
 }
 
 function mostrarPregunta(preg) {
-    if(!preg) { mostrarFeedback(resultadosBase.error); return; }
+    if(!preg) { 
+        log('ERROR', 'Pregunta inválida');
+        mostrarFeedback(resultadosBase.error); 
+        return; 
+    }
     detenerTemporizador();
     const situationBox = document.getElementById("situationBox");
     situationBox.style.animation = "none";
@@ -656,7 +678,11 @@ function mostrarPregunta(preg) {
         optsDiv.appendChild(aviso);
         sessionStorage.setItem("avisoMostrado", "true");
     }
-    if(!preg.opciones || preg.opciones.length === 0) { mostrarFeedback(resultadosBase.error); return; }
+    if(!preg.opciones || preg.opciones.length === 0) { 
+        log('ERROR', 'La pregunta no tiene opciones');
+        mostrarFeedback(resultadosBase.error); 
+        return; 
+    }
     preg.opciones.forEach((op, idx) => {
         const btn = document.createElement("button");
         btn.className = "option-btn";
@@ -680,19 +706,19 @@ function elegirOpcion(dest, letra, texto) {
     historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
     currentChosenLetters.push(letra);
     updateProgressCounter();
-    console.log(`👉 Elegiste: "${texto}" → Destino: ${dest}`);
+    log('INFO', `Usuario eligió opción ${letra}: "${texto}" → Destino: ${dest}`);
 
     // === COMPROBAR SI ES UN RESULTADO DIRECTO ===
     if (dest === "exito") {
-        console.log("🏆 VICTORIA DIRECTA");
+        log('INFO', 'Resultado directo: EXITO');
         mostrarFeedback(resultadosBase.exito);
         return;
     } else if (dest === "parcial") {
-        console.log("⚠️ ÉXITO PARCIAL");
+        log('INFO', 'Resultado directo: PARCIAL');
         mostrarFeedback(resultadosBase.parcial);
         return;
     } else if (dest === "fracaso") {
-        console.log("💀 FRACASO");
+        log('INFO', 'Resultado directo: FRACASO');
         mostrarFeedback(resultadosBase.fracaso);
         return;
     }
@@ -700,11 +726,11 @@ function elegirOpcion(dest, letra, texto) {
     // SI ES UN NODO, BUSCARLO
     const cons = escenarioActivo[dest];
     if(!cons) { 
-        console.error(`❌ Nodo "${dest}" no encontrado.`);
+        log('ERROR', `Nodo "${dest}" no encontrado.`);
         mostrarFeedback(resultadosBase.error); 
         return; 
     }
-    console.log(`✅ Nodo encontrado: ${dest}, siguiente: ${cons.siguiente}`);
+    log('INFO', `Nodo encontrado: ${dest}, siguiente: ${cons.siguiente}`);
     mostrarConsecuencia(cons);
 }
 
@@ -719,12 +745,15 @@ function mostrarConsecuencia(cons) {
     setTimeout(() => {
         // === COMPROBAR SI EL SIGUIENTE ES UN RESULTADO DIRECTO ===
         if (cons.siguiente === "exito") {
+            log('INFO', 'Consecuencia lleva a EXITO');
             mostrarFeedback(resultadosBase.exito);
             return;
         } else if (cons.siguiente === "parcial") {
+            log('INFO', 'Consecuencia lleva a PARCIAL');
             mostrarFeedback(resultadosBase.parcial);
             return;
         } else if (cons.siguiente === "fracaso") {
+            log('INFO', 'Consecuencia lleva a FRACASO');
             mostrarFeedback(resultadosBase.fracaso);
             return;
         }
@@ -732,7 +761,7 @@ function mostrarConsecuencia(cons) {
         // SI ES UN NODO, CONTINUAR
         const sig = escenarioActivo[cons.siguiente];
         if(!sig) { 
-            console.error(`❌ Siguiente nodo "${cons.siguiente}" no encontrado.`);
+            log('ERROR', `Siguiente nodo "${cons.siguiente}" no encontrado.`);
             mostrarFeedback(resultadosBase.error); 
             return; 
         }
@@ -778,6 +807,7 @@ function mostrarFeedback(final) {
     let tiempoPromedio = tiempos.length ? (tiempos.reduce((a,b)=>a+b,0)/tiempos.length).toFixed(1) : 0;
     let decisionCount = historial.length;
     checkAchievements(final.tipo, decisionCount, tiempoPromedio, trainingModeFlag);
+    log('INFO', `Simulación finalizada con resultado: ${final.tipo}`);
     
     document.getElementById("simScreen").style.display = "none";
     document.getElementById("feedbackScreen").style.display = "block";
@@ -809,12 +839,29 @@ function mostrarFeedback(final) {
     document.getElementById("analysisText").innerHTML = analisisCompleto;
 }
 
-function volverMenu() { location.reload(); }
-function reiniciarMismo() { iniciarJuego(); }
-function setDifficulty(d) { dificultadActual = d; const badge = document.getElementById("difficultyBadge"); if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL'; else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL'; else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL'; }
+function volverMenu() { 
+    log('INFO', 'Volviendo al menú principal');
+    location.reload(); 
+}
+function reiniciarMismo() { 
+    log('INFO', 'Reiniciando la misma simulación');
+    iniciarJuego(); 
+}
+function setDifficulty(d) { 
+    dificultadActual = d; 
+    const badge = document.getElementById("difficultyBadge"); 
+    if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL'; 
+    else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL'; 
+    else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL'; 
+    log('INFO', `Dificultad cambiada a: ${d}`);
+}
 
 // ========== EVENTOS ==========
-document.getElementById("startBtn").onclick = () => { document.getElementById("levelMenu").style.display = "block"; document.getElementById("startBtn").style.display = "none"; };
+document.getElementById("startBtn").onclick = () => { 
+    log('INFO', 'Usuario hizo clic en JUGAR');
+    document.getElementById("levelMenu").style.display = "block"; 
+    document.getElementById("startBtn").style.display = "none"; 
+};
 document.querySelectorAll(".level-btn").forEach(btn => { btn.onclick = () => { setDifficulty(btn.getAttribute("data-difficulty")); iniciarJuego(); }; });
 document.getElementById("themeToggleBtn").onclick = () => {
     const isDark = document.body.classList.contains("dark");
@@ -823,11 +870,13 @@ document.getElementById("themeToggleBtn").onclick = () => {
         setColorTheme(savedTheme);
         localStorage.setItem("darkMode", "false");
         document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-moon"></i>';
+        log('INFO', 'Modo oscuro desactivado');
     } else {
         document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial");
         document.body.classList.add("dark");
         localStorage.setItem("darkMode", "true");
         document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-sun"></i>';
+        log('INFO', 'Modo oscuro activado');
     }
 };
 document.getElementById("tutorialBtn").onclick = () => { showModal("Tutorial", "<p>Seleccione dificultad, lea la situación y elija una opción.</p>"); };
@@ -845,6 +894,9 @@ if (localStorage.getItem("darkMode") === "true") document.body.classList.add("da
 if (ambientSoundEnabled) startAmbientSound();
 document.getElementById("trainingModeCheckbox").checked = localStorage.getItem("trainingMode") === "true";
 if (localStorage.getItem("tutorialVisto") !== "true") {
-    setTimeout(() => showModal("Bienvenido", "<p>Simulador táctico. Sus decisiones determinan el éxito.</p>"), 500);
+    setTimeout(() => {
+        showModal("Bienvenido", "<p>Simulador táctico. Sus decisiones determinan el éxito.</p>");
+        log('INFO', 'Tutorial mostrado al usuario');
+    }, 500);
     localStorage.setItem("tutorialVisto", "true");
 }
