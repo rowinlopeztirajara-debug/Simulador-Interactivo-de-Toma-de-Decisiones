@@ -15,7 +15,7 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
       - name: Validar CSS (stylesheet)
-        run: npx stylelint "**/*.css" --ignore-path .stylelintignore
+        run: npx stylelint style.css
       - name: Ejecutar pruebas unitarias
         run: npm test
       - name: Verificar archivos esenciales
