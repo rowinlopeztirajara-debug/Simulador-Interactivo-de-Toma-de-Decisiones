@@ -5,18 +5,39 @@
 }
 
 @keyframes fade-in-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fade-in-scale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @keyframes slide-in-left {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes pulse-once {
@@ -34,13 +55,13 @@
     --color-primary-dark: #1f3a54;
     --color-accent: #5b7c9e;
     --bg-body: #d4dcec;
-    --bg-card: rgba(255, 255, 255, 0.94);
+    --bg-card: rgb(255 255 255 / 94%);
     --text-dark: #1e293b;
-    --border-light: rgba(0, 0, 0, 0.1);
+    --border-light: rgb(0 0 0 / 10%);
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: Inter, sans-serif;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -61,7 +82,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgb(255 255 255 / 30%);
     z-index: -1;
 }
 
@@ -71,9 +92,9 @@ body.theme-llanero {
     --color-primary-dark: #3e4a2a;
     --color-accent: #b68b40;
     --bg-body: #d8cfb0;
-    --bg-card: rgba(210, 190, 140, 0.94);
+    --bg-card: rgb(210 190 140 / 94%);
     --text-dark: #2c2b26;
-    --border-light: rgba(0, 0, 0, 0.15);
+    --border-light: rgb(0 0 0 / 15%);
 }
 
 body.theme-selva {
@@ -81,9 +102,9 @@ body.theme-selva {
     --color-primary-dark: #0f261d;
     --color-accent: #4a7c59;
     --bg-body: #c8d9c5;
-    --bg-card: rgba(40, 60, 45, 0.94);
+    --bg-card: rgb(40 60 45 / 94%);
     --text-dark: #e8f0e5;
-    --border-light: rgba(255, 255, 255, 0.1);
+    --border-light: rgb(255 255 255 / 10%);
 }
 
 body.theme-costa {
@@ -91,9 +112,9 @@ body.theme-costa {
     --color-primary-dark: #123456;
     --color-accent: #5f9ea0;
     --bg-body: #cfdfed;
-    --bg-card: rgba(255, 255, 255, 0.94);
+    --bg-card: rgb(255 255 255 / 94%);
     --text-dark: #0a2f44;
-    --border-light: rgba(0, 0, 0, 0.1);
+    --border-light: rgb(0 0 0 / 10%);
 }
 
 body.theme-ceremonial {
@@ -101,9 +122,9 @@ body.theme-ceremonial {
     --color-primary-dark: #4a1420;
     --color-accent: #c7a23b;
     --bg-body: #f0ede8;
-    --bg-card: rgba(245, 240, 235, 0.96);
+    --bg-card: rgb(245 240 235 / 96%);
     --text-dark: #2c1810;
-    --border-light: rgba(0, 0, 0, 0.1);
+    --border-light: rgb(0 0 0 / 10%);
 }
 
 body.dark {
@@ -111,20 +132,20 @@ body.dark {
     --color-primary-dark: #1a2632;
     --color-accent: #6c7a89;
     --bg-body: #1a252f;
-    --bg-card: rgba(20, 28, 38, 0.96);
+    --bg-card: rgb(20 28 38 / 96%);
     --text-dark: #e2e8f0;
-    --border-light: rgba(255, 255, 255, 0.1);
+    --border-light: rgb(255 255 255 / 10%);
 }
 
 body.dark::before {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(0 0 0 / 50%);
 }
 
 .game-container {
     max-width: 950px;
     width: 100%;
     border-radius: 32px;
-    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
+    box-shadow: 0 25px 45px -12px rgb(0 0 0 / 25%);
     overflow: hidden;
     transition: all 0.3s;
     animation: fade-in-up 0.6s;
@@ -144,7 +165,7 @@ body.dark::before {
 }
 
 .game-title {
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
     font-size: 28px;
     font-weight: 800;
     margin-bottom: 12px;
@@ -164,7 +185,7 @@ body.dark .game-subtitle {
 
 .start-btn {
     border: none;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
     font-weight: 700;
     font-size: 18px;
     padding: 14px 40px;
@@ -175,7 +196,7 @@ body.dark .game-subtitle {
     gap: 12px;
     background: var(--color-primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
     transition: 0.2s;
 }
 
@@ -216,6 +237,12 @@ body.dark .game-subtitle {
     border-color: #cbd5e1;
 }
 
+.level-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
 body.dark .level-btn {
     background: #2d3a4e;
     border-color: #4a5a72;
@@ -234,11 +261,6 @@ body.dark .level-btn {
     border-left: 4px solid #f87171;
 }
 
-.level-btn:hover {
-    background: var(--color-primary);
-    color: white;
-    transform: translateY(-2px);
-}
 
 .training-toggle {
     margin-top: 15px;
@@ -246,7 +268,7 @@ body.dark .level-btn {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: rgba(0,0,0,0.05);
+    background: rgb(0 0 0 / 5%);
     padding: 8px 20px;
     border-radius: 60px;
     width: fit-content;
@@ -280,7 +302,7 @@ body.dark .level-btn {
 }
 
 .progress-indicator {
-    background: rgba(0,0,0,0.6);
+    background: rgb(0 0 0 / 60%);
     padding: 4px 12px;
     border-radius: 40px;
     font-size: 13px;
@@ -292,12 +314,12 @@ body.dark .level-btn {
 }
 
 body.dark .progress-indicator {
-    background: rgba(255,255,255,0.15);
+    background: rgb(255 255 255 / 15%);
     color: #e2e8f0;
 }
 
 .icon-btn {
-    background: rgba(0,0,0,0.08);
+    background: rgb(0 0 0 / 8%);
     border: none;
     font-size: 18px;
     cursor: pointer;
@@ -311,19 +333,19 @@ body.dark .progress-indicator {
     color: var(--color-primary);
 }
 
-body.dark .icon-btn {
-    background: rgba(255,255,255,0.1);
-    color: #cbd5e1;
-}
-
 .icon-btn:hover {
     background: var(--color-primary);
     color: white;
     transform: scale(1.05);
 }
 
+body.dark .icon-btn {
+    background: rgb(255 255 255 / 10%);
+    color: #cbd5e1;
+}
+
 .timer-display {
-    font-family: 'Montserrat', monospace;
+    font-family: Montserrat, monospace;
     font-weight: 800;
     font-size: 24px;
     background: var(--color-primary);
@@ -344,7 +366,7 @@ body.dark .icon-btn {
 }
 
 .menu-btn {
-    background: rgba(0,0,0,0.08);
+    background: rgb(0 0 0 / 8%);
     border: none;
     padding: 8px 20px;
     border-radius: 40px;
@@ -356,22 +378,22 @@ body.dark .icon-btn {
     color: var(--text-dark);
 }
 
-body.dark .menu-btn {
-    background: rgba(255,255,255,0.1);
-    color: #e2e8f0;
-}
-
 .menu-btn:hover {
     background: var(--color-primary);
     color: white;
     transform: translateY(-2px);
 }
 
+body.dark .menu-btn {
+    background: rgb(255 255 255 / 10%);
+    color: #e2e8f0;
+}
+
 .gif-area {
     padding: 20px;
     text-align: center;
-    background: rgba(0,0,0,0.03);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: rgb(0 0 0 / 3%);
+    border-bottom: 1px solid rgb(0 0 0 / 5%);
     animation: fade-in-scale 0.4s ease;
 }
 
@@ -379,7 +401,7 @@ body.dark .menu-btn {
     max-width: 100%;
     max-height: 180px;
     border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
     background: #e2e8f0;
 }
 
@@ -388,7 +410,7 @@ body.dark .menu-btn {
     border-radius: 24px;
     padding: 24px 28px;
     margin-bottom: 28px;
-    background: rgba(0,0,0,0.02);
+    background: rgb(0 0 0 / 2%);
     animation: slide-in-left 0.5s ease;
 }
 
@@ -416,21 +438,21 @@ body.dark .menu-btn {
     align-items: center;
     gap: 16px;
     transition: all 0.2s;
-    background: rgba(255,255,255,0.7);
+    background: rgb(255 255 255 / 70%);
     color: var(--text-dark);
     animation: fade-in-up 0.4s ease backwards;
     animation-delay: calc(0.05s * var(--i, 0));
 }
 
-body.dark .option-btn {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.15);
-}
-
 .option-btn:hover {
     transform: translateX(8px);
     border-color: var(--color-accent);
-    background: rgba(44,76,110,0.1);
+    background: rgb(44 76 110 / 10%);
+}
+
+body.dark .option-btn {
+    background: rgb(255 255 255 / 5%);
+    border-color: rgb(255 255 255 / 15%);
 }
 
 .option-letter {
@@ -461,7 +483,7 @@ body.dark .option-btn {
     text-align: center;
     padding: 40px;
     border-radius: 32px;
-    background: rgba(0,0,0,0.04);
+    background: rgb(0 0 0 / 4%);
     color: var(--color-accent);
     animation: pulse-once 1s infinite;
 }
@@ -485,13 +507,13 @@ body.dark .option-btn {
     border-radius: 28px;
     padding: 28px;
     margin-bottom: 25px;
-    background: rgba(0,0,0,0.02);
+    background: rgb(0 0 0 / 2%);
     border: 1px solid var(--border-light);
     animation: fade-in-up 0.5s;
 }
 
 .feedback-title {
-    font-family: 'Montserrat', sans-serif;
+    font-family: Montserrat, sans-serif;
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 18px;
@@ -576,7 +598,7 @@ body.dark .option-btn {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.85);
+    background: rgb(0 0 0 / 85%);
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
@@ -614,9 +636,21 @@ body.dark .option-btn {
     margin-top: 20px;
 }
 
-@media (max-width:600px){
-    .game-title { font-size: 22px; }
-    .sim-body { padding: 20px; }
-    .timer-display { font-size: 18px; padding: 4px 10px; }
-    .progress-indicator { font-size: 11px; }
+@media (width <=600px) {
+    .game-title {
+        font-size: 22px;
+    }
+
+    .sim-body {
+        padding: 20px;
+    }
+
+    .timer-display {
+        font-size: 18px;
+        padding: 4px 10px;
+    }
+
+    .progress-indicator {
+        font-size: 11px;
+    }
 }
