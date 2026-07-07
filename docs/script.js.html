@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * ======================================================================
  * SIMULADOR TÁCTICO - ADI Sede Coro
  * ======================================================================
@@ -30,7 +58,7 @@ let audioCtx = null;
  * @returns {void}
  */
 function initAudio() {
-    if (!audioCtx && soundEnabled) {
+    if (!audioCtx &amp;&amp; soundEnabled) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
 }
@@ -82,7 +110,7 @@ function startAmbientSound() {
         const bufferSize = 2 * ctx.sampleRate;
         const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
         const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
+        for (let i = 0; i &lt; bufferSize; i++) {
             data[i] = (Math.random() * 2 - 1) * 0.05 + Math.sin(i * 0.05) * 0.02;
         }
         const source = ctx.createBufferSource();
@@ -123,7 +151,7 @@ function toggleAmbientSound() {
     if (ambientSoundEnabled) startAmbientSound();
     else stopAmbientSound();
     const btn = document.getElementById("ambientSoundBtn");
-    if (btn) btn.innerHTML = ambientSoundEnabled ? '<i class="fas fa-head-side-vr"></i> Ambiente ON' : '<i class="fas fa-head-side-vr"></i> Ambiente OFF';
+    if (btn) btn.innerHTML = ambientSoundEnabled ? '&lt;i class="fas fa-head-side-vr">&lt;/i> Ambiente ON' : '&lt;i class="fas fa-head-side-vr">&lt;/i> Ambiente OFF';
 }
 
 // ========== LOGGING CENTRALIZADO (Tarea 2) ==========
@@ -149,7 +177,7 @@ function log(level, message, data = null) {
 
 /**
  * Objeto que almacena el estado de los logros desbloqueados.
- * @type {Object.<string, boolean>}
+ * @type {Object.&lt;string, boolean>}
  */
 let achievements = { firstVictory: false, quickDecision: false, strategist: false, perfectMision: false };
 try {
@@ -189,7 +217,7 @@ function unlockAchievement(id) {
         strategist: "Acumula 3 victorias.",
         perfectMision: "5+ decisiones sin fallar."
     };
-    showModal("🏅 Logro desbloqueado", `<p><strong>${names[id]}</strong><br><small>${descs[id]}</small></p>`);
+    showModal("🏅 Logro desbloqueado", `&lt;p>&lt;strong>${names[id]}&lt;/strong>&lt;br>&lt;small>${descs[id]}&lt;/small>&lt;/p>`);
 }
 
 /**
@@ -225,10 +253,10 @@ function checkAchievements(finalType, decisionCount, tiempoPromedio, training) {
         if (!achievements.firstVictory) unlockAchievement("firstVictory");
         totalWins++;
         localStorage.setItem("totalWins", totalWins);
-        if (totalWins >= 3 && !achievements.strategist) unlockAchievement("strategist");
-        if (decisionCount >= 5 && !achievements.perfectMision) unlockAchievement("perfectMision");
+        if (totalWins >= 3 &amp;&amp; !achievements.strategist) unlockAchievement("strategist");
+        if (decisionCount >= 5 &amp;&amp; !achievements.perfectMision) unlockAchievement("perfectMision");
     }
-    if (!training && tiempoPromedio && tiempoPromedio < 10 && decisionCount >= 1 && dificultadActual !== "easy") {
+    if (!training &amp;&amp; tiempoPromedio &amp;&amp; tiempoPromedio &lt; 10 &amp;&amp; decisionCount >= 1 &amp;&amp; dificultadActual !== "easy") {
         if (!achievements.quickDecision) unlockAchievement("quickDecision");
     }
 }
@@ -250,7 +278,7 @@ function setColorTheme(theme) {
     localStorage.setItem("colorTheme", theme);
     localStorage.setItem("darkMode", "false");
     const themeBtn = document.getElementById("themeToggleBtn");
-    if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    if (themeBtn) themeBtn.innerHTML = '&lt;i class="fas fa-moon">&lt;/i>';
     log('INFO', `Tema de color cambiado a: ${theme}`);
 }
 
@@ -267,7 +295,7 @@ function loadColorTheme() {
         document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial");
         document.body.classList.add("dark");
         const themeBtn = document.getElementById("themeToggleBtn");
-        if (themeBtn) themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        if (themeBtn) themeBtn.innerHTML = '&lt;i class="fas fa-sun">&lt;/i>';
     }
 }
 
@@ -280,7 +308,7 @@ function loadColorTheme() {
 function showModal(title, content) {
     const modalDiv = document.createElement("div");
     modalDiv.className = "modal";
-    modalDiv.innerHTML = `<div class="modal-content"><h3><i class="fas fa-info-circle"></i> ${title}</h3>${content}<button onclick="this.closest('.modal').remove()">Cerrar</button></div>`;
+    modalDiv.innerHTML = `&lt;div class="modal-content">&lt;h3>&lt;i class="fas fa-info-circle">&lt;/i> ${title}&lt;/h3>${content}&lt;button onclick="this.closest('.modal').remove()">Cerrar&lt;/button>&lt;/div>`;
     document.body.appendChild(modalDiv);
 }
 
@@ -290,7 +318,7 @@ function showModal(title, content) {
  * @returns {void}
  */
 function showManual() {
-    showModal("Manual Táctico", "<p>✔️ Desplegar patrullas y pedir refuerzos es la táctica más segura.<br>✔️ En rehenes, priorizar rescate con fuerzas especiales.<br>✔️ Atacar suministros enemigos cambia el rumbo.<br>✔️ El diálogo temprano evita víctimas civiles.<br>✔️ Activar código rojo ante intrusión.</p>");
+    showModal("Manual Táctico", "&lt;p>✔️ Desplegar patrullas y pedir refuerzos es la táctica más segura.&lt;br>✔️ En rehenes, priorizar rescate con fuerzas especiales.&lt;br>✔️ Atacar suministros enemigos cambia el rumbo.&lt;br>✔️ El diálogo temprano evita víctimas civiles.&lt;br>✔️ Activar código rojo ante intrusión.&lt;/p>");
 }
 
 /**
@@ -301,9 +329,9 @@ function showManual() {
 function showAchievements() {
     let list = "";
     for (let [id, unlocked] of Object.entries(achievements)) {
-        list += `<li style="display:flex; align-items:center; gap:10px; margin:10px 0; ${!unlocked ? 'opacity:0.6' : ''}"><i class="fas fa-${unlocked ? 'medal' : 'lock'} fa-2x"></i><div><strong>${getAchievementName(id)}</strong><br><small>${getAchievementDesc(id)}</small></div>${unlocked ? '<i class="fas fa-check-circle" style="color:#4ade80"></i>' : '<i class="fas fa-hourglass-half"></i>'}</li>`;
+        list += `&lt;li style="display:flex; align-items:center; gap:10px; margin:10px 0; ${!unlocked ? 'opacity:0.6' : ''}">&lt;i class="fas fa-${unlocked ? 'medal' : 'lock'} fa-2x">&lt;/i>&lt;div>&lt;strong>${getAchievementName(id)}&lt;/strong>&lt;br>&lt;small>${getAchievementDesc(id)}&lt;/small>&lt;/div>${unlocked ? '&lt;i class="fas fa-check-circle" style="color:#4ade80">&lt;/i>' : '&lt;i class="fas fa-hourglass-half">&lt;/i>'}&lt;/li>`;
     }
-    showModal("Logros", `<ul style="list-style:none">${list}</ul>`);
+    showModal("Logros", `&lt;ul style="list-style:none">${list}&lt;/ul>`);
 }
 
 /**
@@ -315,21 +343,21 @@ function showPaletteSelector() {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
-        <div class="modal-content">
-            <h3><i class="fas fa-palette"></i> Temas Militares Venezolanos</h3>
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
-                <div style="width: 50px; height: 50px; background-color: #5b6e3f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
-                     onclick="setColorTheme('llanero'); this.closest('.modal').remove();" title="Llanero"></div>
-                <div style="width: 50px; height: 50px; background-color: #1e3a2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
-                     onclick="setColorTheme('selva'); this.closest('.modal').remove();" title="Selva"></div>
-                <div style="width: 50px; height: 50px; background-color: #1f4e79; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
-                     onclick="setColorTheme('costa'); this.closest('.modal').remove();" title="Costa"></div>
-                <div style="width: 50px; height: 50px; background-color: #6b1e2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
-                     onclick="setColorTheme('ceremonial'); this.closest('.modal').remove();" title="Ceremonial"></div>
-            </div>
-            <div style="font-size: 12px; color: #666; text-align: center;">* El modo oscuro se puede activar con el botón 🌙/☀️</div>
-            <button onclick="this.closest('.modal').remove()" style="margin-top: 15px;">Cerrar</button>
-        </div>
+        &lt;div class="modal-content">
+            &lt;h3>&lt;i class="fas fa-palette">&lt;/i> Temas Militares Venezolanos&lt;/h3>
+            &lt;div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
+                &lt;div style="width: 50px; height: 50px; background-color: #5b6e3f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('llanero'); this.closest('.modal').remove();" title="Llanero">&lt;/div>
+                &lt;div style="width: 50px; height: 50px; background-color: #1e3a2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('selva'); this.closest('.modal').remove();" title="Selva">&lt;/div>
+                &lt;div style="width: 50px; height: 50px; background-color: #1f4e79; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('costa'); this.closest('.modal').remove();" title="Costa">&lt;/div>
+                &lt;div style="width: 50px; height: 50px; background-color: #6b1e2f; border-radius: 25px; cursor: pointer; border: 2px solid white;" 
+                     onclick="setColorTheme('ceremonial'); this.closest('.modal').remove();" title="Ceremonial">&lt;/div>
+            &lt;/div>
+            &lt;div style="font-size: 12px; color: #666; text-align: center;">* El modo oscuro se puede activar con el botón 🌙/☀️&lt;/div>
+            &lt;button onclick="this.closest('.modal').remove()" style="margin-top: 15px;">Cerrar&lt;/button>
+        &lt;/div>
     `;
     document.body.appendChild(modal);
 }
@@ -857,7 +885,7 @@ let dificultadActual = "medium";
 
 /**
  * Historial de decisiones tomadas por el usuario.
- * @type {Array<{letra: string, texto: string, momento: string, tiempo: number}>}
+ * @type {Array&lt;{letra: string, texto: string, momento: string, tiempo: number}>}
  */
 let historial = [];
 
@@ -875,14 +903,14 @@ let decisionTomada = false;
 
 /**
  * Tiempos máximos por dificultad (en segundos).
- * @type {Object.<string, number>}
+ * @type {Object.&lt;string, number>}
  */
 const tiemposDificultad = { easy: 90, medium: 60, hard: 45 };
 
 /** @type {boolean} Modo entrenamiento (sin temporizador) */
 let trainingModeFlag = false;
 
-/** @type {Array<string>} Letras de las opciones elegidas en la partida actual */
+/** @type {Array&lt;string>} Letras de las opciones elegidas en la partida actual */
 let currentChosenLetters = [];
 
 /** @type {boolean} Indica si ya se mostró el aviso de opciones aleatorias */
@@ -895,7 +923,7 @@ let avisoMostrado = false;
  */
 function updateProgressCounter() {
     const counterSpan = document.getElementById("progressCounter");
-    if (counterSpan) counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
+    if (counterSpan) counterSpan.innerHTML = `&lt;i class="fas fa-list-ol">&lt;/i> Decisiones: ${historial.length}`;
 }
 
 // ===== PREPARAR ESCENARIO (con barajado) =====
@@ -948,12 +976,12 @@ function iniciarTemporizador() {
     tiempoActivo = true;
     temporizadorInterval = setInterval(() => {
         if(!tiempoActivo || decisionTomada) return;
-        if(tiempoRestante <= 1) {
+        if(tiempoRestante &lt;= 1) {
             detenerTemporizador();
             log('WARN', 'Tiempo agotado, seleccionando opción aleatoria');
             playSound("timeout");
             const botones = document.querySelectorAll('.option-btn');
-            if(botones.length > 0 && !decisionTomada) {
+            if(botones.length > 0 &amp;&amp; !decisionTomada) {
                 botones[Math.floor(Math.random()*botones.length)].click();
             } else {
                 mostrarFeedback(resultadosBase.error);
@@ -975,7 +1003,7 @@ function actualizarDisplayTimer() {
     let mins = Math.floor(tiempoRestante/60), segs = tiempoRestante%60;
     const disp = document.getElementById("timerDisplay");
     if(disp) disp.textContent = `${mins.toString().padStart(2,'0')}:${segs.toString().padStart(2,'0')}`;
-    if(tiempoRestante <= 5) {
+    if(tiempoRestante &lt;= 5) {
         disp.style.color = (Math.floor(Date.now() / 300) % 2 === 0) ? '#f87171' : 'white';
     } else {
         disp.style.color = 'white';
@@ -1034,7 +1062,7 @@ function mostrarPregunta(preg) {
     document.getElementById("situationGif").src = preg.gif || gifPlaceholder;
     const optsDiv = document.getElementById("optionsBox");
     optsDiv.innerHTML = "";
-    if (pasoActual === "p1" && !sessionStorage.getItem("avisoMostrado")) {
+    if (pasoActual === "p1" &amp;&amp; !sessionStorage.getItem("avisoMostrado")) {
         const aviso = document.createElement("div");
         aviso.style.cssText = `
             background: rgba(255, 200, 0, 0.15);
@@ -1048,7 +1076,7 @@ function mostrarPregunta(preg) {
             align-items: center;
             gap: 8px;
         `;
-        aviso.innerHTML = `<i class="fas fa-info-circle" style="color:#facc15;"></i> Las opciones se reordenan cada partida. Elige por el <strong>texto</strong>, no por la letra.`;
+        aviso.innerHTML = `&lt;i class="fas fa-info-circle" style="color:#facc15;">&lt;/i> Las opciones se reordenan cada partida. Elige por el &lt;strong>texto&lt;/strong>, no por la letra.`;
         optsDiv.appendChild(aviso);
         sessionStorage.setItem("avisoMostrado", "true");
     }
@@ -1061,7 +1089,7 @@ function mostrarPregunta(preg) {
         const btn = document.createElement("button");
         btn.className = "option-btn";
         btn.style.setProperty('--i', idx);
-        btn.innerHTML = `<span class="option-letter">${op.letra}</span>${op.texto}<i class="fas fa-chevron-right"></i>`;
+        btn.innerHTML = `&lt;span class="option-letter">${op.letra}&lt;/span>${op.texto}&lt;i class="fas fa-chevron-right">&lt;/i>`;
         btn.onclick = () => elegirOpcion(op.destino, op.letra, op.texto);
         optsDiv.appendChild(btn);
     });
@@ -1124,7 +1152,7 @@ function mostrarConsecuencia(cons) {
     situationBox.style.animation = "slideInLeft 0.5s ease";
     document.getElementById("situationText").innerHTML = cons.texto;
     document.getElementById("situationGif").src = cons.gif || gifPlaceholder;
-    document.getElementById("optionsBox").innerHTML = `<div class="loading"><div class="loading-spinner"></div> ANALIZANDO CONSECUENCIAS...</div>`;
+    document.getElementById("optionsBox").innerHTML = `&lt;div class="loading">&lt;div class="loading-spinner">&lt;/div> ANALIZANDO CONSECUENCIAS...&lt;/div>`;
     setTimeout(() => {
         if (cons.siguiente === "exito") {
             log('INFO', 'Consecuencia lleva a EXITO');
@@ -1165,19 +1193,19 @@ function mostrarConsecuencia(cons) {
 function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, escenarioNombre) {
     let analisis = "";
     if (final.tipo === "exito") {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
-                        <i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL
-                    </div>`;
+        analisis = `&lt;div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
+                        &lt;i class="fas fa-check-circle">&lt;/i> RESULTADO: ÉXITO OPERACIONAL
+                    &lt;/div>`;
     } else if (final.tipo === "parcial") {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #facc15; margin-bottom: 15px;">
-                        <i class="fas fa-exclamation-triangle"></i> RESULTADO: ÉXITO LIMITADO
-                    </div>`;
+        analisis = `&lt;div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #facc15; margin-bottom: 15px;">
+                        &lt;i class="fas fa-exclamation-triangle">&lt;/i> RESULTADO: ÉXITO LIMITADO
+                    &lt;/div>`;
     } else {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #f87171; margin-bottom: 15px;">
-                        <i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO
-                    </div>`;
+        analisis = `&lt;div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #f87171; margin-bottom: 15px;">
+                        &lt;i class="fas fa-times-circle">&lt;/i> RESULTADO: NO CUMPLIDO
+                    &lt;/div>`;
     }
-    analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+    analisis += `&lt;p>&lt;strong>Valoración del mando:&lt;/strong> ${final.analisisBase}&lt;/p>`;
     let conclusionTexto = "Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo. ";
     if (final.tipo === "exito") {
         conclusionTexto += "La victoria es el resultado de una planificación sólida y una ejecución precisa. Mantenga este nivel de excelencia en futuras misiones. El mando confía en su criterio y capacidad para tomar decisiones bajo presión. Siga así, comandante.";
@@ -1186,7 +1214,7 @@ function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, esce
     } else {
         conclusionTexto += "El fracaso es una lección en sí mismo. Identifique los errores tácticos y estratégicos que llevaron a este resultado. La próxima vez, asegúrese de mantener la iniciativa y aplicar la doctrina aprendida. El camino hacia la maestría está pavimentado con experiencias como esta. Levántese y vuelva a intentarlo.";
     }
-    analisis += `<p><strong>📌 Conclusión:</strong> ${conclusionTexto}</p>`;
+    analisis += `&lt;p>&lt;strong>📌 Conclusión:&lt;/strong> ${conclusionTexto}&lt;/p>`;
     return analisis;
 }
 
@@ -1208,27 +1236,27 @@ function mostrarFeedback(final) {
 
     const badge = document.getElementById("resultBadge");
     if(final.tipo === "exito") {
-        badge.innerHTML = '<i class="fas fa-trophy"></i> VICTORIA TÁCTICA';
+        badge.innerHTML = '&lt;i class="fas fa-trophy">&lt;/i> VICTORIA TÁCTICA';
         badge.className = "result-badge result-success";
         playSound("victory");
     } else if(final.tipo === "parcial") {
-        badge.innerHTML = '<i class="fas fa-chart-line"></i> ÉXITO PARCIAL';
+        badge.innerHTML = '&lt;i class="fas fa-chart-line">&lt;/i> ÉXITO PARCIAL';
         badge.className = "result-badge result-parcial";
         playSound("failure");
     } else {
-        badge.innerHTML = '<i class="fas fa-skull-crossbones"></i> MISIÓN NO CUMPLIDA';
+        badge.innerHTML = '&lt;i class="fas fa-skull-crossbones">&lt;/i> MISIÓN NO CUMPLIDA';
         badge.className = "result-badge result-failure";
         playSound("failure");
     }
 
-    document.getElementById("resultGifArea").innerHTML = `<img src="${final.gif}" alt="Resultado">`;
-    document.getElementById("feedbackText").innerHTML = `<div style="text-align: center; font-size: 1.8em; font-weight: bold; margin-bottom: 10px;">${final.mensaje}</div>`;
+    document.getElementById("resultGifArea").innerHTML = `&lt;img src="${final.gif}" alt="Resultado">`;
+    document.getElementById("feedbackText").innerHTML = `&lt;div style="text-align: center; font-size: 1.8em; font-weight: bold; margin-bottom: 10px;">${final.mensaje}&lt;/div>`;
 
     let analisisCompleto = generarAnalisisCritico(final, historial, tiempoPromedio, escenarioActivo.nombre);
     let diffName = dificultadActual === "easy" ? "FÁCIL" : (dificultadActual === "medium" ? "NORMAL" : "DIFÍCIL");
-    analisisCompleto += `<hr><p><strong>⏱️ TIEMPO PROMEDIO POR DECISIÓN:</strong> ${tiempoPromedio} segundos</p>`;
-    analisisCompleto += `<p><strong>📊 DIFICULTAD:</strong> ${diffName}</p>`;
-    analisisCompleto += `<p><strong>📌 ESCENARIO:</strong> ${escenarioActivo.nombre}</p>`;
+    analisisCompleto += `&lt;hr>&lt;p>&lt;strong>⏱️ TIEMPO PROMEDIO POR DECISIÓN:&lt;/strong> ${tiempoPromedio} segundos&lt;/p>`;
+    analisisCompleto += `&lt;p>&lt;strong>📊 DIFICULTAD:&lt;/strong> ${diffName}&lt;/p>`;
+    analisisCompleto += `&lt;p>&lt;strong>📌 ESCENARIO:&lt;/strong> ${escenarioActivo.nombre}&lt;/p>`;
 
     document.getElementById("analysisText").innerHTML = analisisCompleto;
 }
@@ -1261,9 +1289,9 @@ function reiniciarMismo() {
 function setDifficulty(d) {
     dificultadActual = d;
     const badge = document.getElementById("difficultyBadge");
-    if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL';
-    else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL';
-    else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL';
+    if(d === "easy") badge.innerHTML = '&lt;i class="fas fa-seedling">&lt;/i> FÁCIL';
+    else if(d === "medium") badge.innerHTML = '&lt;i class="fas fa-chart-line">&lt;/i> NORMAL';
+    else badge.innerHTML = '&lt;i class="fas fa-skull">&lt;/i> DIFÍCIL';
     log('INFO', `Dificultad cambiada a: ${d}`);
 }
 
@@ -1291,19 +1319,19 @@ document.getElementById("themeToggleBtn").onclick = () => {
         const savedTheme = localStorage.getItem("colorTheme") || "default";
         setColorTheme(savedTheme);
         localStorage.setItem("darkMode", "false");
-        document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-moon"></i>';
+        document.getElementById("themeToggleBtn").innerHTML = '&lt;i class="fas fa-moon">&lt;/i>';
         log('INFO', 'Modo oscuro desactivado');
     } else {
         document.body.classList.remove("theme-default", "theme-llanero", "theme-selva", "theme-costa", "theme-ceremonial");
         document.body.classList.add("dark");
         localStorage.setItem("darkMode", "true");
-        document.getElementById("themeToggleBtn").innerHTML = '<i class="fas fa-sun"></i>';
+        document.getElementById("themeToggleBtn").innerHTML = '&lt;i class="fas fa-sun">&lt;/i>';
         log('INFO', 'Modo oscuro activado');
     }
 };
 
 document.getElementById("tutorialBtn").onclick = () => {
-    showModal("Tutorial", "<p>Seleccione dificultad, lea la situación y elija una opción.</p>");
+    showModal("Tutorial", "&lt;p>Seleccione dificultad, lea la situación y elija una opción.&lt;/p>");
 };
 
 document.getElementById("exitToMenuBtn").onclick = volverMenu;
@@ -1315,7 +1343,7 @@ document.getElementById("openPaletteBtn").onclick = showPaletteSelector;
 document.getElementById("soundToggleBtn").onclick = () => {
     soundEnabled = !soundEnabled;
     localStorage.setItem("soundEnabled", soundEnabled);
-    document.getElementById("soundToggleBtn").innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i> Sonido' : '<i class="fas fa-volume-mute"></i> Sonido';
+    document.getElementById("soundToggleBtn").innerHTML = soundEnabled ? '&lt;i class="fas fa-volume-up">&lt;/i> Sonido' : '&lt;i class="fas fa-volume-mute">&lt;/i> Sonido';
     if (soundEnabled) initAudio();
 };
 document.getElementById("ambientSoundBtn").onclick = toggleAmbientSound;
@@ -1326,8 +1354,30 @@ if (ambientSoundEnabled) startAmbientSound();
 document.getElementById("trainingModeCheckbox").checked = localStorage.getItem("trainingMode") === "true";
 if (localStorage.getItem("tutorialVisto") !== "true") {
     setTimeout(() => {
-        showModal("Bienvenido", "<p>Simulador táctico. Sus decisiones determinan el éxito.</p>");
+        showModal("Bienvenido", "&lt;p>Simulador táctico. Sus decisiones determinan el éxito.&lt;/p>");
         log('INFO', 'Tutorial mostrado al usuario');
     }, 500);
     localStorage.setItem("tutorialVisto", "true");
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#.onclick">.onclick</a></li><li><a href="global.html#achievements">achievements</a></li><li><a href="global.html#actualizarDisplayTimer">actualizarDisplayTimer</a></li><li><a href="global.html#ambientAudio">ambientAudio</a></li><li><a href="global.html#ambientSoundEnabled">ambientSoundEnabled</a></li><li><a href="global.html#audioCtx">audioCtx</a></li><li><a href="global.html#avisoMostrado">avisoMostrado</a></li><li><a href="global.html#checkAchievements">checkAchievements</a></li><li><a href="global.html#currentChosenLetters">currentChosenLetters</a></li><li><a href="global.html#decisionTomada">decisionTomada</a></li><li><a href="global.html#detenerTemporizador">detenerTemporizador</a></li><li><a href="global.html#dificultadActual">dificultadActual</a></li><li><a href="global.html#elegirOpcion">elegirOpcion</a></li><li><a href="global.html#escenarioActivo">escenarioActivo</a></li><li><a href="global.html#esperando">esperando</a></li><li><a href="global.html#generarAnalisisCritico">generarAnalisisCritico</a></li><li><a href="global.html#getAchievementDesc">getAchievementDesc</a></li><li><a href="global.html#getAchievementName">getAchievementName</a></li><li><a href="global.html#gifPlaceholder">gifPlaceholder</a></li><li><a href="global.html#historial">historial</a></li><li><a href="global.html#iniciarJuego">iniciarJuego</a></li><li><a href="global.html#iniciarTemporizador">iniciarTemporizador</a></li><li><a href="global.html#initAudio">initAudio</a></li><li><a href="global.html#loadColorTheme">loadColorTheme</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#mostrarConsecuencia">mostrarConsecuencia</a></li><li><a href="global.html#mostrarFeedback">mostrarFeedback</a></li><li><a href="global.html#mostrarPregunta">mostrarPregunta</a></li><li><a href="global.html#pasoActual">pasoActual</a></li><li><a href="global.html#playSound">playSound</a></li><li><a href="global.html#prepararEscenario">prepararEscenario</a></li><li><a href="global.html#reiniciarMismo">reiniciarMismo</a></li><li><a href="global.html#setColorTheme">setColorTheme</a></li><li><a href="global.html#setDifficulty">setDifficulty</a></li><li><a href="global.html#showAchievements">showAchievements</a></li><li><a href="global.html#showManual">showManual</a></li><li><a href="global.html#showModal">showModal</a></li><li><a href="global.html#showPaletteSelector">showPaletteSelector</a></li><li><a href="global.html#shuffleOptions">shuffleOptions</a></li><li><a href="global.html#soundEnabled">soundEnabled</a></li><li><a href="global.html#startAmbientSound">startAmbientSound</a></li><li><a href="global.html#stopAmbientSound">stopAmbientSound</a></li><li><a href="global.html#temporizadorInterval">temporizadorInterval</a></li><li><a href="global.html#tiempoActivo">tiempoActivo</a></li><li><a href="global.html#tiempoRestante">tiempoRestante</a></li><li><a href="global.html#tiemposDificultad">tiemposDificultad</a></li><li><a href="global.html#toggleAmbientSound">toggleAmbientSound</a></li><li><a href="global.html#totalWins">totalWins</a></li><li><a href="global.html#trainingModeFlag">trainingModeFlag</a></li><li><a href="global.html#unlockAchievement">unlockAchievement</a></li><li><a href="global.html#updateProgressCounter">updateProgressCounter</a></li><li><a href="global.html#volverMenu">volverMenu</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Jul 06 2026 20:00:25 GMT-0400 (hora de Venezuela)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
