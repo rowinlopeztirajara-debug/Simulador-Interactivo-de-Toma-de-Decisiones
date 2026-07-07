@@ -24,3 +24,40 @@ coverage/
 # Archivos de construcción (si usas algún empaquetador)
 dist/
 build/
+
+# ============================================================
+# DOCUMENTACIÓN GENERADA (JSDoc) - ¡NUEVO!
+# ============================================================
+docs/
+
+# Archivos binarios e imágenes
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.eot
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.webp
+
+# Archivos de prueba
+*.test.js
+*.spec.js
+
+# Archivos de documentación Markdown
+CHANGELOG.md
+CONTRIBUTING.md
+DoD.md
+
+# Archivos HTML (excepto los principales)
+*.html
+!index.html
+!simulador.html
+
+# Archivos de desarrollo y configuración
+jest.config.js
+package-lock.json
