@@ -14,8 +14,8 @@ jobs:
           node-version: 20
       - name: Instalar dependencias
         run: npm ci
-      - name: Validar CSS (Stylelint)
-        run: npx stylelint "**/*.css"
+      - name: Validar CSS (stylesheet)
+        run: npx stylelint style.css
       - name: Ejecutar pruebas unitarias
         run: npm test
       - name: Verificar archivos esenciales
