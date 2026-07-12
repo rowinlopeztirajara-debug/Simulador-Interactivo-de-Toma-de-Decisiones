@@ -1,25 +1,33 @@
-name: CI - Verificación automática
+name: CI
 
 on:
+  push:
+    branches: [ develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      
       - name: Instalar dependencias
         run: npm ci
-      - name: Validar CSS (stylesheet)
+      
+      - name: Validar CSS
         run: npx stylelint style.css
+      
       - name: Ejecutar pruebas unitarias
         run: npm test
+      
       - name: Verificar archivos esenciales
         run: |
           test -f index.html && echo "✅ index.html existe"
           test -f style.css && echo "✅ style.css existe"
           test -f script.js && echo "✅ script.js existe"
+          test -f simulador.html && echo "✅ simulador.html existe"
