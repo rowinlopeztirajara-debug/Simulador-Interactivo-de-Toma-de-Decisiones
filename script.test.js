@@ -85,9 +85,6 @@ beforeEach(() => {
   }));
   
   window.alert = jest.fn();
-
-  // ========== NUEVO: Reiniciar la variable global totalWins ==========
-  // (Esto se hará después de evaluar el script, pero aquí declaramos la función)
 });
 
 // ==============================================
@@ -143,7 +140,6 @@ const context = {
   audioCtx: null,
 };
 
-// Evaluamos el script
 const fn = new Function('context', `
   const module = { exports: {} };
   const exports = module.exports;
@@ -157,7 +153,7 @@ const fn = new Function('context', `
   
   ${scriptContent}
   
-  // Exponer funciones y variables al contexto
+  // Exponer las funciones al contexto
   context.shuffleOptions = shuffleOptions;
   context.prepararEscenario = prepararEscenario;
   context.checkAchievements = checkAchievements;
@@ -168,8 +164,9 @@ const fn = new Function('context', `
   context.getAchievementName = getAchievementName;
   context.getAchievementDesc = getAchievementDesc;
   context.resultadosBase = resultadosBase;
+  context.elegirOpcion = elegirOpcion;
   
-  // --- NUEVO: Exponer totalWins con getter/setter ---
+  // Exponer totalWins con getter/setter para que refleje el valor real
   Object.defineProperty(context, 'totalWins', {
     get: () => totalWins,
     set: (val) => { totalWins = val; }
