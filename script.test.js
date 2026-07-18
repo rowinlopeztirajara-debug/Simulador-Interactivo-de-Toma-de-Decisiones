@@ -165,10 +165,19 @@ const fn = new Function('context', `
   context.getAchievementDesc = getAchievementDesc;
   context.resultadosBase = resultadosBase;
   context.elegirOpcion = elegirOpcion;
+  
+  // Exponer totalWins con getter/setter para que refleje el valor real
+  Object.defineProperty(context, 'totalWins', {
+    get: () => totalWins,
+    set: (val) => { totalWins = val; }
+  });
+  // Función para reiniciar totalWins a 0
+  context.resetTotalWins = () => { totalWins = 0; };
 `);
 
 fn(context);
 
+// Extraer las funciones del contexto (ya están)
 const {
   shuffleOptions,
   prepararEscenario,
@@ -187,8 +196,24 @@ const {
 
 describe('Pruebas del Simulador Táctico', () => {
 
+  // Restaurar el comportamiento original de getElementById después de las pruebas
   afterEach(() => {
     document.getElementById = originalGetElementById;
+  });
+
+  // Reiniciar estado antes de cada prueba
+  beforeEach(() => {
+    // Reiniciar logros
+    achievements.firstVictory = false;
+    achievements.quickDecision = false;
+    achievements.strategist = false;
+    achievements.perfectMision = false;
+    // Reiniciar totalWins usando el setter
+    context.totalWins = 0;
+    // Limpiar historial
+    historial.length = 0;
+    // Limpiar mocks de localStorage (opcional)
+    localStorage.setItem.mockClear();
   });
 
   // ---------- PRUEBA 1: shuffleOptions ----------
@@ -235,27 +260,28 @@ describe('Pruebas del Simulador Táctico', () => {
 
   // ---------- PRUEBA 3: checkAchievements (Primera Victoria) ----------
   test('checkAchievements: debe desbloquear "Primera Victoria" al ganar', () => {
-    context.achievements.firstVictory = false;
+    // Ya reiniciamos en beforeEach, pero por si acaso
+    achievements.firstVictory = false;
     context.totalWins = 0;
     
     checkAchievements('exito', 3, 5, false);
     
-    expect(context.achievements.firstVictory).toBe(true);
-    expect(context.totalWins).toBe(1);
+    expect(achievements.firstVictory).toBe(true);
+    expect(context.totalWins).toBe(1);   // <-- Ahora usa el getter
   });
 
   // ---------- PRUEBA 4: checkAchievements (Estratega) ----------
   test('checkAchievements: debe desbloquear "Estratega" al acumular 3 victorias', () => {
-    context.achievements.firstVictory = false;
-    context.achievements.strategist = false;
+    achievements.firstVictory = false;
+    achievements.strategist = false;
     context.totalWins = 0;
     
     checkAchievements('exito', 3, 5, false);
     checkAchievements('exito', 3, 5, false);
     checkAchievements('exito', 3, 5, false);
     
-    expect(context.achievements.strategist).toBe(true);
-    expect(context.totalWins).toBe(3);
+    expect(achievements.strategist).toBe(true);
+    expect(context.totalWins).toBe(3);   // <-- Ahora usa el getter
   });
 
   // ---------- PRUEBA 5: updateProgressCounter ----------
@@ -263,8 +289,8 @@ describe('Pruebas del Simulador Táctico', () => {
     const counterSpan = document.getElementById('progressCounter');
     counterSpan.innerHTML = '<i class="fas fa-list-ol"></i> Decisiones: 0';
     
-    context.historial.length = 0;
-    context.historial.push({ letra: 'A' }, { letra: 'B' }, { letra: 'C' });
+    historial.length = 0;
+    historial.push({ letra: 'A' }, { letra: 'B' }, { letra: 'C' });
     
     updateProgressCounter();
     
@@ -273,13 +299,13 @@ describe('Pruebas del Simulador Táctico', () => {
 
   // ---------- PRUEBA 6: Historial de decisiones ----------
   test('El historial debe almacenar las decisiones correctamente', () => {
-    context.historial.length = 0;
-    context.historial.push({ letra: 'A', texto: 'Opción A', tiempo: 5 });
-    context.historial.push({ letra: 'B', texto: 'Opción B', tiempo: 3 });
+    historial.length = 0;
+    historial.push({ letra: 'A', texto: 'Opción A', tiempo: 5 });
+    historial.push({ letra: 'B', texto: 'Opción B', tiempo: 3 });
     
-    expect(context.historial.length).toBe(2);
-    expect(context.historial[0].letra).toBe('A');
-    expect(context.historial[1].tiempo).toBe(3);
+    expect(historial.length).toBe(2);
+    expect(historial[0].letra).toBe('A');
+    expect(historial[1].tiempo).toBe(3);
   });
 
 });
