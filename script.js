@@ -5,7 +5,7 @@
  * Archivo principal del simulador de toma de decisiones.
  * Contiene: sonidos, logs, logros, temas, escenarios (3 largos + 3 cortos),
  * lógica del juego, análisis y feedback.
- * Versión: 2.0.0 (Avance #4)
+ * Versión: 2.0.0 (Avance #4) + BlueTeam + Trazabilidad Avanzada (Avance #6)
  * Autor: López Tirajara
  * ======================================================================
  */
@@ -1069,221 +1069,241 @@ function mostrarPregunta(preg) {
     setTimeout(() => iniciarTemporizador(), 100);
 }
 
+// ======================================================================
+// ========== TRAZABILIDAD AVANZADA (Avance #6) ==========
+// ======================================================================
+
 /**
- * Procesa la elección de una opción por parte del usuario.
- * @param {string} dest - Destino de la opción (nodo o resultado directo)
- * @param {string} letra - Letra de la opción elegida
- * @param {string} texto - Texto de la opción elegida
- * @returns {void}
+ * Genera un UUID v4 (versión 4) para Correlation ID.
+ * @returns {string} UUID en formato xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
  */
-function elegirOpcion(dest, letra, texto) {
-    if(esperando || decisionTomada) return;
-    decisionTomada = true;
-    esperando = true;
-    detenerTemporizador();
-    playSound("click");
-    let tiempoUsado = trainingModeFlag ? 0 : tiemposDificultad[dificultadActual] - tiempoRestante;
-    historial.push({ letra, texto, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
-    currentChosenLetters.push(letra);
-    updateProgressCounter();
-    log('INFO', `Usuario eligió opción ${letra}: "${texto}" → Destino: ${dest}`);
-
-    if (dest === "exito") {
-        log('INFO', 'Resultado directo: EXITO');
-        mostrarFeedback(resultadosBase.exito);
-        return;
-    } else if (dest === "parcial") {
-        log('INFO', 'Resultado directo: PARCIAL');
-        mostrarFeedback(resultadosBase.parcial);
-        return;
-    } else if (dest === "fracaso") {
-        log('INFO', 'Resultado directo: FRACASO');
-        mostrarFeedback(resultadosBase.fracaso);
-        return;
-    }
-
-    const cons = escenarioActivo[dest];
-    if(!cons) {
-        log('ERROR', `Nodo "${dest}" no encontrado.`);
-        mostrarFeedback(resultadosBase.error);
-        return;
-    }
-    log('INFO', `Nodo encontrado: ${dest}, siguiente: ${cons.siguiente}`);
-    mostrarConsecuencia(cons);
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 /**
- * Muestra la consecuencia de una decisión.
- * @param {Object} cons - Objeto consecuencia con texto, gif y siguiente
+ * Crea un log estructurado en formato JSON y lo imprime en consola.
+ * @param {string} level - Nivel del log: 'INFO', 'WARN', 'ERROR'
+ * @param {string} message - Mensaje descriptivo
+ * @param {string} correlationId - UUID para rastrear la acción
+ * @param {Object} [data] - Datos adicionales opcionales (objeto)
+ * @returns {Object} El objeto log completo
+ */
+function createStructuredLog(level, message, correlationId, data = null) {
+    const logEntry = {
+        timestamp: new Date().toISOString(),
+        level: level,
+        correlationId: correlationId,
+        message: message,
+        data: data,
+        service: "Simulador Táctico",
+        version: "1.0.0"
+    };
+    // Imprimir en consola como JSON stringify para que sea legible por máquinas
+    console.log(JSON.stringify(logEntry));
+    return logEntry;
+}
+
+/**
+ * Middleware que envuelve cualquier acción del usuario, asignando un Correlation ID,
+ * registrando el inicio, ejecutando la acción y capturando errores para mostrar
+ * un mensaje seguro al usuario.
+ * @param {string} action - Nombre de la acción (ej. 'click_jugar', 'seleccionar_opcion_A')
+ * @param {Function} callback - Función que ejecuta la lógica real, recibe el correlationId como parámetro
  * @returns {void}
  */
-function mostrarConsecuencia(cons) {
-    const situationBox = document.getElementById("situationBox");
-    situationBox.style.animation = "none";
-    situationBox.offsetHeight;
-    situationBox.style.animation = "slideInLeft 0.5s ease";
-    document.getElementById("situationText").innerHTML = cons.texto;
-    document.getElementById("situationGif").src = cons.gif || gifPlaceholder;
-    document.getElementById("optionsBox").innerHTML = `<div class="loading"><div class="loading-spinner"></div> ANALIZANDO CONSECUENCIAS...</div>`;
-    setTimeout(() => {
-        if (cons.siguiente === "exito") {
-            log('INFO', 'Consecuencia lleva a EXITO');
+function withCorrelation(action, callback) {
+    const correlationId = generateUUID();
+    // Registrar inicio
+    createStructuredLog('INFO', `Iniciando acción: ${action}`, correlationId);
+    try {
+        // Ejecutar la acción
+        callback(correlationId);
+        // Registrar éxito (si no se lanza excepción)
+        createStructuredLog('INFO', `Acción completada: ${action}`, correlationId);
+    } catch (error) {
+        // Registrar error
+        createStructuredLog('ERROR', `Error en acción: ${action}`, correlationId, {
+            error: error.message,
+            stack: error.stack
+        });
+        // Mostrar mensaje seguro al usuario
+        alert(`Ocurrió un error. Reporte el código: ${correlationId}`);
+        // También mostrar el error en consola para depuración (opcional)
+        console.error(`[ERROR] ${error.message}`, error);
+    }
+}
+
+// ======================================================================
+// ========== BLUETEAM - VALIDACIÓN Y SANITIZACIÓN DE ENTRADAS (Avance #6) ==========
+// ======================================================================
+
+/**
+ * Sanitiza y valida una entrada de texto del usuario.
+ * Aplica las siguientes reglas:
+ * - Verifica que sea un string.
+ * - Verifica que no exceda la longitud máxima.
+ * - Verifica que solo contenga caracteres permitidos (alfanuméricos, espacios, acentos, puntuación básica).
+ * - Elimina etiquetas HTML y caracteres peligrosos (< >).
+ * - Recorta espacios al inicio y final.
+ * @param {string} input - El texto a validar.
+ * @param {number} maxLength - Longitud máxima permitida (por defecto 100).
+ * @param {RegExp} allowedChars - Patrón de caracteres permitidos (por defecto alfanumérico con acentos, espacios y puntuación básica).
+ * @returns {string} El texto sanitizado, o una cadena vacía si no pasa la validación.
+ */
+function sanitizeInput(input, maxLength = 100, allowedChars = /^[a-zA-Z0-9\sáéíóúüñÑ.,;:!?()\-]+$/) {
+    // 1. Verificar que sea string
+    if (typeof input !== 'string') {
+        createStructuredLog('WARN', 'Entrada rechazada: no es un string', 'system', { inputType: typeof input });
+        return '';
+    }
+
+    // 2. Verificar longitud
+    if (input.length > maxLength) {
+        createStructuredLog('WARN', `Entrada rechazada: excede longitud máxima (${maxLength})`, 'system', { inputLength: input.length });
+        return '';
+    }
+
+    // 3. Verificar caracteres permitidos
+    if (!allowedChars.test(input)) {
+        createStructuredLog('WARN', 'Entrada rechazada: contiene caracteres no permitidos', 'system', { input: input });
+        return '';
+    }
+
+    // 4. Sanitizar: eliminar etiquetas HTML, caracteres < y >, y recortar
+    const sanitized = input
+        .replace(/<[^>]*>/g, '')
+        .replace(/[<>]/g, '')
+        .trim();
+
+    // 5. Si después de sanitizar queda vacío pero original no, rechazar
+    if (sanitized.length === 0 && input.length > 0) {
+        createStructuredLog('WARN', 'Entrada rechazada: después de sanitizar queda vacía', 'system', { input: input });
+        return '';
+    }
+
+    createStructuredLog('INFO', 'Entrada validada y sanitizada correctamente', 'system', { original: input, sanitized: sanitized });
+    return sanitized;
+}
+
+// ======================================================================
+// ========== MODIFICACIONES A LA LÓGICA PRINCIPAL PARA USAR CORRELATION ID Y SANITIZACIÓN ==========
+// ======================================================================
+
+// Guardar referencia a las funciones originales para no perderlas
+const originalElegirOpcion = elegirOpcion;
+
+// Reescribir elegirOpcion para envolver con Correlation ID y sanitizar
+elegirOpcion = function(dest, letra, texto) {
+    // Sanitizar el texto de la opción antes de usarlo
+    const textoSanitizado = sanitizeInput(texto, 50);
+    if (textoSanitizado === '') {
+        // Si el texto no pasa la validación (no debería pasar con los datos del juego), pero por seguridad lo rechazamos.
+        alert('Opción inválida. Reporte el código: SYS-001');
+        return;
+    }
+
+    withCorrelation(`seleccionar_opcion_${letra}`, function(cid) {
+        // Ejecutar la lógica original (pero usando textoSanitizado)
+        if(esperando || decisionTomada) return;
+        decisionTomada = true;
+        esperando = true;
+        detenerTemporizador();
+        playSound("click");
+        let tiempoUsado = trainingModeFlag ? 0 : tiemposDificultad[dificultadActual] - tiempoRestante;
+        historial.push({ letra, texto: textoSanitizado, momento: new Date().toLocaleTimeString(), tiempo: tiempoUsado });
+        currentChosenLetters.push(letra);
+        updateProgressCounter();
+        // Registrar con Correlation ID
+        createStructuredLog('INFO', `Usuario eligió opción ${letra}: "${textoSanitizado}" → Destino: ${dest}`, cid);
+
+        if (dest === "exito") {
+            createStructuredLog('INFO', 'Resultado directo: EXITO', cid);
             mostrarFeedback(resultadosBase.exito);
             return;
-        } else if (cons.siguiente === "parcial") {
-            log('INFO', 'Consecuencia lleva a PARCIAL');
+        } else if (dest === "parcial") {
+            createStructuredLog('INFO', 'Resultado directo: PARCIAL', cid);
             mostrarFeedback(resultadosBase.parcial);
             return;
-        } else if (cons.siguiente === "fracaso") {
-            log('INFO', 'Consecuencia lleva a FRACASO');
+        } else if (dest === "fracaso") {
+            createStructuredLog('INFO', 'Resultado directo: FRACASO', cid);
             mostrarFeedback(resultadosBase.fracaso);
             return;
         }
-        const sig = escenarioActivo[cons.siguiente];
-        if(!sig) {
-            log('ERROR', `Siguiente nodo "${cons.siguiente}" no encontrado.`);
+
+        const cons = escenarioActivo[dest];
+        if(!cons) {
+            createStructuredLog('ERROR', `Nodo "${dest}" no encontrado.`, cid);
             mostrarFeedback(resultadosBase.error);
             return;
         }
-        pasoActual = cons.siguiente;
-        esperando = false;
-        decisionTomada = false;
-        mostrarPregunta(sig);
-    }, 3500);
-}
-
-// ===== ANÁLISIS Y FEEDBACK =====
-
-/**
- * Genera un análisis crítico del desempeño del usuario.
- * @param {Object} final - Objeto resultado final (con tipo, mensaje, etc.)
- * @param {Array} historialDecisiones - Lista de decisiones tomadas
- * @param {number} tiempoPromedio - Tiempo promedio por decisión
- * @param {string} escenarioNombre - Nombre del escenario jugado
- * @returns {string} HTML con el análisis formateado
- */
-function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, escenarioNombre) {
-    let analisis = "";
-    if (final.tipo === "exito") {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
-                        <i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL
-                    </div>`;
-    } else if (final.tipo === "parcial") {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #facc15; margin-bottom: 15px;">
-                        <i class="fas fa-exclamation-triangle"></i> RESULTADO: ÉXITO LIMITADO
-                    </div>`;
-    } else {
-        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #f87171; margin-bottom: 15px;">
-                        <i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO
-                    </div>`;
-    }
-    analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
-    let conclusionTexto = "Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo. ";
-    if (final.tipo === "exito") {
-        conclusionTexto += "La victoria es el resultado de una planificación sólida y una ejecución precisa. Mantenga este nivel de excelencia en futuras misiones. El mando confía en su criterio y capacidad para tomar decisiones bajo presión. Siga así, comandante.";
-    } else if (final.tipo === "parcial") {
-        conclusionTexto += "El éxito parcial indica que va por buen camino, pero aún hay margen de mejora. Revise los momentos clave donde pudo haber actuado con más determinación o anticipación. La próxima vez, el triunfo total estará a su alcance. No baje la guardia.";
-    } else {
-        conclusionTexto += "El fracaso es una lección en sí mismo. Identifique los errores tácticos y estratégicos que llevaron a este resultado. La próxima vez, asegúrese de mantener la iniciativa y aplicar la doctrina aprendida. El camino hacia la maestría está pavimentado con experiencias como esta. Levántese y vuelva a intentarlo.";
-    }
-    analisis += `<p><strong>📌 Conclusión:</strong> ${conclusionTexto}</p>`;
-    return analisis;
-}
-
-/**
- * Muestra el feedback final de la simulación.
- * @param {Object} final - Objeto resultado final
- * @returns {void}
- */
-function mostrarFeedback(final) {
-    detenerTemporizador();
-    let tiempos = historial.map(h => h.tiempo).filter(t => t !== undefined);
-    let tiempoPromedio = tiempos.length ? (tiempos.reduce((a,b)=>a+b,0)/tiempos.length).toFixed(1) : 0;
-    let decisionCount = historial.length;
-    checkAchievements(final.tipo, decisionCount, tiempoPromedio, trainingModeFlag);
-    log('INFO', `Simulación finalizada con resultado: ${final.tipo}`);
-
-    document.getElementById("simScreen").style.display = "none";
-    document.getElementById("feedbackScreen").style.display = "block";
-
-    const badge = document.getElementById("resultBadge");
-    if(final.tipo === "exito") {
-        badge.innerHTML = '<i class="fas fa-trophy"></i> VICTORIA TÁCTICA';
-        badge.className = "result-badge result-success";
-        playSound("victory");
-    } else if(final.tipo === "parcial") {
-        badge.innerHTML = '<i class="fas fa-chart-line"></i> ÉXITO PARCIAL';
-        badge.className = "result-badge result-parcial";
-        playSound("failure");
-    } else {
-        badge.innerHTML = '<i class="fas fa-skull-crossbones"></i> MISIÓN NO CUMPLIDA';
-        badge.className = "result-badge result-failure";
-        playSound("failure");
-    }
-
-    document.getElementById("resultGifArea").innerHTML = `<img src="${final.gif}" alt="Resultado">`;
-    document.getElementById("feedbackText").innerHTML = `<div style="text-align: center; font-size: 1.8em; font-weight: bold; margin-bottom: 10px;">${final.mensaje}</div>`;
-
-    let analisisCompleto = generarAnalisisCritico(final, historial, tiempoPromedio, escenarioActivo.nombre);
-    let diffName = dificultadActual === "easy" ? "FÁCIL" : (dificultadActual === "medium" ? "NORMAL" : "DIFÍCIL");
-    analisisCompleto += `<hr><p><strong>⏱️ TIEMPO PROMEDIO POR DECISIÓN:</strong> ${tiempoPromedio} segundos</p>`;
-    analisisCompleto += `<p><strong>📊 DIFICULTAD:</strong> ${diffName}</p>`;
-    analisisCompleto += `<p><strong>📌 ESCENARIO:</strong> ${escenarioActivo.nombre}</p>`;
-
-    document.getElementById("analysisText").innerHTML = analisisCompleto;
-}
-
-/**
- * Vuelve al menú principal recargando la página.
- * @function volverMenu
- * @returns {void}
- */
-function volverMenu() {
-    log('INFO', 'Volviendo al menú principal');
-    location.reload();
-}
-
-/**
- * Reinicia la misma simulación.
- * @function reiniciarMismo
- * @returns {void}
- */
-function reiniciarMismo() {
-    log('INFO', 'Reiniciando la misma simulación');
-    iniciarJuego();
-}
-
-/**
- * Cambia la dificultad de la simulación.
- * @param {string} d - 'easy', 'medium', 'hard'
- * @returns {void}
- */
-function setDifficulty(d) {
-    dificultadActual = d;
-    const badge = document.getElementById("difficultyBadge");
-    if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL';
-    else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL';
-    else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL';
-    log('INFO', `Dificultad cambiada a: ${d}`);
-}
-
-// ========== EVENTOS ==========
-
-/**
- * Manejadores de eventos para los botones del menú y acciones del simulador.
- */
-document.getElementById("startBtn").onclick = () => {
-    log('INFO', 'Usuario hizo clic en JUGAR');
-    document.getElementById("levelMenu").style.display = "block";
-    document.getElementById("startBtn").style.display = "none";
+        createStructuredLog('INFO', `Nodo encontrado: ${dest}, siguiente: ${cons.siguiente}`, cid);
+        mostrarConsecuencia(cons);
+    });
 };
 
+// Ahora envolver el evento de startBtn con Correlation ID
+document.getElementById("startBtn").onclick = function(e) {
+    withCorrelation('click_jugar', function(cid) {
+        log('INFO', 'Usuario hizo clic en JUGAR');
+        document.getElementById("levelMenu").style.display = "block";
+        document.getElementById("startBtn").style.display = "none";
+        createStructuredLog('INFO', 'Menú de niveles mostrado', cid);
+    });
+};
+
+// Envolver también el evento de los botones de nivel (dificultad)
 document.querySelectorAll(".level-btn").forEach(btn => {
-    btn.onclick = () => {
-        setDifficulty(btn.getAttribute("data-difficulty"));
-        iniciarJuego();
+    const originalClick = btn.onclick;
+    btn.onclick = function(e) {
+        const difficulty = btn.getAttribute("data-difficulty");
+        withCorrelation(`seleccionar_dificultad_${difficulty}`, function(cid) {
+            setDifficulty(difficulty);
+            iniciarJuego();
+            createStructuredLog('INFO', `Dificultad seleccionada: ${difficulty}`, cid);
+        });
     };
 });
+
+// ======================================================================
+// ========== MANEJADOR GLOBAL DE ERRORES (Catch-all) ==========
+// ======================================================================
+
+// Capturar errores no controlados a nivel global para mostrar mensaje seguro
+window.addEventListener('error', function(event) {
+    const correlationId = generateUUID();
+    createStructuredLog('ERROR', 'Error no controlado en la aplicación', correlationId, {
+        message: event.message,
+        filename: event.filename,
+        lineno: event.lineno,
+        colno: event.colno,
+        stack: event.error ? event.error.stack : null
+    });
+    alert(`Ocurrió un error inesperado. Reporte el código: ${correlationId}`);
+    // Prevenir que el error se muestre en consola (opcional)
+    // event.preventDefault();
+});
+
+// Capturar promesas rechazadas no manejadas
+window.addEventListener('unhandledrejection', function(event) {
+    const correlationId = generateUUID();
+    createStructuredLog('ERROR', 'Promesa rechazada no manejada', correlationId, {
+        reason: event.reason ? event.reason.toString() : 'sin razón'
+    });
+    alert(`Ocurrió un error en una operación asíncrona. Reporte el código: ${correlationId}`);
+    event.preventDefault();
+});
+
+// ======================================================================
+// ========== EVENTOS ORIGINALES QUE NO SE MODIFICAN (pero se mantienen) ==========
+// ======================================================================
+
+// Los siguientes event listeners se mantienen igual, pero ahora con las nuevas funcionalidades
+// ya que los reemplazamos arriba. Solo conservamos los que no hemos envuelto.
 
 document.getElementById("themeToggleBtn").onclick = () => {
     const isDark = document.body.classList.contains("dark");
@@ -1319,6 +1339,10 @@ document.getElementById("soundToggleBtn").onclick = () => {
     if (soundEnabled) initAudio();
 };
 document.getElementById("ambientSoundBtn").onclick = toggleAmbientSound;
+
+// ======================================================================
+// ========== INICIALIZACIÓN ==========
+// ======================================================================
 
 loadColorTheme();
 if (localStorage.getItem("darkMode") === "true") document.body.classList.add("dark");
