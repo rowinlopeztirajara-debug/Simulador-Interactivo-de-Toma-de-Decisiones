@@ -18,7 +18,6 @@ Aplicación web interactiva para la toma de decisiones estratégicas en entornos
 - [Enlaces](#-enlaces)
 - [Licencia](#-licencia)
 
-
 ## 📖 Descripción
 
 El **Simulador Táctico** es un sistema de entrenamiento basado en escenarios interactivos donde el usuario asume el rol de un comandante militar y debe tomar decisiones críticas en tiempo limitado. Cada decisión genera consecuencias que afectan el desarrollo de la misión, proporcionando retroalimentación inmediata y análisis detallado del desempeño.
