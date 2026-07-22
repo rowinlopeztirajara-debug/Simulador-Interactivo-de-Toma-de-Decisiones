@@ -5,7 +5,6 @@ Aplicación web interactiva para la toma de decisiones estratégicas en entornos
 ![prototipo 1](https://github.com/user-attachments/assets/bc8a3687-a782-4afe-9aee-a5ae8a8d9c60)
 
 [![Portada del video](public/portada.png)](https://www.youtube.com/watch?v=jtwspJoaWX8)
----
 
 ## 📋 Tabla de Contenidos
 
@@ -18,8 +17,6 @@ Aplicación web interactiva para la toma de decisiones estratégicas en entornos
 - [Contribución](#-contribución)
 - [Enlaces](#-enlaces)
 - [Licencia](#-licencia)
-
----
 
 ## 📖 Descripción
 
@@ -34,7 +31,6 @@ El **Simulador Táctico** es un sistema de entrenamiento basado en escenarios in
 - 📊 **Análisis detallado** al final de cada simulación.
 - 🔐 **Sanitización de entradas** y **logs estructurados** con Correlation ID.
 
----
 
 ## 🚀 Instalación y Despliegue
 
