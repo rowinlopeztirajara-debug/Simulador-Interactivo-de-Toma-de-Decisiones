@@ -1,15 +1,10 @@
-# Simulador-Interactivo-de-Toma-de-Decisiones
-
-Aplicación web de Simulador Interactivo de Toma de Decisiones ante amenazas.
-
-![prototipo 1](https://github.com/user-attachments/assets/bc8a3687-a782-4afe-9aee-a5ae8a8d9c60)
-
-# 🎯 Simulador Táctico
+# Simulador Interactivo de Toma de Decisiones
 
 Aplicación web interactiva para la toma de decisiones estratégicas en entornos de conflicto, diseñada como herramienta de entrenamiento para personal militar y de seguridad.
 
 ![prototipo 1](https://github.com/user-attachments/assets/bc8a3687-a782-4afe-9aee-a5ae8a8d9c60)
 
+[![Portada del video](public/portada.png)](https://www.youtube.com/watch?v=jtwspJoaWX8)
 ---
 
 ## 📋 Tabla de Contenidos
@@ -66,6 +61,7 @@ cd Simulador-Interactivo-de-Toma-de-Decisiones
 - docker build -t simulador-tactico .
 - docker run -p 8080:80 simulador-tactico
 - Acceder en: http://localhost:8080
+```
 
 ## Diagrama de Arquitectura
 
@@ -91,6 +87,7 @@ graph TD
     Cliente --> Módulo_Central
     Módulo_Central --> Backend
 ```
+
 ## Diagrama de Flujo
 ```mermaid
 flowchart TB
