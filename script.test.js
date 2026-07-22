@@ -8,7 +8,7 @@ const path = require('path');
 beforeEach(() => {
   // Limpiar el documento y crear TODOS los elementos que el script necesita
   document.body.innerHTML = '';
-  
+
   const elementos = [
     'startBtn', 'levelMenu', 'themeToggleBtn', 'tutorialBtn',
     'exitToMenuBtn', 'retryBtn', 'mainMenuBtn', 'openManualBtn',
@@ -18,21 +18,21 @@ beforeEach(() => {
     'resultBadge', 'feedbackText', 'analysisText', 'resultGifArea',
     'progressCounter', 'levelMenu'
   ];
-  
+
   elementos.forEach(id => {
     const el = document.createElement('div');
     el.id = id;
     el.onclick = null;
     document.body.appendChild(el);
   });
-  
+
   document.getElementById('progressCounter').innerHTML = '<i class="fas fa-list-ol"></i> Decisiones: 0';
   document.getElementById('timerDisplay').textContent = '01:00';
   document.getElementById('difficultyBadge').textContent = 'NORMAL';
   document.getElementById('optionsBox').innerHTML = '';
-  
+
   document.querySelectorAll = jest.fn(() => []);
-  
+
   // Simular localStorage
   Object.defineProperty(window, 'localStorage', {
     value: {
@@ -43,7 +43,7 @@ beforeEach(() => {
     },
     writable: true
   });
-  
+
   Object.defineProperty(window, 'sessionStorage', {
     value: {
       getItem: jest.fn(() => null),
@@ -53,14 +53,14 @@ beforeEach(() => {
     },
     writable: true
   });
-  
+
   window.Audio = jest.fn(() => ({
     play: jest.fn(),
     pause: jest.fn(),
     loop: false,
     volume: 0
   }));
-  
+
   window.AudioContext = jest.fn(() => ({
     createOscillator: jest.fn(() => ({
       connect: jest.fn(),
@@ -83,7 +83,7 @@ beforeEach(() => {
     destination: {},
     currentTime: 0
   }));
-  
+
   window.alert = jest.fn();
 });
 
@@ -150,10 +150,21 @@ const fn = new Function('context', `
   const Audio = context.Audio;
   const alert = context.alert;
   const console = context.console;
-  
+
+  // ========================================
+  // 0. Stubs para evitar errores antes de que el script las defina
+  // ========================================
+  function volverMenu() {}
+  function reiniciarMismo() {}
+
+  // ========================================
+  // 1. Ejecutar el script (aquí se definen las funciones reales)
+  // ========================================
   ${scriptContent}
-  
-  // Exponer las funciones al contexto
+
+  // ========================================
+  // 2. Exportar las funciones reales (ya sobrescribieron los stubs)
+  // ========================================
   context.shuffleOptions = shuffleOptions;
   context.prepararEscenario = prepararEscenario;
   context.checkAchievements = checkAchievements;
@@ -165,13 +176,14 @@ const fn = new Function('context', `
   context.getAchievementDesc = getAchievementDesc;
   context.resultadosBase = resultadosBase;
   context.elegirOpcion = elegirOpcion;
-  
-  // Exponer totalWins con getter/setter para que refleje el valor real
+  context.volverMenu = volverMenu;
+  context.reiniciarMismo = reiniciarMismo;
+
+  // Exponer totalWins con getter/setter
   Object.defineProperty(context, 'totalWins', {
     get: () => totalWins,
     set: (val) => { totalWins = val; }
   });
-  // Función para reiniciar totalWins a 0
   context.resetTotalWins = () => { totalWins = 0; };
 `);
 
@@ -223,9 +235,9 @@ describe('Pruebas del Simulador Táctico', () => {
       { texto: 'Opción 2', destino: 'dest2' },
       { texto: 'Opción 3', destino: 'dest3' }
     ];
-    
+
     const resultado = shuffleOptions(opciones);
-    
+
     expect(resultado.length).toBe(3);
     const letras = resultado.map(o => o.letra);
     expect(letras).toContain('A');
@@ -247,9 +259,9 @@ describe('Pruebas del Simulador Táctico', () => {
         ]
       }
     };
-    
+
     const escenarioPreparado = prepararEscenario(escenarioMock);
-    
+
     expect(escenarioPreparado).toBeDefined();
     expect(escenarioPreparado.p1.opciones).toBeDefined();
     expect(escenarioPreparado.p1.opciones.length).toBe(2);
@@ -260,14 +272,13 @@ describe('Pruebas del Simulador Táctico', () => {
 
   // ---------- PRUEBA 3: checkAchievements (Primera Victoria) ----------
   test('checkAchievements: debe desbloquear "Primera Victoria" al ganar', () => {
-    // Ya reiniciamos en beforeEach, pero por si acaso
     achievements.firstVictory = false;
     context.totalWins = 0;
-    
+
     checkAchievements('exito', 3, 5, false);
-    
+
     expect(achievements.firstVictory).toBe(true);
-    expect(context.totalWins).toBe(1);   // <-- Ahora usa el getter
+    expect(context.totalWins).toBe(1);
   });
 
   // ---------- PRUEBA 4: checkAchievements (Estratega) ----------
@@ -275,25 +286,25 @@ describe('Pruebas del Simulador Táctico', () => {
     achievements.firstVictory = false;
     achievements.strategist = false;
     context.totalWins = 0;
-    
+
     checkAchievements('exito', 3, 5, false);
     checkAchievements('exito', 3, 5, false);
     checkAchievements('exito', 3, 5, false);
-    
+
     expect(achievements.strategist).toBe(true);
-    expect(context.totalWins).toBe(3);   // <-- Ahora usa el getter
+    expect(context.totalWins).toBe(3);
   });
 
   // ---------- PRUEBA 5: updateProgressCounter ----------
   test('updateProgressCounter: debe actualizar el contador de decisiones en el DOM', () => {
     const counterSpan = document.getElementById('progressCounter');
     counterSpan.innerHTML = '<i class="fas fa-list-ol"></i> Decisiones: 0';
-    
+
     historial.length = 0;
     historial.push({ letra: 'A' }, { letra: 'B' }, { letra: 'C' });
-    
+
     updateProgressCounter();
-    
+
     expect(counterSpan.innerHTML).toContain('Decisiones: 3');
   });
 
@@ -302,7 +313,7 @@ describe('Pruebas del Simulador Táctico', () => {
     historial.length = 0;
     historial.push({ letra: 'A', texto: 'Opción A', tiempo: 5 });
     historial.push({ letra: 'B', texto: 'Opción B', tiempo: 3 });
-    
+
     expect(historial.length).toBe(2);
     expect(historial[0].letra).toBe('A');
     expect(historial[1].tiempo).toBe(3);
