@@ -1447,6 +1447,30 @@ let currentChosenLetters = [];
 /** @type {boolean} Indica si ya se mostró el aviso de opciones aleatorias */
 let avisoMostrado = false;
 
+// ============================================================
+// FUNCIONES DE NAVEGACIÓN (movidas aquí para evitar ReferenceError)
+// ============================================================
+
+/**
+ * Vuelve al menú principal recargando la página.
+ * @function volverMenu
+ * @returns {void}
+ */
+function volverMenu() {
+    log('INFO', 'Volviendo al menú principal');
+    location.reload();
+}
+
+/**
+ * Reinicia la misma simulación.
+ * @function reiniciarMismo
+ * @returns {void}
+ */
+function reiniciarMismo() {
+    log('INFO', 'Reiniciando la misma simulación');
+    iniciarJuego();
+}
+
 /**
  * Actualiza el contador de decisiones en la interfaz.
  * @function updateProgressCounter
