@@ -60,7 +60,6 @@ cd Simulador-Interactivo-de-Toma-de-Decisiones
 ```
 
 ## Diagrama de Arquitectura
-
 ```mermaid
 graph TD
     subgraph Cliente ["🔷 Cliente"]
