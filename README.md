@@ -1,10 +1,63 @@
-# Simulador-Interactivo-de-Toma-de-Decisiones
+# Simulador Interactivo de Toma de Decisiones
 
-Aplicación web de Simulador Interactivo de Toma de Decisiones ante amenazas.
+Aplicación web interactiva para la toma de decisiones estratégicas en entornos de conflicto, diseñada como herramienta de entrenamiento para personal militar y de seguridad.
 
 ![prototipo 1](https://github.com/user-attachments/assets/bc8a3687-a782-4afe-9aee-a5ae8a8d9c60)
 
 [![Portada del video](public/portada.png)](https://www.youtube.com/watch?v=jtwspJoaWX8)
+
+## 📋 Tabla de Contenidos
+
+- [Descripción](#-descripción)
+- [Instalación y Despliegue](#-instalación-y-despliegue)
+- [Health Check](#-health-check)
+- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Documentación](#-documentación)
+- [Contribución](#-contribución)
+- [Enlaces](#-enlaces)
+- [Licencia](#-licencia)
+
+## 📖 Descripción
+
+El **Simulador Táctico** es un sistema de entrenamiento basado en escenarios interactivos donde el usuario asume el rol de un comandante militar y debe tomar decisiones críticas en tiempo limitado. Cada decisión genera consecuencias que afectan el desarrollo de la misión, proporcionando retroalimentación inmediata y análisis detallado del desempeño.
+
+**Características principales:**
+- 🧠 **Árbol de decisión dinámico** con múltiples rutas y resultados.
+- ⏱️ **Temporizador por dificultad** (Fácil: 90s, Normal: 60s, Difícil: 45s).
+- 🏅 **Sistema de logros** que reconoce hitos del jugador.
+- 🎨 **Temas militares venezolanos** (Llanero, Selva, Costa, Ceremonial).
+- 🔊 **Sonidos ambientales y efectos** para inmersión.
+- 📊 **Análisis detallado** al final de cada simulación.
+- 🔐 **Sanitización de entradas** y **logs estructurados** con Correlation ID.
+
+
+## 🚀 Instalación y Despliegue
+
+### Requisitos previos
+- Node.js (v20 o superior)
+- npm o yarn
+- Docker (opcional, para despliegue local)
+
+### Instalación local
+
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/rowinlopeztirajara-debug/Simulador-Interactivo-de-Toma-de-Decisiones.git
+cd Simulador-Interactivo-de-Toma-de-Decisiones
+
+2. Instalar dependencias:
+- npm install
+
+3. Ejecutar en modo desarrollo:
+- npm run dev
+
+4. Abrir en el navegador: http://localhost:3000
+- Despliegue con Docker
+- docker build -t simulador-tactico .
+- docker run -p 8080:80 simulador-tactico
+- Acceder en: http://localhost:8080
+```
 
 ## Diagrama de Arquitectura
 
@@ -30,6 +83,7 @@ graph TD
     Cliente --> Módulo_Central
     Módulo_Central --> Backend
 ```
+
 ## Diagrama de Flujo
 ```mermaid
 flowchart TB
