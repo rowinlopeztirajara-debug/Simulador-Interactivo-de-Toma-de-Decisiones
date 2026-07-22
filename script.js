@@ -1448,13 +1448,11 @@ let currentChosenLetters = [];
 let avisoMostrado = false;
 
 // ============================================================
-// FUNCIONES DE NAVEGACIÓN (movidas aquí para evitar ReferenceError)
+// FUNCIONES DE NAVEGACIÓN Y CONTROL (movidas al inicio)
 // ============================================================
 
 /**
  * Vuelve al menú principal recargando la página.
- * @function volverMenu
- * @returns {void}
  */
 function volverMenu() {
     log('INFO', 'Volviendo al menú principal');
@@ -1463,12 +1461,23 @@ function volverMenu() {
 
 /**
  * Reinicia la misma simulación.
- * @function reiniciarMismo
- * @returns {void}
  */
 function reiniciarMismo() {
     log('INFO', 'Reiniciando la misma simulación');
     iniciarJuego();
+}
+
+/**
+ * Cambia la dificultad de la simulación.
+ * @param {string} d - 'easy', 'medium', 'hard'
+ */
+function setDifficulty(d) {
+    dificultadActual = d;
+    const badge = document.getElementById("difficultyBadge");
+    if(d === "easy") badge.innerHTML = '<i class="fas fa-seedling"></i> FÁCIL';
+    else if(d === "medium") badge.innerHTML = '<i class="fas fa-chart-line"></i> NORMAL';
+    else badge.innerHTML = '<i class="fas fa-skull"></i> DIFÍCIL';
+    log('INFO', `Dificultad cambiada a: ${d}`);
 }
 
 /**
