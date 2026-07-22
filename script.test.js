@@ -153,7 +153,6 @@ const fn = new Function('context', `
   
   ${scriptContent}
   
-  // Exponer las funciones al contexto
   context.shuffleOptions = shuffleOptions;
   context.prepararEscenario = prepararEscenario;
   context.checkAchievements = checkAchievements;
@@ -165,13 +164,13 @@ const fn = new Function('context', `
   context.getAchievementDesc = getAchievementDesc;
   context.resultadosBase = resultadosBase;
   context.elegirOpcion = elegirOpcion;
+  context.volverMenu = volverMenu;           
+  context.reiniciarMismo = reiniciarMismo;    
   
-  // Exponer totalWins con getter/setter para que refleje el valor real
   Object.defineProperty(context, 'totalWins', {
     get: () => totalWins,
     set: (val) => { totalWins = val; }
   });
-  // Función para reiniciar totalWins a 0
   context.resetTotalWins = () => { totalWins = 0; };
 `);
 
