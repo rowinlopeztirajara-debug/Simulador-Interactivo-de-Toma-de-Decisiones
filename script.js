@@ -126,7 +126,7 @@ function toggleAmbientSound() {
     if (btn) btn.innerHTML = ambientSoundEnabled ? '<i class="fas fa-head-side-vr"></i> Ambiente ON' : '<i class="fas fa-head-side-vr"></i> Ambiente OFF';
 }
 
-// ========== LOGGING CENTRALIZADO (Tarea 2) ==========
+// ========== LOGGING CENTRALIZADO ==========
 
 /**
  * Registra un mensaje en la consola con nivel y timestamp.
@@ -398,21 +398,9 @@ const escenarioFrontera = {
             { texto: "Enviar negociadores", destino: "consA3" }
         ]
     },
-    consA1: {
-        texto: "Refuerzos aéreos llegarán en 20 minutos. Sus patrullas detectan movimiento enemigo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "Los drones destruyen un depósito de munición, pero el enemigo responde con fuego de mortero. 3 heridos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983486183-91576fe8-f8b8-43c7-88cd-ce72c3bfe448.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "Los negociadores son tomados como rehenes. La situación se vuelve crítica.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
-        siguiente: "p2c"
-    },
+    consA1: { texto: "Refuerzos aéreos llegarán en 20 minutos. Sus patrullas detectan movimiento enemigo.", gif: gifPlaceholder, siguiente: "p2" },
+    consA2: { texto: "Los drones destruyen un depósito de munición, pero el enemigo responde con fuego de mortero. 3 heridos.", gif: gifPlaceholder, siguiente: "p2b" },
+    consA3: { texto: "Los negociadores son tomados como rehenes. La situación se vuelve crítica.", gif: gifPlaceholder, siguiente: "p2c" },
     p2: {
         texto: "Refuerzos en camino. La columna enemiga avanza rápidamente. ¿Qué ordena?",
         gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
@@ -422,21 +410,9 @@ const escenarioFrontera = {
             { texto: "Evacuar el puesto", destino: "consB3" }
         ]
     },
-    consB1: {
-        texto: "Los francotiradores eliminan a dos cabecillas. El enemigo se desorganiza.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987009380-f979372a-73aa-4507-b7a9-4452f28b2f1b.gif",
-        siguiente: "p3"
-    },
-    consB2: {
-        texto: "La espera permite al enemigo atrincherarse. La misión se complica.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
-        siguiente: "p3b"
-    },
-    consB3: {
-        texto: "La retirada es ordenada, pero se pierde terreno estratégico.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783365127440-bd0879cf-4085-46d7-9d82-27bac1b78095.gif",
-        siguiente: "p3c"
-    },
+    consB1: { texto: "Los francotiradores eliminan a dos cabecillas. El enemigo se desorganiza.", gif: gifPlaceholder, siguiente: "p3" },
+    consB2: { texto: "La espera permite al enemigo atrincherarse. La misión se complica.", gif: gifPlaceholder, siguiente: "p3b" },
+    consB3: { texto: "La retirada es ordenada, pero se pierde terreno estratégico.", gif: gifPlaceholder, siguiente: "p3c" },
     p2b: {
         texto: "Tras el bombardeo, el enemigo se repliega a una cueva cercana. ¿Qué acción toma?",
         gif: "https://www.image2url.com/r2/default/gifs/1782422719699-eed1c881-f570-4339-8ebd-679e3ed187e3.gif",
@@ -446,21 +422,9 @@ const escenarioFrontera = {
             { texto: "Solicitar bombardeo aéreo", destino: "consC3" }
         ]
     },
-    consC1: {
-        texto: "Asalto exitoso, 2 bajas propias. Capturan documentos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "p4"
-    },
-    consC2: {
-        texto: "Negociación tensa: 10 enemigos se rinden, otros huyen.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "p4b"
-    },
-    consC3: {
-        texto: "El bombardeo destruye la cueva, pero daña un oleoducto cercano.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "p4c"
-    },
+    consC1: { texto: "Asalto exitoso, 2 bajas propias. Capturan documentos.", gif: gifPlaceholder, siguiente: "p4" },
+    consC2: { texto: "Negociación tensa: 10 enemigos se rinden, otros huyen.", gif: gifPlaceholder, siguiente: "p4b" },
+    consC3: { texto: "El bombardeo destruye la cueva, pero daña un oleoducto cercano.", gif: gifPlaceholder, siguiente: "p4c" },
     p2c: {
         texto: "Los rehenes (3 soldados) están en poder del enemigo. ¿Qué prioriza?",
         gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif",
@@ -469,16 +433,8 @@ const escenarioFrontera = {
             { texto: "Negociar la liberación", destino: "consD2" }
         ]
     },
-    consD1: {
-        texto: "Rescate exitoso, pero un soldado resulta herido. El enemigo huye.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif",
-        siguiente: "p5"
-    },
-    consD2: {
-        texto: "Negociación larga: liberan a los rehenes, pero el enemigo obtiene armamento.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
-        siguiente: "p5b"
-    },
+    consD1: { texto: "Rescate exitoso, pero un soldado resulta herido. El enemigo huye.", gif: gifPlaceholder, siguiente: "p5" },
+    consD2: { texto: "Negociación larga: liberan a los rehenes, pero el enemigo obtiene armamento.", gif: gifPlaceholder, siguiente: "p5b" },
     p3: {
         texto: "El enemigo se reagrupa en una colina. Tiene unos 100 efectivos. ¿Qué estrategia emplea?",
         gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
@@ -487,16 +443,8 @@ const escenarioFrontera = {
             { texto: "Bombardeo de artillería", destino: "consE2" }
         ]
     },
-    consE1: {
-        texto: "Ataque sorpresa logra romper la defensa enemiga. Avance significativo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif",
-        siguiente: "p6"
-    },
-    consE2: {
-        texto: "El bombardeo causa pánico y deserción masiva. El enemigo se rinde.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "exito"
-    },
+    consE1: { texto: "Ataque sorpresa logra romper la defensa enemiga. Avance significativo.", gif: gifPlaceholder, siguiente: "p6" },
+    consE2: { texto: "El bombardeo causa pánico y deserción masiva. El enemigo se rinde.", gif: gifPlaceholder, siguiente: "exito" },
     p3b: {
         texto: "El enemigo atrincherado lanza un contraataque. ¿Cómo responde?",
         gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
@@ -505,16 +453,8 @@ const escenarioFrontera = {
             { texto: "Defensa firme con morteros", destino: "consF2" }
         ]
     },
-    consF1: {
-        texto: "Retirada ordenada, pero pierde terreno.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif",
-        siguiente: "p6b"
-    },
-    consF2: {
-        texto: "Repelen ataque con 10 bajas enemigas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "parcial"
-    },
+    consF1: { texto: "Retirada ordenada, pero pierde terreno.", gif: gifPlaceholder, siguiente: "p6b" },
+    consF2: { texto: "Repelen ataque con 10 bajas enemigas.", gif: gifPlaceholder, siguiente: "parcial" },
     p3c: {
         texto: "El tiempo perdido permitió al enemigo recibir suministros. ¿Qué orden da?",
         gif: "https://www.image2url.com/r2/default/gifs/1782527878625-f56705c2-916d-4906-9d0a-619dbede7fea.gif",
@@ -523,16 +463,8 @@ const escenarioFrontera = {
             { texto: "Solicitar alto el fuego", destino: "consG2" }
         ]
     },
-    consG1: {
-        texto: "Destruyen convoy enemigo. Golpe de gracia.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "exito"
-    },
-    consG2: {
-        texto: "Alto el fuego rechazado. El enemigo ataca con más fuerza.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531421224-b6b7b048-d64b-4b1b-a9a6-ebf19f9116dd.gif",
-        siguiente: "fracaso"
-    },
+    consG1: { texto: "Destruyen convoy enemigo. Golpe de gracia.", gif: gifPlaceholder, siguiente: "exito" },
+    consG2: { texto: "Alto el fuego rechazado. El enemigo ataca con más fuerza.", gif: gifPlaceholder, siguiente: "fracaso" },
     p4: {
         texto: "Los documentos capturados revelan un plan de ataque contra una ciudad cercana. ¿Qué hace?",
         gif: "https://www.image2url.com/r2/default/gifs/1783911485917-3508f407-c88a-4aa6-a8bb-2d5bf4b4d2fc.gif",
@@ -541,16 +473,8 @@ const escenarioFrontera = {
             { texto: "Emboscar células enemigas", destino: "consH2" }
         ]
     },
-    consH1: {
-        texto: "Evacuación exitosa. La ciudad está a salvo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344602151-3c4d5460-9067-4a68-9410-9517d8f30190.gif",
-        siguiente: "exito"
-    },
-    consH2: {
-        texto: "Emboscada elimina a 15 terroristas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "exito"
-    },
+    consH1: { texto: "Evacuación exitosa. La ciudad está a salvo.", gif: gifPlaceholder, siguiente: "exito" },
+    consH2: { texto: "Emboscada elimina a 15 terroristas.", gif: gifPlaceholder, siguiente: "exito" },
     p4b: {
         texto: "Los que huyeron se refugian en una aldea. ¿Cómo procede?",
         gif: "https://www.image2url.com/r2/default/gifs/1782528486694-e7dd9a4b-f6b9-44d8-87cd-26def7ed3f6a.gif",
@@ -559,16 +483,8 @@ const escenarioFrontera = {
             { texto: "Asalto directo", destino: "consI2" }
         ]
     },
-    consI1: {
-        texto: "Capturan a los líderes. Operación exitosa.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "exito"
-    },
-    consI2: {
-        texto: "Asalto violento, muchos heridos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "parcial"
-    },
+    consI1: { texto: "Capturan a los líderes. Operación exitosa.", gif: gifPlaceholder, siguiente: "exito" },
+    consI2: { texto: "Asalto violento, muchos heridos.", gif: gifPlaceholder, siguiente: "parcial" },
     p4c: {
         texto: "El oleoducto dañado provoca un incendio. ¿Cuál es su prioridad?",
         gif: "https://www.image2url.com/r2/default/gifs/1782528888880-87cd4af4-a26d-40b6-a86d-c4c57ee91051.gif",
@@ -577,16 +493,8 @@ const escenarioFrontera = {
             { texto: "Abandonar zona", destino: "consJ2" }
         ]
     },
-    consJ1: {
-        texto: "Fuego controlado. Daño limitado.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782530678880-d64a5c4e-45f9-49ec-bfea-6b809b68194c.gif",
-        siguiente: "parcial"
-    },
-    consJ2: {
-        texto: "El fuego se expande y causa una crisis diplomática.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    },
+    consJ1: { texto: "Fuego controlado. Daño limitado.", gif: gifPlaceholder, siguiente: "parcial" },
+    consJ2: { texto: "El fuego se expande y causa una crisis diplomática.", gif: gifPlaceholder, siguiente: "fracaso" },
     p5: {
         texto: "El enemigo fugitivo busca refugio en zona montañosa. ¿Qué táctica usa?",
         gif: "https://www.image2url.com/r2/default/gifs/1782531182749-59b00bfd-de6c-41b5-88f3-36a976c35724.gif",
@@ -595,16 +503,8 @@ const escenarioFrontera = {
             { texto: "Bloqueo de rutas", destino: "consK2" }
         ]
     },
-    consK1: {
-        texto: "Capturan al líder. Fin de la amenaza.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif",
-        siguiente: "exito"
-    },
-    consK2: {
-        texto: "El enemigo se rinde por falta de suministros.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "exito"
-    },
+    consK1: { texto: "Capturan al líder. Fin de la amenaza.", gif: gifPlaceholder, siguiente: "exito" },
+    consK2: { texto: "El enemigo se rinde por falta de suministros.", gif: gifPlaceholder, siguiente: "exito" },
     p5b: {
         texto: "El armamento entregado durante la negociación ahora es usado en su contra. ¿Cómo se defiende?",
         gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
@@ -613,16 +513,8 @@ const escenarioFrontera = {
             { texto: "Mediación internacional", destino: "consL2" }
         ]
     },
-    consL1: {
-        texto: "Ataque exitoso. Recuperan armamento.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif",
-        siguiente: "parcial"
-    },
-    consL2: {
-        texto: "Mediación fracasa. Escalada del conflicto.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531421224-b6b7b048-d64b-4b1b-a9a6-ebf19f9116dd.gif",
-        siguiente: "fracaso"
-    },
+    consL1: { texto: "Ataque exitoso. Recuperan armamento.", gif: gifPlaceholder, siguiente: "parcial" },
+    consL2: { texto: "Mediación fracasa. Escalada del conflicto.", gif: gifPlaceholder, siguiente: "fracaso" },
     p6: {
         texto: "Operación casi finalizada. Enemigo pide tregua. ¿Acepta?",
         gif: "https://www.image2url.com/r2/default/gifs/1782531421224-b6b7b048-d64b-4b1b-a9a6-ebf19f9116dd.gif",
@@ -644,750 +536,314 @@ const escenarioFrontera = {
 // ===== ESCENARIO 2: DISTURBIOS (largo) =====
 const escenarioDisturbios = {
     nombre: "Control de Orden Público",
-    p1: {
-        texto: "Manifestaciones violentas en el centro. Grupos encapuchados atacan comercios. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782532269712-58b416aa-210b-4ff5-b911-bbcb72f14a1f.gif",
+    p1: { texto: "Manifestaciones violentas en el centro. Grupos encapuchados atacan comercios. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1782532269712-58b416aa-210b-4ff5-b911-bbcb72f14a1f.gif",
         opciones_raw: [
             { texto: "Desplegar antimotines", destino: "consA1" },
             { texto: "Dialogar con líderes", destino: "consA2" },
             { texto: "Solicitar refuerzos y esperar", destino: "consA3" }
-        ]
-    },
-    consA1: {
-        texto: "Antimotines contienen disturbios. 5 detenidos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "Diálogo calma ánimos temporalmente. Líderes piden 24h.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "Espera permite saqueos masivos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196826763-436af878-4736-4e5c-aaf8-457a852714ae.gif",
-        siguiente: "p2c"
-    },
-    p2: {
-        texto: "Enfrentamientos escalan. Lanzan cócteles molotov. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782532586728-669b649e-cbdb-444a-931d-8dedb36acdd4.gif",
+        ] },
+    consA1: { texto: "Antimotines contienen disturbios. 5 detenidos.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "p2" },
+    consA2: { texto: "Diálogo calma ánimos temporalmente. Líderes piden 24h.", gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif", siguiente: "p2b" },
+    consA3: { texto: "Espera permite saqueos masivos.", gif: "https://www.image2url.com/r2/default/gifs/1783196826763-436af878-4736-4e5c-aaf8-457a852714ae.gif", siguiente: "p2c" },
+    p2: { texto: "Enfrentamientos escalan. Lanzan cócteles molotov. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1782532586728-669b649e-cbdb-444a-931d-8dedb36acdd4.gif",
         opciones_raw: [
             { texto: "Gas lacrimógeno", destino: "consB1" },
             { texto: "Retirarse y esperar", destino: "consB2" },
             { texto: "Negociar nuevamente", destino: "consB3" }
-        ]
-    },
-    consB1: {
-        texto: "Gas dispersa multitud, varios heridos. Situación se calma.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346995635-05421d7e-c3ff-4934-a228-8a679571a5b1.gif",
-        siguiente: "p3"
-    },
-    consB2: {
-        texto: "Retirada permite que disturbios se extiendan.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif",
-        siguiente: "p3b"
-    },
-    consB3: {
-        texto: "Líderes dialogan, pero radicales no obedecen.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif",
-        siguiente: "p3c"
-    },
-    p2b: {
-        texto: "Durante tregua, radicales se reagrupan. ¿Qué acción?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782533050040-a49e9e92-dda9-4473-b0a8-d851568eb32c.gif",
+        ] },
+    consB1: { texto: "Gas dispersa multitud, varios heridos. Situación se calma.", gif: "https://www.image2url.com/r2/default/gifs/1782346995635-05421d7e-c3ff-4934-a228-8a679571a5b1.gif", siguiente: "p3" },
+    consB2: { texto: "Retirada permite que disturbios se extiendan.", gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif", siguiente: "p3b" },
+    consB3: { texto: "Líderes dialogan, pero radicales no obedecen.", gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif", siguiente: "p3c" },
+    p2b: { texto: "Durante tregua, radicales se reagrupan. ¿Qué acción?", gif: "https://www.image2url.com/r2/default/gifs/1782533050040-a49e9e92-dda9-4473-b0a8-d851568eb32c.gif",
         opciones_raw: [
             { texto: "Operaciones de inteligencia", destino: "consC1" },
             { texto: "Reforzar puntos críticos", destino: "consC2" },
             { texto: "Mantener calma", destino: "consC3" }
-        ]
-    },
-    consC1: {
-        texto: "Identifican y detienen líderes radicales.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
-        siguiente: "p4"
-    },
-    consC2: {
-        texto: "Refuerzo disuade nuevos ataques.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "p4b"
-    },
-    consC3: {
-        texto: "Radicales atacan de nuevo, más daños.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782532269712-58b416aa-210b-4ff5-b911-bbcb72f14a1f.gif",
-        siguiente: "p4c"
-    },
-    p2c: {
-        texto: "Saqueos se extienden. ¿Qué prioriza?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196826763-436af878-4736-4e5c-aaf8-457a852714ae.gif",
+        ] },
+    consC1: { texto: "Identifican y detienen líderes radicales.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif", siguiente: "p4" },
+    consC2: { texto: "Refuerzo disuade nuevos ataques.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "p4b" },
+    consC3: { texto: "Radicales atacan de nuevo, más daños.", gif: "https://www.image2url.com/r2/default/gifs/1782532269712-58b416aa-210b-4ff5-b911-bbcb72f14a1f.gif", siguiente: "p4c" },
+    p2c: { texto: "Saqueos se extienden. ¿Qué prioriza?", gif: "https://www.image2url.com/r2/default/gifs/1783196826763-436af878-4736-4e5c-aaf8-457a852714ae.gif",
         opciones_raw: [
             { texto: "Proteger comercios", destino: "consD1" },
             { texto: "Evacuar civiles", destino: "consD2" }
-        ]
-    },
-    consD1: {
-        texto: "Protegen bienes, pero hay heridos civiles.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "p5"
-    },
-    consD2: {
-        texto: "Evacuación exitosa, pero pérdidas millonarias.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344602151-3c4d5460-9067-4a68-9410-9517d8f30190.gif",
-        siguiente: "p5b"
-    },
-    p3: {
-        texto: "Orden restablecido en mayoría de zonas. ¿Cómo procede?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345971074-4f83ce1f-1ec9-457b-8ff9-3de002a2a5e3.gif",
+        ] },
+    consD1: { texto: "Protegen bienes, pero hay heridos civiles.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "p5" },
+    consD2: { texto: "Evacuación exitosa, pero pérdidas millonarias.", gif: "https://www.image2url.com/r2/default/gifs/1782344602151-3c4d5460-9067-4a68-9410-9517d8f30190.gif", siguiente: "p5b" },
+    p3: { texto: "Orden restablecido en mayoría de zonas. ¿Cómo procede?", gif: "https://www.image2url.com/r2/default/gifs/1782345971074-4f83ce1f-1ec9-457b-8ff9-3de002a2a5e3.gif",
         opciones_raw: [
             { texto: "Mantener presencia policial", destino: "consE1" },
             { texto: "Operaciones de reconstrucción", destino: "consE2" }
-        ]
-    },
-    consE1: {
-        texto: "Presencia evita nuevos disturbios.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "exito"
-    },
-    consE2: {
-        texto: "Reconstrucción gana apoyo ciudadano.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783365586324-73a43515-1971-445b-91f7-5fdc83c2c85c.gif",
-        siguiente: "exito"
-    },
-    p3b: {
-        texto: "Disturbios se expanden a zonas residenciales. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783197416390-467a286d-eba4-431c-a735-17dc8e8cb6e3.gif",
+        ] },
+    consE1: { texto: "Presencia evita nuevos disturbios.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "exito" },
+    consE2: { texto: "Reconstrucción gana apoyo ciudadano.", gif: "https://www.image2url.com/r2/default/gifs/1783365586324-73a43515-1971-445b-91f7-5fdc83c2c85c.gif", siguiente: "exito" },
+    p3b: { texto: "Disturbios se expanden a zonas residenciales. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1783197416390-467a286d-eba4-431c-a735-17dc8e8cb6e3.gif",
         opciones_raw: [
             { texto: "Toque de queda y ejército", destino: "consF1" },
             { texto: "Negociar con líderes vecinales", destino: "consF2" }
-        ]
-    },
-    consF1: {
-        texto: "Toque de queda restablece orden, pero tensiones sociales.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345971074-4f83ce1f-1ec9-457b-8ff9-3de002a2a5e3.gif",
-        siguiente: "parcial"
-    },
-    consF2: {
-        texto: "Negociación reduce violencia, pero radicales persisten.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif",
-        siguiente: "parcial"
-    },
-    p3c: {
-        texto: "Radicales se refugian en barrio popular. ¿Qué acción?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783197843287-33731a3c-e55a-4352-b5b8-510d84fe6be9.gif",
+        ] },
+    consF1: { texto: "Toque de queda restablece orden, pero tensiones sociales.", gif: "https://www.image2url.com/r2/default/gifs/1782345971074-4f83ce1f-1ec9-457b-8ff9-3de002a2a5e3.gif", siguiente: "parcial" },
+    consF2: { texto: "Negociación reduce violencia, pero radicales persisten.", gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif", siguiente: "parcial" },
+    p3c: { texto: "Radicales se refugian en barrio popular. ¿Qué acción?", gif: "https://www.image2url.com/r2/default/gifs/1783197843287-33731a3c-e55a-4352-b5b8-510d84fe6be9.gif",
         opciones_raw: [
             { texto: "Cercar y negociar", destino: "consG1" },
             { texto: "Allanamientos selectivos", destino: "consG2" }
-        ]
-    },
-    consG1: {
-        texto: "Logran rendición de radicales.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "exito"
-    },
-    consG2: {
-        texto: "Allanamientos capturan cabecillas, con heridos civiles.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "fracaso"
-    },
-    p4: {
-        texto: "Líderes detenidos. Estrategia de largo plazo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
+        ] },
+    consG1: { texto: "Logran rendición de radicales.", gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif", siguiente: "exito" },
+    consG2: { texto: "Allanamientos capturan cabecillas, con heridos civiles.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "fracaso" },
+    p4: { texto: "Líderes detenidos. Estrategia de largo plazo.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
         opciones_raw: [
             { texto: "Programas sociales", destino: "consH1" },
             { texto: "Aumentar vigilancia", destino: "consH2" }
-        ]
-    },
-    consH1: {
-        texto: "Programas mejoran convivencia.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783366639611-56a1d1fd-363e-418c-81a2-a22e5377ded2.gif",
-        siguiente: "exito"
-    },
-    consH2: {
-        texto: "Vigilancia reduce delincuencia, pero persiste malestar.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "parcial"
-    },
-    p4b: {
-        texto: "Orden parcial, focos de resistencia. ¿Qué hace?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783209092708-70c459a9-762e-495f-a8cc-e5a25fc24bba.gif",
+        ] },
+    consH1: { texto: "Programas mejoran convivencia.", gif: "https://www.image2url.com/r2/default/gifs/1783366639611-56a1d1fd-363e-418c-81a2-a22e5377ded2.gif", siguiente: "exito" },
+    consH2: { texto: "Vigilancia reduce delincuencia, pero persiste malestar.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "parcial" },
+    p4b: { texto: "Orden parcial, focos de resistencia. ¿Qué hace?", gif: "https://www.image2url.com/r2/default/gifs/1783209092708-70c459a9-762e-495f-a8cc-e5a25fc24bba.gif",
         opciones_raw: [
             { texto: "Intensificar presencia policial", destino: "consI1" },
             { texto: "Diálogos comunitarios", destino: "consI2" }
-        ]
-    },
-    consI1: {
-        texto: "Presión policial disuelve focos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "exito"
-    },
-    consI2: {
-        texto: "Diálogo reduce tensión, requiere más tiempo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif",
-        siguiente: "parcial"
-    },
-    p4c: {
-        texto: "Daños materiales enormes. ¿Prioridad?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783365127440-bd0879cf-4085-46d7-9d82-27bac1b78095.gif",
+        ] },
+    consI1: { texto: "Presión policial disuelve focos.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "exito" },
+    consI2: { texto: "Diálogo reduce tensión, requiere más tiempo.", gif: "https://www.image2url.com/r2/default/gifs/1782345646233-66efe9eb-aa48-4d7e-838e-08baa14ff815.gif", siguiente: "parcial" },
+    p4c: { texto: "Daños materiales enormes. ¿Prioridad?", gif: "https://www.image2url.com/r2/default/gifs/1783365127440-bd0879cf-4085-46d7-9d82-27bac1b78095.gif",
         opciones_raw: [
             { texto: "Reconstruir infraestructura", destino: "consJ1" },
             { texto: "Capturar responsables", destino: "consJ2" }
-        ]
-    },
-    consJ1: {
-        texto: "Reconstrucción gana apoyo ciudadano.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783365586324-73a43515-1971-445b-91f7-5fdc83c2c85c.gif",
-        siguiente: "parcial"
-    },
-    consJ2: {
-        texto: "Capturas exitosas, pero ciudad en ruinas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "fracaso"
-    },
-    p5: {
-        texto: "Heridos civiles necesitan atención. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
+        ] },
+    consJ1: { texto: "Reconstrucción gana apoyo ciudadano.", gif: "https://www.image2url.com/r2/default/gifs/1783365586324-73a43515-1971-445b-91f7-5fdc83c2c85c.gif", siguiente: "parcial" },
+    consJ2: { texto: "Capturas exitosas, pero ciudad en ruinas.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "fracaso" },
+    p5: { texto: "Heridos civiles necesitan atención. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
         opciones_raw: [
             { texto: "Ambulancias y hospital de campaña", destino: "consK1" },
             { texto: "Ayuda humanitaria internacional", destino: "consK2" }
-        ]
-    },
-    consK1: {
-        texto: "Atención médica salva vidas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
-        siguiente: "exito"
-    },
-    consK2: {
-        texto: "Ayuda llega tarde. Se pierden vidas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
-        siguiente: "fracaso"
-    },
-    p5b: {
-        texto: "Economía local afectada por saqueos. ¿Qué prioriza?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783366096157-46388f61-2a4e-4782-8cdc-dcc4991cd400.gif",
+        ] },
+    consK1: { texto: "Atención médica salva vidas.", gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif", siguiente: "exito" },
+    consK2: { texto: "Ayuda llega tarde. Se pierden vidas.", gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif", siguiente: "fracaso" },
+    p5b: { texto: "Economía local afectada por saqueos. ¿Qué prioriza?", gif: "https://www.image2url.com/r2/default/gifs/1783366096157-46388f61-2a4e-4782-8cdc-dcc4991cd400.gif",
         opciones_raw: [
             { texto: "Ayudas a comerciantes", destino: "consL1" },
             { texto: "Reforzar seguridad", destino: "consL2" }
-        ]
-    },
-    consL1: {
-        texto: "Ayudas reactivan comercio.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783366639611-56a1d1fd-363e-418c-81a2-a22e5377ded2.gif",
-        siguiente: "exito"
-    },
-    consL2: {
-        texto: "Seguridad evita nuevos incidentes, pero economía se hunde.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif",
-        siguiente: "parcial"
-    }
+        ] },
+    consL1: { texto: "Ayudas reactivan comercio.", gif: "https://www.image2url.com/r2/default/gifs/1783366639611-56a1d1fd-363e-418c-81a2-a22e5377ded2.gif", siguiente: "exito" },
+    consL2: { texto: "Seguridad evita nuevos incidentes, pero economía se hunde.", gif: "https://www.image2url.com/r2/default/gifs/1782346262358-d817b7ef-d04c-4d68-8fff-bf6f6cb281a4.gif", siguiente: "parcial" }
 };
 
 // ===== ESCENARIO 3: INFILTRACIÓN (largo) =====
 const escenarioInfiltracion = {
     nombre: "Seguridad Perimetral de la Base",
-    p1: {
-        texto: "Sensores detectan intrusión en perímetro norte. Son las 03:00. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783366986807-7f02b8de-dc28-47e3-b21a-ff0bd0e991f6.gif",
+    p1: { texto: "Sensores detectan intrusión en perímetro norte. Son las 03:00. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1783366986807-7f02b8de-dc28-47e3-b21a-ff0bd0e991f6.gif",
         opciones_raw: [
             { texto: "Activar código rojo", destino: "consA1" },
             { texto: "Enviar ronda de investigación", destino: "consA2" },
             { texto: "Revisar cámaras", destino: "consA3" }
-        ]
-    },
-    consA1: {
-        texto: "Código rojo activado. Se sellan salidas. Movimientos en comunicaciones.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783367622347-68317f8e-4352-4059-bc6e-f76a38845151.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "Ronda encuentra brecha, sin intrusos a la vista.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "Mientras revisa cámaras, intrusos acceden a centro de datos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782347472455-df0e84e3-b6f9-48e0-bf53-7ee3089479e1.gif",
-        siguiente: "p2c"
-    },
-    p2: {
-        texto: "Intrusos en área de comunicaciones. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783375103987-9d8ddd4f-337e-4e1e-93c5-cd250cba4890.gif",
+        ] },
+    consA1: { texto: "Código rojo activado. Se sellan salidas. Movimientos en comunicaciones.", gif: "https://www.image2url.com/r2/default/gifs/1783367622347-68317f8e-4352-4059-bc6e-f76a38845151.gif", siguiente: "p2" },
+    consA2: { texto: "Ronda encuentra brecha, sin intrusos a la vista.", gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif", siguiente: "p2b" },
+    consA3: { texto: "Mientras revisa cámaras, intrusos acceden a centro de datos.", gif: "https://www.image2url.com/r2/default/gifs/1782347472455-df0e84e3-b6f9-48e0-bf53-7ee3089479e1.gif", siguiente: "p2c" },
+    p2: { texto: "Intrusos en área de comunicaciones. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1783375103987-9d8ddd4f-337e-4e1e-93c5-cd250cba4890.gif",
         opciones_raw: [
             { texto: "Equipo de reacción rápida", destino: "consB1" },
             { texto: "Aislar área y cortar energía", destino: "consB2" },
             { texto: "Negociar", destino: "consB3" }
-        ]
-    },
-    consB1: {
-        texto: "Capturan dos intrusos, uno escapa a hangares.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif",
-        siguiente: "p3"
-    },
-    consB2: {
-        texto: "Corte de energía dificulta visión. Intrusos se mueven al arsenal.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783375559754-8a6322ff-f7c1-4576-ab55-bd539fae033a.gif",
-        siguiente: "p3b"
-    },
-    consB3: {
-        texto: "No negocian. Se atrincheran con rehenes.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783910911918-e577ec11-5527-4491-abef-077dff4e727e.gif",
-        siguiente: "p3c"
-    },
-    p2b: {
-        texto: "Brecha abierta. No hay señales. ¿Qué acción?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783375814090-07d6626d-a89f-4633-8454-08acabcf1c20.gif",
+        ] },
+    consB1: { texto: "Capturan dos intrusos, uno escapa a hangares.", gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif", siguiente: "p3" },
+    consB2: { texto: "Corte de energía dificulta visión. Intrusos se mueven al arsenal.", gif: "https://www.image2url.com/r2/default/gifs/1783375559754-8a6322ff-f7c1-4576-ab55-bd539fae033a.gif", siguiente: "p3b" },
+    consB3: { texto: "No negocian. Se atrincheran con rehenes.", gif: "https://www.image2url.com/r2/default/gifs/1783910911918-e577ec11-5527-4491-abef-077dff4e727e.gif", siguiente: "p3c" },
+    p2b: { texto: "Brecha abierta. No hay señales. ¿Qué acción?", gif: "https://www.image2url.com/r2/default/gifs/1783375814090-07d6626d-a89f-4633-8454-08acabcf1c20.gif",
         opciones_raw: [
             { texto: "Reparar brecha y aumentar vigilancia", destino: "consC1" },
             { texto: "Patrullas al exterior para buscar rastros", destino: "consC2" },
             { texto: "Desestimar alerta", destino: "consC3" }
-        ]
-    },
-    consC1: {
-        texto: "Reparación completa. Horas después, robaron información clasificada.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783908466997-3f7f7478-a87d-45f8-bfa4-52d32eceb29f.gif",
-        siguiente: "p4"
-    },
-    consC2: {
-        texto: "Patrullas encuentran huellas hacia pueblo cercano.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif",
-        siguiente: "p4b"
-    },
-    consC3: {
-        texto: "Al día siguiente, descubren equipos de espionaje instalados.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782347472455-df0e84e3-b6f9-48e0-bf53-7ee3089479e1.gif",
-        siguiente: "p4c"
-    },
-    p2c: {
-        texto: "Intrusos en centro de datos. ¿Prioridad?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
+        ] },
+    consC1: { texto: "Reparación completa. Horas después, robaron información clasificada.", gif: "https://www.image2url.com/r2/default/gifs/1783908466997-3f7f7478-a87d-45f8-bfa4-52d32eceb29f.gif", siguiente: "p4" },
+    consC2: { texto: "Patrullas encuentran huellas hacia pueblo cercano.", gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif", siguiente: "p4b" },
+    consC3: { texto: "Al día siguiente, descubren equipos de espionaje instalados.", gif: "https://www.image2url.com/r2/default/gifs/1782347472455-df0e84e3-b6f9-48e0-bf53-7ee3089479e1.gif", siguiente: "p4c" },
+    p2c: { texto: "Intrusos en centro de datos. ¿Prioridad?", gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
         opciones_raw: [
             { texto: "Proteger información clasificada", destino: "consD1" },
             { texto: "Capturar intrusos vivos", destino: "consD2" }
-        ]
-    },
-    consD1: {
-        texto: "Desconectan servidores. Información a salvo, intrusos huyen.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909728201-02bafc00-206e-4357-9826-f8887ca0c3be.gif",
-        siguiente: "p5"
-    },
-    consD2: {
-        texto: "Capturan intrusos, pero datos fueron copiados.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif",
-        siguiente: "p5b"
-    },
-    p3: {
-        texto: "Intruso se oculta en hangares. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783910010804-3d40a06b-b328-496c-9615-87ac77dae57c.gif",
+        ] },
+    consD1: { texto: "Desconectan servidores. Información a salvo, intrusos huyen.", gif: "https://www.image2url.com/r2/default/gifs/1783909728201-02bafc00-206e-4357-9826-f8887ca0c3be.gif", siguiente: "p5" },
+    consD2: { texto: "Capturan intrusos, pero datos fueron copiados.", gif: "https://www.image2url.com/r2/default/gifs/1782348023841-7f46763a-54b5-4c8c-976d-1fc0b8951d88.gif", siguiente: "p5b" },
+    p3: { texto: "Intruso se oculta en hangares. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1783910010804-3d40a06b-b328-496c-9615-87ac77dae57c.gif",
         opciones_raw: [
             { texto: "Cercar y usar perros detectores", destino: "consE1" },
             { texto: "Entrar con equipo táctico", destino: "consE2" }
-        ]
-    },
-    consE1: {
-        texto: "Perros detectan intruso escondido. Capturado.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348547013-6b177aa1-f688-4eb4-9738-e0a49f20faf4.gif",
-        siguiente: "p6"
-    },
-    consE2: {
-        texto: "Equipo lo acorrala, pero se inmola con granada.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "p6b"
-    },
-    p3b: {
-        texto: "Intrusos se dirigen al arsenal. ¿Qué acción?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783910253008-4058382c-d12c-4529-a7f7-332b1f198be4.gif",
+        ] },
+    consE1: { texto: "Perros detectan intruso escondido. Capturado.", gif: "https://www.image2url.com/r2/default/gifs/1782348547013-6b177aa1-f688-4eb4-9738-e0a49f20faf4.gif", siguiente: "p6" },
+    consE2: { texto: "Equipo lo acorrala, pero se inmola con granada.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "p6b" },
+    p3b: { texto: "Intrusos se dirigen al arsenal. ¿Qué acción?", gif: "https://www.image2url.com/r2/default/gifs/1783910253008-4058382c-d12c-4529-a7f7-332b1f198be4.gif",
         opciones_raw: [
             { texto: "Bloquear acceso", destino: "consF1" },
             { texto: "Permitirles entrar para atraparlos", destino: "consF2" }
-        ]
-    },
-    consF1: {
-        texto: "Se bloquea acceso. Intrusos se rinden.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "exito"
-    },
-    consF2: {
-        texto: "Al entrar, activan bomba. Explosión y daños.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    },
-    p3c: {
-        texto: "Intrusos tienen rehenes. ¿Cómo procede?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783910911918-e577ec11-5527-4491-abef-077dff4e727e.gif",
+        ] },
+    consF1: { texto: "Se bloquea acceso. Intrusos se rinden.", gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif", siguiente: "exito" },
+    consF2: { texto: "Al entrar, activan bomba. Explosión y daños.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "fracaso" },
+    p3c: { texto: "Intrusos tienen rehenes. ¿Cómo procede?", gif: "https://www.image2url.com/r2/default/gifs/1783910911918-e577ec11-5527-4491-abef-077dff4e727e.gif",
         opciones_raw: [
             { texto: "Negociación", destino: "consG1" },
             { texto: "Asalto relámpago", destino: "consG2" }
-        ]
-    },
-    consG1: {
-        texto: "Negociación exitosa: liberan rehenes a cambio de helicóptero.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783911224650-1c444c7c-dac9-4955-9d92-2c057cde6c18.gif",
-        siguiente: "parcial"
-    },
-    consG2: {
-        texto: "Asalto exitoso, dos rehenes heridos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif",
-        siguiente: "parcial"
-    },
-    p4: {
-        texto: "Información robada incluye planes de defensa. ¿Qué hace?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783911485917-3508f407-c88a-4aa6-a8bb-2d5bf4b4d2fc.gif",
+        ] },
+    consG1: { texto: "Negociación exitosa: liberan rehenes a cambio de helicóptero.", gif: "https://www.image2url.com/r2/default/gifs/1783911224650-1c444c7c-dac9-4955-9d92-2c057cde6c18.gif", siguiente: "parcial" },
+    consG2: { texto: "Asalto exitoso, dos rehenes heridos.", gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif", siguiente: "parcial" },
+    p4: { texto: "Información robada incluye planes de defensa. ¿Qué hace?", gif: "https://www.image2url.com/r2/default/gifs/1783911485917-3508f407-c88a-4aa6-a8bb-2d5bf4b4d2fc.gif",
         opciones_raw: [
             { texto: "Cambiar códigos y protocolos", destino: "consH1" },
             { texto: "Rastrear responsables", destino: "consH2" }
-        ]
-    },
-    consH1: {
-        texto: "Códigos cambiados. Información obsoleta.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783912152265-b1e14acf-cd8e-4e9d-95a1-4b73baf56ff2.gif",
-        siguiente: "exito"
-    },
-    consH2: {
-        texto: "Recuperan información antes de ser vendida.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
-        siguiente: "exito"
-    },
-    p4b: {
-        texto: "Huellas llevan a casa en pueblo. ¿Qué orden?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783913725662-a8c311b7-3f5f-4c3f-a57f-c49b33f06745.gif",
+        ] },
+    consH1: { texto: "Códigos cambiados. Información obsoleta.", gif: "https://www.image2url.com/r2/default/gifs/1783912152265-b1e14acf-cd8e-4e9d-95a1-4b73baf56ff2.gif", siguiente: "exito" },
+    consH2: { texto: "Recuperan información antes de ser vendida.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif", siguiente: "exito" },
+    p4b: { texto: "Huellas llevan a casa en pueblo. ¿Qué orden?", gif: "https://www.image2url.com/r2/default/gifs/1783913725662-a8c311b7-3f5f-4c3f-a57f-c49b33f06745.gif",
         opciones_raw: [
             { texto: "Solicitar orden de allanamiento", destino: "consI1" },
             { texto: "Allanar sin orden por urgencia", destino: "consI2" }
-        ]
-    },
-    consI1: {
-        texto: "Orden llega tarde. Sospechosos huyen.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif",
-        siguiente: "parcial"
-    },
-    consI2: {
-        texto: "Capturan espías y recuperan material.",
-        gif: "https://www.image2url.com/r2/default/gifs/1784743013722-dc12b240-b510-4d2c-9b44-244daa64ec0e.gif",
-        siguiente: "exito"
-    },
-    p4c: {
-        texto: "Equipos de espionaje activos. ¿Qué acción?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784743364576-27269487-99cd-4838-a8f2-84f22d9c7e3a.gif",
+        ] },
+    consI1: { texto: "Orden llega tarde. Sospechosos huyen.", gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif", siguiente: "parcial" },
+    consI2: { texto: "Capturan espías y recuperan material.", gif: "https://www.image2url.com/r2/default/gifs/1784743013722-dc12b240-b510-4d2c-9b44-244daa64ec0e.gif", siguiente: "exito" },
+    p4c: { texto: "Equipos de espionaje activos. ¿Qué acción?", gif: "https://www.image2url.com/r2/default/gifs/1784743364576-27269487-99cd-4838-a8f2-84f22d9c7e3a.gif",
         opciones_raw: [
             { texto: "Desconectar red y auditoría", destino: "consJ1" },
             { texto: "Usar equipos para enviar información falsa", destino: "consJ2" }
-        ]
-    },
-    consJ1: {
-        texto: "Auditoría descubre sistema comprometido. Reemplazan equipos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1784743708420-7bba6165-ec08-4d81-ae33-0adb4dd47962.gif",
-        siguiente: "parcial"
-    },
-    consJ2: {
-        texto: "Contra-inteligencia funciona. Desenmascaran red de espionaje.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
-        siguiente: "exito"
-    },
-    p5: {
-        texto: "Intrusos huyeron, dejaron pistas. ¿Qué prioriza?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784744052661-af744bad-e1dc-4f07-ae06-bf3fe1c4b70d.gif",
+        ] },
+    consJ1: { texto: "Auditoría descubre sistema comprometido. Reemplazan equipos.", gif: "https://www.image2url.com/r2/default/gifs/1784743708420-7bba6165-ec08-4d81-ae33-0adb4dd47962.gif", siguiente: "parcial" },
+    consJ2: { texto: "Contra-inteligencia funciona. Desenmascaran red de espionaje.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif", siguiente: "exito" },
+    p5: { texto: "Intrusos huyeron, dejaron pistas. ¿Qué prioriza?", gif: "https://www.image2url.com/r2/default/gifs/1784744052661-af744bad-e1dc-4f07-ae06-bf3fe1c4b70d.gif",
         opciones_raw: [
             { texto: "Analizar pistas", destino: "consK1" },
             { texto: "Reforzar seguridad", destino: "consK2" }
-        ]
-    },
-    consK1: {
-        texto: "Identifican célula enemiga. Toman medidas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
-        siguiente: "exito"
-    },
-    consK2: {
-        texto: "Seguridad reforzada, pero culpables no capturados.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif",
-        siguiente: "parcial"
-    },
-    p5b: {
-        texto: "Intrusos capturados se niegan a hablar. ¿Qué técnica?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784744567292-43e6718f-24a8-45cd-b65f-e1aa0a229c47.gif",
+        ] },
+    consK1: { texto: "Identifican célula enemiga. Toman medidas.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif", siguiente: "exito" },
+    consK2: { texto: "Seguridad reforzada, pero culpables no capturados.", gif: "https://www.image2url.com/r2/default/gifs/1783374616100-31a1ac15-7113-4671-9e3c-52a1f18b7e25.gif", siguiente: "parcial" },
+    p5b: { texto: "Intrusos capturados se niegan a hablar. ¿Qué técnica?", gif: "https://www.image2url.com/r2/default/gifs/1784744567292-43e6718f-24a8-45cd-b65f-e1aa0a229c47.gif",
         opciones_raw: [
             { texto: "Interrogatorio psicológico", destino: "consL1" },
             { texto: "Ofrecer reducción de condena", destino: "consL2" }
-        ]
-    },
-    consL1: {
-        texto: "Uno confiesa red de apoyo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782348923748-3d33047d-628e-4cd2-af45-757fd4ef6813.gif",
-        siguiente: "exito"
-    },
-    consL2: {
-        texto: "Obtienen información valiosa sobre futuros ataques.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
-        siguiente: "exito"
-    },
-    p6: {
-        texto: "Intruso capturado ofrece información a cambio de asilo. ¿Acepta?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784749020304-ff1311eb-8111-40e2-addb-c71e81b93aae.gif",
+        ] },
+    consL1: { texto: "Uno confiesa red de apoyo.", gif: "https://www.image2url.com/r2/default/gifs/1782348923748-3d33047d-628e-4cd2-af45-757fd4ef6813.gif", siguiente: "exito" },
+    consL2: { texto: "Obtienen información valiosa sobre futuros ataques.", gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif", siguiente: "exito" },
+    p6: { texto: "Intruso capturado ofrece información a cambio de asilo. ¿Acepta?", gif: "https://www.image2url.com/r2/default/gifs/1784749020304-ff1311eb-8111-40e2-addb-c71e81b93aae.gif",
         opciones_raw: [
             { texto: "Aceptar trato", destino: "exito" },
             { texto: "Rechazar y juzgar", destino: "parcial" }
-        ]
-    },
-    p6b: {
-        texto: "Intruso murió en explosión. No hay pistas. ¿Qué concluye?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784749714882-659984bc-4f8b-42cc-b399-005bc8e9d45c.gif",
+        ] },
+    p6b: { texto: "Intruso murió en explosión. No hay pistas. ¿Qué concluye?", gif: "https://www.image2url.com/r2/default/gifs/1784749714882-659984bc-4f8b-42cc-b399-005bc8e9d45c.gif",
         opciones_raw: [
             { texto: "Amenaza continúa. Incrementar vigilancia", destino: "parcial" },
             { texto: "Cerrar caso por falta de pruebas", destino: "fracaso" }
-        ]
-    }
+        ] }
 };
 
 // ===== ESCENARIO 4: CIBERATAQUE (corto - 3 niveles) =====
 const escenarioCiberataque = {
     nombre: "Ciberataque a sistemas de comando",
-    p1: {
-        texto: "Se detecta un acceso no autorizado a la red de comunicaciones de la base. Los sistemas de comando están siendo escaneados. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1784743364576-27269487-99cd-4838-a8f2-84f22d9c7e3a.gif",
+    p1: { texto: "Se detecta un acceso no autorizado a la red de comunicaciones de la base. Los sistemas de comando están siendo escaneados. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1784743364576-27269487-99cd-4838-a8f2-84f22d9c7e3a.gif",
         opciones_raw: [
             { texto: "Aislar físicamente los servidores principales", destino: "consA1" },
             { texto: "Rastrear la fuente del ataque", destino: "consA2" },
             { texto: "Ignorar y esperar a que pase", destino: "consA3" }
-        ]
-    },
-    consA1: {
-        texto: "Los servidores se aíslan, pero se pierde conectividad con las unidades móviles.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909728201-02bafc00-206e-4357-9826-f8887ca0c3be.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "El rastreo identifica una dirección IP extranjera. Se activa el protocolo de contrainteligencia.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "El ataque se propaga a los sistemas de armas. Se pierde control de misiles.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
-        siguiente: "p2c"
-    },
-    p2: {
-        texto: "Las unidades móviles no reciben órdenes. ¿Qué acción prioriza?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
+        ] },
+    consA1: { texto: "Los servidores se aíslan, pero se pierde conectividad con las unidades móviles.", gif: "https://www.image2url.com/r2/default/gifs/1783909728201-02bafc00-206e-4357-9826-f8887ca0c3be.gif", siguiente: "p2" },
+    consA2: { texto: "El rastreo identifica una dirección IP extranjera. Se activa el protocolo de contrainteligencia.", gif: "https://www.image2url.com/r2/default/gifs/1783196346278-d02201ce-0726-4a65-9440-89159f19c955.gif", siguiente: "p2b" },
+    consA3: { texto: "El ataque se propaga a los sistemas de armas. Se pierde control de misiles.", gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif", siguiente: "p2c" },
+    p2: { texto: "Las unidades móviles no reciben órdenes. ¿Qué acción prioriza?", gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
         opciones_raw: [
             { texto: "Restablecer comunicaciones por radio alternativa", destino: "consB1" },
             { texto: "Enviar mensajeros físicos con las órdenes", destino: "consB2" }
-        ]
-    },
-    consB1: {
-        texto: "La radio alternativa funciona. Las unidades recuperan el contacto. El ciberataque es contenido.",
-        gif: "https://www.image2url.com/r2/default/gifs/1783912152265-b1e14acf-cd8e-4e9d-95a1-4b73baf56ff2.gif",
-        siguiente: "exito"
-    },
-    consB2: {
-        texto: "Los mensajeros sufren una emboscada. Las órdenes no llegan a tiempo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "parcial"
-    },
-    p2b: {
-        texto: "La IP rastreada pertenece a un país neutral. ¿Cómo procede?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783911485917-3508f407-c88a-4aa6-a8bb-2d5bf4b4d2fc.gif",
+        ] },
+    consB1: { texto: "La radio alternativa funciona. Las unidades recuperan el contacto. El ciberataque es contenido.", gif: "https://www.image2url.com/r2/default/gifs/1783912152265-b1e14acf-cd8e-4e9d-95a1-4b73baf56ff2.gif", siguiente: "exito" },
+    consB2: { texto: "Los mensajeros sufren una emboscada. Las órdenes no llegan a tiempo.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "parcial" },
+    p2b: { texto: "La IP rastreada pertenece a un país neutral. ¿Cómo procede?", gif: "https://www.image2url.com/r2/default/gifs/1783911485917-3508f407-c88a-4aa6-a8bb-2d5bf4b4d2fc.gif",
         opciones_raw: [
             { texto: "Informar al ministerio de defensa", destino: "consC1" },
             { texto: "Lanzar un contraataque cibernético inmediato", destino: "consC2" }
-        ]
-    },
-    consC1: {
-        texto: "La diplomacia detiene el ataque. Se refuerzan los cortafuegos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
-        siguiente: "exito"
-    },
-    consC2: {
-        texto: "El contraataque daña servidores aliados por error. Escándalo internacional.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    },
-    p2c: {
-        texto: "Los misiles están bajo control enemigo. ¿Qué hace?",
-        gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
+        ] },
+    consC1: { texto: "La diplomacia detiene el ataque. Se refuerzan los cortafuegos.", gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif", siguiente: "exito" },
+    consC2: { texto: "El contraataque daña servidores aliados por error. Escándalo internacional.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "fracaso" },
+    p2c: { texto: "Los misiles están bajo control enemigo. ¿Qué hace?", gif: "https://www.image2url.com/r2/default/gifs/1783909356161-da663261-b80e-41e1-b85c-e1f01bff57e3.gif",
         opciones_raw: [
             { texto: "Autodestruir los misiles remotamente", destino: "consD1" },
             { texto: "Intentar recuperar el control con códigos de emergencia", destino: "consD2" }
-        ]
-    },
-    consD1: {
-        texto: "Los misiles se autodestruyen sin víctimas. Pérdida de material.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "parcial"
-    },
-    consD2: {
-        texto: "Se recupera el control, pero el enemigo copia la tecnología.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    }
+        ] },
+    consD1: { texto: "Los misiles se autodestruyen sin víctimas. Pérdida de material.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "parcial" },
+    consD2: { texto: "Se recupera el control, pero el enemigo copia la tecnología.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "fracaso" }
 };
 
 // ===== ESCENARIO 5: EVACUACIÓN (corto - 4 niveles) =====
 const escenarioEvacuacion = {
     nombre: "Evacuación de personal en zona hostil",
-    p1: {
-        texto: "Un convoy de suministros ha sido emboscado en una carretera secundaria. Hay 5 soldados heridos y el enemigo se acerca. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782345283172-76f29534-8406-4d83-ad45-ead1934cc58e.gif",
+    p1: { texto: "Un convoy de suministros ha sido emboscado en una carretera secundaria. Hay 5 soldados heridos y el enemigo se acerca. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1782345283172-76f29534-8406-4d83-ad45-ead1934cc58e.gif",
         opciones_raw: [
             { texto: "Enviar helicópteros de evacuación médica", destino: "consA1" },
             { texto: "Desplegar un pelotón para asegurar la zona", destino: "consA2" },
             { texto: "Negociar con el enemigo un alto el fuego temporal", destino: "consA3" }
-        ]
-    },
-    consA1: {
-        texto: "Los helicópteros se acercan, pero el enemigo tiene lanzacohetes.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "El pelotón establece un perímetro defensivo. El enemigo se repliega.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "El enemigo acepta negociar, pero pone condiciones políticas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
-        siguiente: "p2c"
-    },
-    p2: {
-        texto: "Los helicópteros son vulnerables. ¿Qué protección envía?",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif",
+        ] },
+    consA1: { texto: "Los helicópteros se acercan, pero el enemigo tiene lanzacohetes.", gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif", siguiente: "p2" },
+    consA2: { texto: "El pelotón establece un perímetro defensivo. El enemigo se repliega.", gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif", siguiente: "p2b" },
+    consA3: { texto: "El enemigo acepta negociar, pero pone condiciones políticas.", gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif", siguiente: "p2c" },
+    p2: { texto: "Los helicópteros son vulnerables. ¿Qué protección envía?", gif: "https://www.image2url.com/r2/default/gifs/1781983346125-6d238762-bb71-465d-aeab-2d3a4c5683f0.gif",
         opciones_raw: [
             { texto: "Drones de combate para supresión de amenazas", destino: "consB1" },
             { texto: "Fuego de artillería contra las posiciones enemigas", destino: "consB2" }
-        ]
-    },
-    consB1: {
-        texto: "Los drones neutralizan los lanzacohetes. Los helicópteros evacúan a los heridos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983486183-91576fe8-f8b8-43c7-88cd-ce72c3bfe448.gif",
-        siguiente: "p3"
-    },
-    consB2: {
-        texto: "La artillería daña accidentalmente el convoy. Más bajas.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "p3b"
-    },
-    p2b: {
-        texto: "El enemigo se reagrupa a 500 metros. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
+        ] },
+    consB1: { texto: "Los drones neutralizan los lanzacohetes. Los helicópteros evacúan a los heridos.", gif: "https://www.image2url.com/r2/default/gifs/1781983486183-91576fe8-f8b8-43c7-88cd-ce72c3bfe448.gif", siguiente: "p3" },
+    consB2: { texto: "La artillería daña accidentalmente el convoy. Más bajas.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "p3b" },
+    p2b: { texto: "El enemigo se reagrupa a 500 metros. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1781982706636-2a9e6056-4485-45db-9894-3d8cce1ff77e.gif",
         opciones_raw: [
             { texto: "Retirar el pelotón con los heridos", destino: "consC1" },
             { texto: "Atacar la posición enemiga antes de que reciban refuerzos", destino: "consC2" }
-        ]
-    },
-    consC1: {
-        texto: "La retirada es ordenada. Todos los soldados se salvan.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif",
-        siguiente: "p3c"
-    },
-    consC2: {
-        texto: "El ataque sorpresa destruye la célula enemiga. Victoria táctica.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "exito"
-    },
-    p2c: {
-        texto: "El enemigo pide liberar prisioneros a cambio del alto el fuego. ¿Acepta?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
+        ] },
+    consC1: { texto: "La retirada es ordenada. Todos los soldados se salvan.", gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif", siguiente: "p3c" },
+    consC2: { texto: "El ataque sorpresa destruye la célula enemiga. Victoria táctica.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "exito" },
+    p2c: { texto: "El enemigo pide liberar prisioneros a cambio del alto el fuego. ¿Acepta?", gif: "https://www.image2url.com/r2/default/gifs/1782344003164-465dec20-0d87-4f0b-a511-fcab79a9b30a.gif",
         opciones_raw: [
             { texto: "Aceptar el intercambio", destino: "consD1" },
             { texto: "Rechazar y rescatar por la fuerza", destino: "consD2" }
-        ]
-    },
-    consD1: {
-        texto: "Se liberan prisioneros, pero la moral baja. Misión cumplida a medias.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif",
-        siguiente: "parcial"
-    },
-    consD2: {
-        texto: "El rescate es exitoso, pero dos soldados mueren en la operación.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif",
-        siguiente: "fracaso"
-    },
-    p3: {
-        texto: "Los heridos llegan al hospital de campaña. ¿Qué recurso asigna?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
+        ] },
+    consD1: { texto: "Se liberan prisioneros, pero la moral baja. Misión cumplida a medias.", gif: "https://www.image2url.com/r2/default/gifs/1781987769945-849e75cc-c483-4243-bd65-1bd11996fd98.gif", siguiente: "parcial" },
+    consD2: { texto: "El rescate es exitoso, pero dos soldados mueren en la operación.", gif: "https://www.image2url.com/r2/default/gifs/1781989372665-82cfb24b-212f-4d37-9cfc-ae56a1b4d6b0.gif", siguiente: "fracaso" },
+    p3: { texto: "Los heridos llegan al hospital de campaña. ¿Qué recurso asigna?", gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
         opciones_raw: [
             { texto: "Priorizar cirugías de emergencia", destino: "exito" },
             { texto: "Evacuar a los más graves a la capital", destino: "parcial" }
-        ]
-    },
-    p3b: {
-        texto: "Las bajas son numerosas. Se necesita apoyo médico adicional. ¿Qué hace?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
+        ] },
+    p3b: { texto: "Las bajas son numerosas. Se necesita apoyo médico adicional. ¿Qué hace?", gif: "https://www.image2url.com/r2/default/gifs/1782344966215-9e85e24c-ab40-49f0-8914-ba162fb747bd.gif",
         opciones_raw: [
             { texto: "Solicitar ayuda humanitaria internacional", destino: "parcial" },
             { texto: "Reorganizar los recursos propios", destino: "fracaso" }
-        ]
-    },
-    p3c: {
-        texto: "La retirada fue exitosa, pero se perdió el suministro. ¿Próximo paso?",
-        gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif",
+        ] },
+    p3c: { texto: "La retirada fue exitosa, pero se perdió el suministro. ¿Próximo paso?", gif: "https://www.image2url.com/r2/default/gifs/1782531728490-84dc41b2-93c6-497f-8a65-1bd955d57f59.gif",
         opciones_raw: [
             { texto: "Programar un nuevo convoy con mayor escolta", destino: "exito" },
             { texto: "Abandonar la misión de suministros", destino: "fracaso" }
-        ]
-    }
+        ] }
 };
 
 // ===== ESCENARIO 6: AMENAZA DE BOMBA (corto - 3 niveles) =====
 const escenarioBomba = {
     nombre: "Amenaza de bomba en instalación",
-    p1: {
-        texto: "Una llamada anónima advierte que hay un artefacto explosivo en el comedor de la base. Hay 300 soldados en el área. ¿Qué ordena?",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
+    p1: { texto: "Una llamada anónima advierte que hay un artefacto explosivo en el comedor de la base. Hay 300 soldados en el área. ¿Qué ordena?", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
         opciones_raw: [
             { texto: "Evacuar inmediatamente todo el edificio", destino: "consA1" },
             { texto: "Enviar a los artificieros a inspeccionar", destino: "consA2" },
             { texto: "Ignorar la llamada como falsa alarma", destino: "consA3" }
-        ]
-    },
-    consA1: {
-        texto: "La evacuación es masiva, pero ordenada. Los artificieros buscan la bomba.",
-        gif: "https://www.image2url.com/r2/default/gifs/1782344602151-3c4d5460-9067-4a68-9410-9517d8f30190.gif",
-        siguiente: "p2"
-    },
-    consA2: {
-        texto: "Los artificieros encuentran un artefacto en una mochila. Tienen 10 minutos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "p2b"
-    },
-    consA3: {
-        texto: "La bomba explota. Hay 20 muertos y 50 heridos.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    },
-    p2: {
-        texto: "Los artificieros no encuentran la bomba. ¿Qué hace?",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
+        ] },
+    consA1: { texto: "La evacuación es masiva, pero ordenada. Los artificieros buscan la bomba.", gif: "https://www.image2url.com/r2/default/gifs/1782344602151-3c4d5460-9067-4a68-9410-9517d8f30190.gif", siguiente: "p2" },
+    consA2: { texto: "Los artificieros encuentran un artefacto en una mochila. Tienen 10 minutos.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "p2b" },
+    consA3: { texto: "La bomba explota. Hay 20 muertos y 50 heridos.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "fracaso" },
+    p2: { texto: "Los artificieros no encuentran la bomba. ¿Qué hace?", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
         opciones_raw: [
             { texto: "Ampliar la búsqueda a zonas cercanas", destino: "consB1" },
             { texto: "Reintegrar al personal y declarar falsa alarma", destino: "consB2" }
-        ]
-    },
-    consB1: {
-        texto: "Se encuentra un artefacto camuflado en los ventiladores. Es desactivado a tiempo.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "exito"
-    },
-    consB2: {
-        texto: "La bomba explosiona 30 minutos después. Daños estructurales graves.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "fracaso"
-    },
-    p2b: {
-        texto: "El artefacto tiene un temporizador. ¿Qué técnica usa?",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
+        ] },
+    consB1: { texto: "Se encuentra un artefacto camuflado en los ventiladores. Es desactivado a tiempo.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "exito" },
+    consB2: { texto: "La bomba explosiona 30 minutos después. Daños estructurales graves.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "fracaso" },
+    p2b: { texto: "El artefacto tiene un temporizador. ¿Qué técnica usa?", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
         opciones_raw: [
             { texto: "Desactivación manual con equipo especializado", destino: "consC1" },
             { texto: "Trasladar la bomba a un área desierta", destino: "consC2" }
-        ]
-    },
-    consC1: {
-        texto: "Los artificieros desactivan la bomba a 30 segundos del estallido. Héroe del día.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781981587356-83265fec-b07c-41c9-bca5-33a13a815d32.gif",
-        siguiente: "exito"
-    },
-    consC2: {
-        texto: "Durante el traslado, la bomba explota en un camión. Daños materiales.",
-        gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif",
-        siguiente: "parcial"
-    }
+        ] },
+    consC1: { texto: "Los artificieros desactivan la bomba a 30 segundos del estallido. Héroe del día.", gif: "https://www.image2url.com/r2/default/gifs/1781981587356-83265fec-b07c-41c9-bca5-33a13a815d32.gif", siguiente: "exito" },
+    consC2: { texto: "Durante el traslado, la bomba explota en un camión. Daños materiales.", gif: "https://www.image2url.com/r2/default/gifs/1781983547844-66b696ad-e9d4-46df-b97a-f2e673f84af6.gif", siguiente: "parcial" }
 };
 
 // ===== LISTA DE TODOS LOS ESCENARIOS =====
@@ -1482,134 +938,132 @@ function setDifficulty(d) {
 
 /**
  * Actualiza el contador de decisiones en la interfaz.
- * @function updateProgressCounter
- * @returns {void}
  */
 function updateProgressCounter() {
     const counterSpan = document.getElementById("progressCounter");
     if (counterSpan) counterSpan.innerHTML = `<i class="fas fa-list-ol"></i> Decisiones: ${historial.length}`;
 }
 
-// ===== PREPARAR ESCENARIO (con barajado) =====
-
 /**
- * Prepara un escenario clonándolo, barajando sus opciones y añadiendo logs.
- * @param {Object} escenarioBase - Objeto escenario original
- * @returns {Object} Escenario preparado con opciones barajadas
+ * Genera un análisis crítico del desempeño del usuario.
+ * @param {Object} final - Objeto resultado final
+ * @param {Array} historialDecisiones - Lista de decisiones tomadas
+ * @param {number} tiempoPromedio - Tiempo promedio por decisión
+ * @param {string} escenarioNombre - Nombre del escenario jugado
+ * @returns {string} HTML con el análisis formateado
  */
-function prepararEscenario(escenarioBase) {
-    let escenario = JSON.parse(JSON.stringify(escenarioBase));
-    for (let key in escenario) {
-        if (escenario[key].opciones_raw) {
-            let rawOpts = escenario[key].opciones_raw;
-            let shuffled = shuffleOptions(rawOpts);
-            escenario[key].opciones = shuffled;
-        }
+function generarAnalisisCritico(final, historialDecisiones, tiempoPromedio, escenarioNombre) {
+    let analisis = "";
+    if (final.tipo === "exito") {
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #4ade80; margin-bottom: 15px;">
+                        <i class="fas fa-check-circle"></i> RESULTADO: ÉXITO OPERACIONAL
+                    </div>`;
+    } else if (final.tipo === "parcial") {
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #facc15; margin-bottom: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> RESULTADO: ÉXITO LIMITADO
+                    </div>`;
+    } else {
+        analisis = `<div style="text-align: center; font-size: 1.5em; font-weight: bold; color: #f87171; margin-bottom: 15px;">
+                        <i class="fas fa-times-circle"></i> RESULTADO: NO CUMPLIDO
+                    </div>`;
     }
-    log('INFO', `Escenario preparado: ${escenario.nombre}`);
-    return escenario;
+    analisis += `<p><strong>Valoración del mando:</strong> ${final.analisisBase}</p>`;
+    let conclusionTexto = "Cada simulación es una oportunidad de crecimiento. Analice sus aciertos y errores, y vuelva a intentarlo. ";
+    if (final.tipo === "exito") {
+        conclusionTexto += "La victoria es el resultado de una planificación sólida y una ejecución precisa. Mantenga este nivel de excelencia en futuras misiones. El mando confía en su criterio y capacidad para tomar decisiones bajo presión. Siga así, comandante.";
+    } else if (final.tipo === "parcial") {
+        conclusionTexto += "El éxito parcial indica que va por buen camino, pero aún hay margen de mejora. Revise los momentos clave donde pudo haber actuado con más determinación o anticipación. La próxima vez, el triunfo total estará a su alcance. No baje la guardia.";
+    } else {
+        conclusionTexto += "El fracaso es una lección en sí mismo. Identifique los errores tácticos y estratégicos que llevaron a este resultado. La próxima vez, asegúrese de mantener la iniciativa y aplicar la doctrina aprendida. El camino hacia la maestría está pavimentado con experiencias como esta. Levántese y vuelva a intentarlo.";
+    }
+    analisis += `<p><strong>📌 Conclusión:</strong> ${conclusionTexto}</p>`;
+    return analisis;
 }
 
-// ===== FUNCIONES DE CONTROL =====
-
 /**
- * Detiene el temporizador actual.
- * @function detenerTemporizador
- * @returns {void}
+ * Muestra el feedback final de la simulación.
+ * @param {Object} final - Objeto resultado final
  */
-function detenerTemporizador() {
-    if(temporizadorInterval) clearInterval(temporizadorInterval);
-    temporizadorInterval = null;
-    tiempoActivo = false;
-}
-
-/**
- * Inicia el temporizador para la decisión actual.
- * @function iniciarTemporizador
- * @returns {void}
- */
-function iniciarTemporizador() {
-    if (trainingModeFlag) {
-        document.getElementById("timerDisplay").textContent = "--:--";
-        return;
-    }
+function mostrarFeedback(final) {
     detenerTemporizador();
-    decisionTomada = false;
-    tiempoRestante = tiemposDificultad[dificultadActual];
-    actualizarDisplayTimer();
-    tiempoActivo = true;
-    temporizadorInterval = setInterval(() => {
-        if(!tiempoActivo || decisionTomada) return;
-        if(tiempoRestante <= 1) {
-            detenerTemporizador();
-            log('WARN', 'Tiempo agotado, seleccionando opción aleatoria');
-            playSound("timeout");
-            const botones = document.querySelectorAll('.option-btn');
-            if(botones.length > 0 && !decisionTomada) {
-                botones[Math.floor(Math.random()*botones.length)].click();
-            } else {
-                mostrarFeedback(resultadosBase.error);
-            }
-        } else {
-            tiempoRestante--;
-            actualizarDisplayTimer();
+    let tiempos = historial.map(h => h.tiempo).filter(t => t !== undefined);
+    let tiempoPromedio = tiempos.length ? (tiempos.reduce((a,b)=>a+b,0)/tiempos.length).toFixed(1) : 0;
+    let decisionCount = historial.length;
+    checkAchievements(final.tipo, decisionCount, tiempoPromedio, trainingModeFlag);
+    log('INFO', `Simulación finalizada con resultado: ${final.tipo}`);
+
+    document.getElementById("simScreen").style.display = "none";
+    document.getElementById("feedbackScreen").style.display = "block";
+
+    const badge = document.getElementById("resultBadge");
+    if(final.tipo === "exito") {
+        badge.innerHTML = '<i class="fas fa-trophy"></i> VICTORIA TÁCTICA';
+        badge.className = "result-badge result-success";
+        playSound("victory");
+    } else if(final.tipo === "parcial") {
+        badge.innerHTML = '<i class="fas fa-chart-line"></i> ÉXITO PARCIAL';
+        badge.className = "result-badge result-parcial";
+        playSound("failure");
+    } else {
+        badge.innerHTML = '<i class="fas fa-skull-crossbones"></i> MISIÓN NO CUMPLIDA';
+        badge.className = "result-badge result-failure";
+        playSound("failure");
+    }
+
+    document.getElementById("resultGifArea").innerHTML = `<img src="${final.gif}" alt="Resultado">`;
+    document.getElementById("feedbackText").innerHTML = `<div style="text-align: center; font-size: 1.8em; font-weight: bold; margin-bottom: 10px;">${final.mensaje}</div>`;
+
+    let analisisCompleto = generarAnalisisCritico(final, historial, tiempoPromedio, escenarioActivo.nombre);
+    let diffName = dificultadActual === "easy" ? "FÁCIL" : (dificultadActual === "medium" ? "NORMAL" : "DIFÍCIL");
+    analisisCompleto += `<hr><p><strong>⏱️ TIEMPO PROMEDIO POR DECISIÓN:</strong> ${tiempoPromedio} segundos</p>`;
+    analisisCompleto += `<p><strong>📊 DIFICULTAD:</strong> ${diffName}</p>`;
+    analisisCompleto += `<p><strong>📌 ESCENARIO:</strong> ${escenarioActivo.nombre}</p>`;
+
+    document.getElementById("analysisText").innerHTML = analisisCompleto;
+}
+
+/**
+ * Muestra la consecuencia de una decisión.
+ * @param {Object} cons - Objeto consecuencia con texto, gif y siguiente
+ */
+function mostrarConsecuencia(cons) {
+    const situationBox = document.getElementById("situationBox");
+    situationBox.style.animation = "none";
+    situationBox.offsetHeight;
+    situationBox.style.animation = "slideInLeft 0.5s ease";
+    document.getElementById("situationText").innerHTML = cons.texto;
+    document.getElementById("situationGif").src = cons.gif || gifPlaceholder;
+    document.getElementById("optionsBox").innerHTML = `<div class="loading"><div class="loading-spinner"></div> ANALIZANDO CONSECUENCIAS...</div>`;
+    setTimeout(() => {
+        if (cons.siguiente === "exito") {
+            log('INFO', 'Consecuencia lleva a EXITO');
+            mostrarFeedback(resultadosBase.exito);
+            return;
+        } else if (cons.siguiente === "parcial") {
+            log('INFO', 'Consecuencia lleva a PARCIAL');
+            mostrarFeedback(resultadosBase.parcial);
+            return;
+        } else if (cons.siguiente === "fracaso") {
+            log('INFO', 'Consecuencia lleva a FRACASO');
+            mostrarFeedback(resultadosBase.fracaso);
+            return;
         }
-    }, 1000);
-}
-
-/**
- * Actualiza el display del temporizador en la interfaz.
- * @function actualizarDisplayTimer
- * @returns {void}
- */
-function actualizarDisplayTimer() {
-    if (trainingModeFlag) return;
-    let mins = Math.floor(tiempoRestante/60), segs = tiempoRestante%60;
-    const disp = document.getElementById("timerDisplay");
-    if(disp) disp.textContent = `${mins.toString().padStart(2,'0')}:${segs.toString().padStart(2,'0')}`;
-    if(tiempoRestante <= 5) {
-        disp.style.color = (Math.floor(Date.now() / 300) % 2 === 0) ? '#f87171' : 'white';
-    } else {
-        disp.style.color = 'white';
-    }
-}
-
-/**
- * Inicia una nueva partida.
- * @function iniciarJuego
- * @returns {void}
- */
-function iniciarJuego() {
-    log('INFO', 'Iniciando nueva simulación');
-    trainingModeFlag = document.getElementById("trainingModeCheckbox")?.checked || false;
-    localStorage.setItem("trainingMode", trainingModeFlag);
-    const randomIndex = Math.floor(Math.random() * escenariosPosibles.length);
-    const escenarioSeleccionado = escenariosPosibles[randomIndex];
-    log('INFO', `Escenario seleccionado: ${escenarioSeleccionado.nombre}`);
-    escenarioActivo = prepararEscenario(escenarioSeleccionado);
-    pasoActual = "p1";
-    esperando = false;
-    historial = [];
-    currentChosenLetters = [];
-    decisionTomada = false;
-    avisoMostrado = false;
-    updateProgressCounter();
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("simScreen").style.display = "block";
-    document.getElementById("feedbackScreen").style.display = "none";
-    const primera = escenarioActivo.p1;
-    if(!primera) {
-        log('ERROR', 'No se encontró la primera pregunta');
-        mostrarFeedback(resultadosBase.error);
-    } else {
-        mostrarPregunta(primera);
-    }
+        const sig = escenarioActivo[cons.siguiente];
+        if(!sig) {
+            log('ERROR', `Siguiente nodo "${cons.siguiente}" no encontrado.`);
+            mostrarFeedback(resultadosBase.error);
+            return;
+        }
+        pasoActual = cons.siguiente;
+        esperando = false;
+        decisionTomada = false;
+        mostrarPregunta(sig);
+    }, 3500);
 }
 
 /**
  * Muestra una pregunta en la interfaz.
  * @param {Object} preg - Objeto pregunta con texto, opciones, etc.
- * @returns {void}
  */
 function mostrarPregunta(preg) {
     if(!preg) {
@@ -1659,6 +1113,112 @@ function mostrarPregunta(preg) {
     });
     decisionTomada = false;
     setTimeout(() => iniciarTemporizador(), 100);
+}
+
+/**
+ * Inicia una nueva partida.
+ */
+function iniciarJuego() {
+    log('INFO', 'Iniciando nueva simulación');
+    trainingModeFlag = document.getElementById("trainingModeCheckbox")?.checked || false;
+    localStorage.setItem("trainingMode", trainingModeFlag);
+    const randomIndex = Math.floor(Math.random() * escenariosPosibles.length);
+    const escenarioSeleccionado = escenariosPosibles[randomIndex];
+    log('INFO', `Escenario seleccionado: ${escenarioSeleccionado.nombre}`);
+    escenarioActivo = prepararEscenario(escenarioSeleccionado);
+    pasoActual = "p1";
+    esperando = false;
+    historial = [];
+    currentChosenLetters = [];
+    decisionTomada = false;
+    avisoMostrado = false;
+    updateProgressCounter();
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("simScreen").style.display = "block";
+    document.getElementById("feedbackScreen").style.display = "none";
+    const primera = escenarioActivo.p1;
+    if(!primera) {
+        log('ERROR', 'No se encontró la primera pregunta');
+        mostrarFeedback(resultadosBase.error);
+    } else {
+        mostrarPregunta(primera);
+    }
+}
+
+/**
+ * Prepara un escenario clonándolo, barajando sus opciones y añadiendo logs.
+ * @param {Object} escenarioBase - Objeto escenario original
+ * @returns {Object} Escenario preparado con opciones barajadas
+ */
+function prepararEscenario(escenarioBase) {
+    let escenario = JSON.parse(JSON.stringify(escenarioBase));
+    for (let key in escenario) {
+        if (escenario[key].opciones_raw) {
+            let rawOpts = escenario[key].opciones_raw;
+            let shuffled = shuffleOptions(rawOpts);
+            escenario[key].opciones = shuffled;
+        }
+    }
+    log('INFO', `Escenario preparado: ${escenario.nombre}`);
+    return escenario;
+}
+
+// ===== FUNCIONES DE CONTROL =====
+
+/**
+ * Detiene el temporizador actual.
+ */
+function detenerTemporizador() {
+    if(temporizadorInterval) clearInterval(temporizadorInterval);
+    temporizadorInterval = null;
+    tiempoActivo = false;
+}
+
+/**
+ * Inicia el temporizador para la decisión actual.
+ */
+function iniciarTemporizador() {
+    if (trainingModeFlag) {
+        document.getElementById("timerDisplay").textContent = "--:--";
+        return;
+    }
+    detenerTemporizador();
+    decisionTomada = false;
+    tiempoRestante = tiemposDificultad[dificultadActual];
+    actualizarDisplayTimer();
+    tiempoActivo = true;
+    temporizadorInterval = setInterval(() => {
+        if(!tiempoActivo || decisionTomada) return;
+        if(tiempoRestante <= 1) {
+            detenerTemporizador();
+            log('WARN', 'Tiempo agotado, seleccionando opción aleatoria');
+            playSound("timeout");
+            const botones = document.querySelectorAll('.option-btn');
+            if(botones.length > 0 && !decisionTomada) {
+                botones[Math.floor(Math.random()*botones.length)].click();
+            } else {
+                mostrarFeedback(resultadosBase.error);
+            }
+        } else {
+            tiempoRestante--;
+            actualizarDisplayTimer();
+        }
+    }, 1000);
+}
+
+/**
+ * Actualiza el display del temporizador en la interfaz.
+ */
+function actualizarDisplayTimer() {
+    if (trainingModeFlag) return;
+    let mins = Math.floor(tiempoRestante/60), segs = tiempoRestante%60;
+    const disp = document.getElementById("timerDisplay");
+    if(disp) disp.textContent = `${mins.toString().padStart(2,'0')}:${segs.toString().padStart(2,'0')}`;
+    if(tiempoRestante <= 5) {
+        disp.style.color = (Math.floor(Date.now() / 300) % 2 === 0) ? '#f87171' : 'white';
+    } else {
+        disp.style.color = 'white';
+    }
 }
 
 // ======================================================================
